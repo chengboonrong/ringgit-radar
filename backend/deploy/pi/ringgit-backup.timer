@@ -1,0 +1,11 @@
+[Unit]
+Description=Ringgit Radar database backup, every night at 03:17 Malaysia time
+
+[Timer]
+# two hours after the sweep, so a backup never overlaps one
+OnCalendar=*-*-* 03:17:00 Asia/Kuala_Lumpur
+Persistent=true
+AccuracySec=30s
+
+[Install]
+WantedBy=timers.target

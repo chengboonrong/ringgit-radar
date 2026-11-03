@@ -1,0 +1,18 @@
+version: "2"
+sql:
+  - engine: postgresql
+    schema: db/migrations
+    queries: db/queries
+    gen:
+      go:
+        package: db
+        out: internal/db
+        sql_package: pgx/v5
+        overrides:
+          - column: "catalog.price_minor"
+            go_type: "github.com/jackc/pgx/v5/pgtype.Int8"
+          - column: "catalog.age"
+            go_type: "github.com/jackc/pgx/v5/pgtype.Int4"
+          # the pooler needs the simple protocol, which sends []byte as bytea text; json must go as json
+          - column: "products.raw"
+            go_type: "encoding/json.RawMessage"

@@ -1,0 +1,19 @@
+[Unit]
+Description=Ringgit Radar price sweep
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ringgit
+Group=ringgit
+# DATABASE_URL, optional USER_AGENT; root-owned, mode 0600, outside the repo
+EnvironmentFile=/etc/ringgit-radar/env
+ExecStart=/opt/ringgit-radar/collector
+# a sweep takes about 4 to 5 minutes; this only stops one that hangs
+TimeoutStartSec=30min
+Nice=10
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true

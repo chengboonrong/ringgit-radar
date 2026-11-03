@@ -1,0 +1,11 @@
+[Unit]
+Description=Ringgit Radar price sweep, every night at 01:17 Malaysia time
+
+[Timer]
+OnCalendar=*-*-* 01:17:00 Asia/Kuala_Lumpur
+# a sweep missed while the Pi was off runs when it comes back
+Persistent=true
+AccuracySec=30s
+
+[Install]
+WantedBy=timers.target

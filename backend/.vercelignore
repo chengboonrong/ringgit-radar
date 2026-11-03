@@ -1,0 +1,7 @@
+.cache
+.omc
+launchd
+deploy
+/collector
+*.test
+.env*

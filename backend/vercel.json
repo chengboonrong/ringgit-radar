@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "regions": ["sin1"],
+  "outputDirectory": "public",
+  "functions": { "api/index.go": { "maxDuration": 30 } },
+  "rewrites": [
+    { "source": "/v1/:path*", "destination": "/api/index?p=/v1/:path*" },
+    { "source": "/healthz", "destination": "/api/index?p=/healthz" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+        { "key": "Cross-Origin-Embedder-Policy", "value": "credentialless" }
+      ]
+    }
+  ]
+}

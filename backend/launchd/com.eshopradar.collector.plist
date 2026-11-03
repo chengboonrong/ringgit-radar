@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.eshopradar.collector</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/sh</string>
+		<string>-c</string>
+		<string>DATABASE_URL="$(grep '^SUPABASE_SESSION_URL=' ../.env | cut -d= -f2-)" exec ./collector</string>
+	</array>
+	<key>WorkingDirectory</key>
+	<string>/Users/chrischeng/eshop-radar/backend</string>
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Hour</key>
+		<integer>1</integer>
+		<key>Minute</key>
+		<integer>17</integer>
+	</dict>
+	<key>StandardOutPath</key>
+	<string>/Users/chrischeng/Library/Logs/eshop-radar-collector.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/chrischeng/Library/Logs/eshop-radar-collector.log</string>
+</dict>
+</plist>

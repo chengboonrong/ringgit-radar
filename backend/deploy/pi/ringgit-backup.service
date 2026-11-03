@@ -1,0 +1,18 @@
+[Unit]
+Description=Ringgit Radar database backup (pg_dump)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ringgit
+Group=ringgit
+EnvironmentFile=/etc/ringgit-radar/env
+ExecStart=/opt/ringgit-radar/backup.sh
+TimeoutStartSec=30min
+Nice=15
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/backups/ringgit-radar

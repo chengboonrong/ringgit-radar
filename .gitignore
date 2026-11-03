@@ -1,0 +1,10 @@
+*.test
+/backend/collector
+.env
+/docs/research/switch2-eshop-refs/
+.cache/
+
+/backend/public/
+/backend/.vercel/
+/backend/deploy/pi/collector-linux-*
+/.impeccable/review/
