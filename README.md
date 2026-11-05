@@ -14,7 +14,7 @@ Unofficial price tracker for Malaysian Nintendo eShop prices, in MYR. A Go colle
 
 <img src="docs/screenshots/desktop-sale.png" alt="Sale page on a wide screen with a sidebar and a four-column grid">
 
-Cover art in these screenshots is replaced with plain tiles; the app itself shows the store's art. The prices, dates and charts are real, from the live site on 5 Nov 2026.
+Screenshots of the live site on 5 Nov 2026. Game art belongs to Nintendo and the games' publishers; the site loads it from Nintendo's image server.
 
 Setup: `createdb eshop_radar && for f in backend/db/migrations/*.sql; do psql -d eshop_radar -f $f; done`
 Collect one sweep (from `backend/`): `go run ./cmd/collector` (optional `USER_AGENT`)
