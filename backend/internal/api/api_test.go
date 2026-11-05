@@ -786,3 +786,17 @@ func TestOnlyGoodAnswersAreCachedByACDN(t *testing.T) {
 		t.Errorf("ids=1 and ids=999 gave the same total %d: the ids must decide the answer", a.Total)
 	}
 }
+
+func TestExcerpt(t *testing.T) {
+	long := strings.Repeat("word ", 40) + "end. " + strings.Repeat("more ", 60)
+	for in, want := range map[string]string{
+		"Short one.":                      "Short one.",
+		"First para.  \n\nSecond para.":   "First para.",
+		long:                              strings.TrimSpace(strings.Repeat("word ", 40)) + " end.",
+		strings.Repeat("abcdefghij ", 40): strings.TrimSpace(strings.Repeat("abcdefghij ", 25)) + "…",
+	} {
+		if got := excerpt(in); got != want {
+			t.Errorf("excerpt(%.30q) = %.60q, want %.60q", in, got, want)
+		}
+	}
+}

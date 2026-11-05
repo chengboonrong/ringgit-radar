@@ -404,7 +404,7 @@ func (s *Server) game(w http.ResponseWriter, r *http.Request) {
 	}
 	d := detailJSON{
 		gameJSON: toGame(c), Screenshots: c.Screenshots, Dcolors: c.Dcolors, Genres: c.Genres,
-		Description: c.Description, Tagline: c.Tagline, Players: c.Players,
+		Description: excerpt(c.Description), Tagline: c.Tagline, Players: c.Players,
 		History: make([]historyJSON, 0, len(hist)), Addons: []gameJSON{},
 	}
 	for _, h := range hist {
@@ -549,4 +549,30 @@ func (s *Server) image(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	s.img.ServeHTTP(w, r)
+}
+
+// excerpt keeps the first paragraph of a publisher's description, cut to about 280 characters at a
+// sentence end (or a word, with an ellipsis), so the API quotes the store text instead of republishing it.
+func excerpt(s string) string {
+	s = strings.TrimSpace(s)
+	if i := strings.Index(s, "\n"); i >= 0 {
+		s = strings.TrimSpace(s[:i])
+	}
+	const limit = 280
+	r := []rune(s)
+	if len(r) <= limit {
+		return s
+	}
+	cut := string(r[:limit])
+	end := -1
+	for _, p := range []string{". ", "! ", "? "} {
+		end = max(end, strings.LastIndex(cut, p))
+	}
+	if end > len(cut)/3 {
+		return cut[:end+1]
+	}
+	if i := strings.LastIndex(cut, " "); i > 0 {
+		return cut[:i] + "…"
+	}
+	return cut + "…"
 }
