@@ -4,12 +4,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('image urls', () {
-    test('an empty API_BASE gives same-origin paths', () {
-      expect(imageUrl('abc', width: 320, base: ''), '/v1/img/abc?w=320');
+    test('art loads from the store\'s image server, not ours', () {
+      expect(imageUrl('abc'), 'https://img-eshop.cdn.nintendo.net/i/abc.jpg');
     });
 
-    test('a base is put in front', () {
-      expect(imageUrl('abc', base: 'http://127.0.0.1:8088'), 'http://127.0.0.1:8088/v1/img/abc?w=640');
+    test('decode width covers the display size', () {
+      expect(imageWidthFor(150, 2), 320);
+      expect(imageWidthFor(300, 2), 640);
+      expect(imageWidthFor(400, 3), 1280);
     });
   });
 

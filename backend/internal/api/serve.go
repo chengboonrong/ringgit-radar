@@ -22,7 +22,6 @@ import (
 // Config is everything the deployed server is made of.
 type Config struct {
 	Pool *pgxpool.Pool
-	Img  *ImageProxy
 	Log  *slog.Logger
 	// WebDir, when set, is a Flutter web build served at / with a fallback to index.html.
 	WebDir string
@@ -42,7 +41,7 @@ const maxLimiterKeys = 10000
 // NewHandler is the whole site: /healthz open, then (behind the password, if one is set) the API
 // under /v1 and, if WebDir is set, the web app everywhere else.
 func NewHandler(c Config) (http.Handler, error) {
-	apiHandler := New(c.Pool, c.Img, c.Log)
+	apiHandler := New(c.Pool, c.Log)
 	var web http.Handler
 	if c.WebDir != "" {
 		w, err := newWeb(c.WebDir)

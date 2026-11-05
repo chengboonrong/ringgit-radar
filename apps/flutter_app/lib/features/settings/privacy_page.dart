@@ -19,18 +19,18 @@ class PrivacyPage extends StatelessWidget {
     ),
     (
       'What our server logs',
-      'Our server writes no access log. It logs only errors, for example a database error or an image that could not be fetched, and those lines hold an image id or an error message, not your address. '
+      'Our server writes no access log. It logs only errors, for example a database error, and those lines hold an error message, not your address. '
           'To stop one visitor from overloading it, the server counts requests per internet address, in memory only. Those addresses are never written to disk.'
     ),
     (
-      'Pictures come through our server',
-      'Game art is fetched from the store\'s image servers by our server and passed on to you, and may be kept in Vercel\'s cache for reuse. Your browser or phone does not contact Nintendo.'
+      'Pictures come from Nintendo\'s image server',
+      'Game art and screenshots load straight from the store\'s image server (img-eshop.cdn.nintendo.net). Your browser or phone asks it for each picture, so Nintendo receives your internet address and the usual details of a request, under Nintendo\'s own privacy policy. Ringgit Radar does not keep or pass on any pictures.'
     ),
     (
       'Who else sees your visit',
       'The site and its server run on Vercel. Vercel keeps request logs under its own policy, which can include the page you asked for, the time, your internet address and your browser type. '
           'Price data is stored with Supabase; it holds game prices and nothing about visitors, and it only ever hears from our server. '
-          'The web version loads everything, fonts included, from our own address. The Android app talks to our server and to nobody else.'
+          'Apart from those pictures, the web version loads everything, fonts included, from our own address, and the Android app talks only to our server.'
     ),
     (
       'Not Nintendo',

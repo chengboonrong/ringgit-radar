@@ -10,7 +10,7 @@ void main() {
     addTearDown(t.view.reset);
     await t.pumpWidget(MaterialApp(theme: buildTheme(Brightness.light), home: const Scaffold(body: PrivacyPage())));
     final all = t.widgetList<Text>(find.byType(Text)).map((w) => w.data ?? '').join('\n');
-    for (final must in ['No accounts', 'Wish List stays on your device', 'writes no access log', 'Pictures come through our server', 'Vercel', 'Supabase', 'nothing about visitors', 'Not affiliated with or endorsed by Nintendo']) {
+    for (final must in ['No accounts', 'Wish List stays on your device', 'writes no access log', 'Pictures come from Nintendo\'s image server', 'img-eshop.cdn.nintendo.net', 'Vercel', 'Supabase', 'nothing about visitors', 'Not affiliated with or endorsed by Nintendo']) {
       expect(all, contains(must), reason: must);
     }
     // nothing on the page is a promise the code does not keep

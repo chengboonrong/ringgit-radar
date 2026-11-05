@@ -10,7 +10,6 @@ import (
 	"sync"
 
 	"eshop-radar/backend/internal/api"
-	"eshop-radar/backend/internal/nintendo"
 )
 
 var (
@@ -43,10 +42,6 @@ func build(ctx context.Context) (http.Handler, error) {
 	if err != nil {
 		return nil, err
 	}
-	perHour, err := api.EnvInt("IMG_UPSTREAM_PER_HOUR", api.DefaultUpstreamPerHour)
-	if err != nil {
-		return nil, err
-	}
 	trust := os.Getenv("TRUST_PROXY")
 	if trust == "" {
 		trust = "true" // behind Vercel, whose X-Forwarded-For is the visitor's address
@@ -55,11 +50,5 @@ func build(ctx context.Context) (http.Handler, error) {
 	if err != nil {
 		return nil, err
 	}
-	ua := os.Getenv("USER_AGENT")
-	if ua == "" {
-		ua = nintendo.DefaultUserAgent
-	}
-	img := api.NewImageProxy("", ua, log) // no disk in a function: fetch, resize, let the CDN keep it
-	img.UpstreamPerHour = perHour
-	return api.NewHandler(api.Config{Pool: pool, Img: img, Log: log, RatePerMin: rate, TrustProxy: mode})
+	return api.NewHandler(api.Config{Pool: pool, Log: log, RatePerMin: rate, TrustProxy: mode})
 }

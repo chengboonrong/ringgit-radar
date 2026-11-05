@@ -16,10 +16,10 @@ class ApiException implements Exception {
   String toString() => message;
 }
 
-/// Where art comes from: our own API's image proxy, never the store's servers.
-String imageUrl(String hash, {int width = 640, String base = apiBase}) => '$base/v1/img/$hash?w=$width';
+/// Where art comes from: the store's own image server, full size (1920x1080). Ringgit Radar keeps no copies.
+String imageUrl(String hash) => 'https://img-eshop.cdn.nintendo.net/i/$hash.jpg';
 
-/// Picks the proxy width that covers [logicalWidth] at [pixelRatio] without going far over.
+/// Picks the decode width that covers [logicalWidth] at [pixelRatio] without going far over.
 int imageWidthFor(double logicalWidth, double pixelRatio) {
   final px = logicalWidth * pixelRatio;
   if (px <= 320) return 320;

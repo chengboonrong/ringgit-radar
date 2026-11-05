@@ -8,6 +8,7 @@ import (
 	"log/slog"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -22,13 +23,12 @@ import (
 
 type Server struct {
 	q   *db.Queries
-	img *ImageProxy
 	log *slog.Logger
 }
 
-// New builds the router. img may be nil in tests that do not touch images.
-func New(pool *pgxpool.Pool, img *ImageProxy, log *slog.Logger) http.Handler {
-	s := &Server{q: db.New(pool), img: img, log: log}
+// New builds the router.
+func New(pool *pgxpool.Pool, log *slog.Logger) http.Handler {
+	s := &Server{q: db.New(pool), log: log}
 	r := chi.NewRouter()
 	r.Use(cors)
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) { writeErr(w, http.StatusNotFound, "not found") })
@@ -47,7 +47,7 @@ func New(pool *pgxpool.Pool, img *ImageProxy, log *slog.Logger) http.Handler {
 		r.Get("/v1/genres", s.genres)
 	})
 	r.With(cdnCache("public, max-age=30, s-maxage=60")).Get("/v1/status/prices", s.status)
-	r.Get("/v1/img/{hash}", s.image) // sets its own, much longer, caching
+	r.Get("/v1/img/{hash}", s.image) // a redirect, for app builds from before art loaded straight from the store
 	return r
 }
 
@@ -543,12 +543,21 @@ func (s *Server) status(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// ImageUpstream is where cover art and screenshots live, as <hash>.jpg. The app loads them from there itself.
+const ImageUpstream = "https://img-eshop.cdn.nintendo.net/i/"
+
+var hashRE = regexp.MustCompile(`^[0-9a-f]{64}$`)
+
+// image redirects to the store's own copy, so the site never keeps or serves art. Older app builds still ask
+// for /v1/img/<hash>?w=...; the width is ignored.
 func (s *Server) image(w http.ResponseWriter, r *http.Request) {
-	if s.img == nil {
-		writeErr(w, http.StatusNotFound, "images are not enabled")
+	hash := chi.URLParam(r, "hash")
+	if !hashRE.MatchString(hash) {
+		writeErr(w, http.StatusBadRequest, "bad image hash")
 		return
 	}
-	s.img.ServeHTTP(w, r)
+	w.Header().Set("Cache-Control", "public, max-age=86400")
+	http.Redirect(w, r, ImageUpstream+hash+".jpg", http.StatusFound)
 }
 
 // excerpt keeps the first paragraph of a publisher's description, cut to about 280 characters at a

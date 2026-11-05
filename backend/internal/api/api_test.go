@@ -32,7 +32,7 @@ type testEnv struct {
 func newEnv(t *testing.T) *testEnv {
 	t.Helper()
 	pool := testdb.Pool(t)
-	e := &testEnv{t: t, pool: pool, h: New(pool, nil, slog.New(slog.NewTextHandler(io.Discard, nil)))}
+	e := &testEnv{t: t, pool: pool, h: New(pool, slog.New(slog.NewTextHandler(io.Discard, nil)))}
 	if err := pool.QueryRow(context.Background(), `INSERT INTO collection_runs (provider, status, finished_at) VALUES ('t', 'succeeded', now()) RETURNING id`).Scan(&e.run); err != nil {
 		t.Fatal(err)
 	}
@@ -798,5 +798,20 @@ func TestExcerpt(t *testing.T) {
 		if got := excerpt(in); got != want {
 			t.Errorf("excerpt(%.30q) = %.60q, want %.60q", in, got, want)
 		}
+	}
+}
+
+func TestImageRedirectsToStore(t *testing.T) {
+	h := New(nil, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	hash := strings.Repeat("a", 64)
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/v1/img/"+hash+"?w=640", nil))
+	if rec.Code != http.StatusFound || rec.Header().Get("Location") != ImageUpstream+hash+".jpg" {
+		t.Fatalf("got %d %q", rec.Code, rec.Header().Get("Location"))
+	}
+	rec = httptest.NewRecorder()
+	h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/v1/img/zzz", nil))
+	if rec.Code != http.StatusBadRequest {
+		t.Fatalf("bad hash: got %d, want 400", rec.Code)
 	}
 }

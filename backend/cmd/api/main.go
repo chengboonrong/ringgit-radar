@@ -1,7 +1,7 @@
 // Command api serves the read-only Ringgit Radar API, and the web app when WEB_DIR is set.
 // HOST (default 127.0.0.1) and PORT choose the address; a HOST other than loopback needs SITE_PASSWORD or
-// PUBLIC=true. TRUST_PROXY=true believes X-Forwarded-For (Vercel); TRUST_PROXY=cloudflare also Cf-Connecting-Ip. RATE_LIMIT_PER_MIN and
-// IMG_UPSTREAM_PER_HOUR tune the limits (0 turns one off).
+// PUBLIC=true. TRUST_PROXY=true believes X-Forwarded-For (Vercel); TRUST_PROXY=cloudflare also Cf-Connecting-Ip. RATE_LIMIT_PER_MIN
+// tunes the rate limit (0 turns it off).
 package main
 
 import (
@@ -19,7 +19,6 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"eshop-radar/backend/internal/api"
-	"eshop-radar/backend/internal/nintendo"
 )
 
 func main() {
@@ -45,10 +44,6 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	imgPerHour, err := api.EnvInt("IMG_UPSTREAM_PER_HOUR", api.DefaultUpstreamPerHour)
-	if err != nil {
-		return err
-	}
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
@@ -60,13 +55,8 @@ func run() error {
 	}
 	defer pool.Close()
 
-	img := api.NewImageProxy(imgCacheDir(), getenv("USER_AGENT", nintendo.DefaultUserAgent), log)
-	img.UpstreamPerHour = imgPerHour
-	if v := os.Getenv("IMG_UPSTREAM"); v != "" { // for tests against a stand-in image server; ends with "/i/"
-		img.Upstream = v
-	}
 	handler, err := api.NewHandler(api.Config{
-		Pool: pool, Img: img, Log: log, WebDir: os.Getenv("WEB_DIR"), Password: password,
+		Pool: pool, Log: log, WebDir: os.Getenv("WEB_DIR"), Password: password,
 		RatePerMin: ratePerMin, TrustProxy: trust,
 	})
 	if err != nil {
@@ -78,7 +68,7 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	log.Info("listening", "addr", ln.Addr().String(), "web_dir", os.Getenv("WEB_DIR"), "password", password != "", "public", public, "rate_per_min", ratePerMin, "img_upstream_per_hour", imgPerHour, "img_cache", img.Dir, "pid", os.Getpid())
+	log.Info("listening", "addr", ln.Addr().String(), "web_dir", os.Getenv("WEB_DIR"), "password", password != "", "public", public, "rate_per_min", ratePerMin, "pid", os.Getpid())
 
 	errc := make(chan error, 1)
 	go func() { errc <- srv.Serve(ln) }()
@@ -93,20 +83,6 @@ func run() error {
 		return err
 	}
 	return nil
-}
-
-// imgCacheDir is IMG_CACHE ("none" for no disk), else backend/.cache/img from the repo root or .cache/img from backend/.
-func imgCacheDir() string {
-	if v := os.Getenv("IMG_CACHE"); v != "" {
-		if v == "none" { // no disk: the proxy fetches and resizes per request (a serverless function)
-			return ""
-		}
-		return v
-	}
-	if st, err := os.Stat("backend"); err == nil && st.IsDir() {
-		return "backend/.cache/img"
-	}
-	return ".cache/img"
 }
 
 func getenv(key, def string) string {
