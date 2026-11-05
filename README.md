@@ -2,6 +2,20 @@
 
 Unofficial price tracker for Malaysian Nintendo eShop prices, in MYR. A Go collector records prices into local Postgres, a read API serves them, and a Flutter app (web, Android, iOS) shows them. Not affiliated with or endorsed by Nintendo.
 
+**Try it:** [ringgit-radar-nine.vercel.app](https://ringgit-radar-nine.vercel.app) · Android: [download the APK](https://ringgit-radar-nine.vercel.app/android.html)
+
+<p align="center">
+  <img src="docs/screenshots/preview.gif" width="260" alt="Phone walkthrough: Highlights, Sale, Ranking, then a game page with its price history chart">
+</p>
+
+| Highlights | Sale | Ranking | Game page |
+| --- | --- | --- | --- |
+| <img src="docs/screenshots/phone-highlights.png" width="180" alt="Highlights: biggest Switch 2 savings and sales ending soon"> | <img src="docs/screenshots/phone-sale.png" width="180" alt="Sale: 582 games sorted by biggest savings"> | <img src="docs/screenshots/phone-ranking.png" width="180" alt="Ranking: Switch 2 games ranked by ringgit saved"> | <img src="docs/screenshots/phone-game.png" width="180" alt="Game page: sale end date, lowest price seen and price history chart"> |
+
+<img src="docs/screenshots/desktop-sale.png" alt="Sale page on a wide screen with a sidebar and a four-column grid">
+
+Cover art in these screenshots is replaced with plain tiles. The prices, dates and charts are real, from the live site on 5 Nov 2026.
+
 Setup: `createdb eshop_radar && for f in backend/db/migrations/*.sql; do psql -d eshop_radar -f $f; done`
 Collect one sweep (from `backend/`): `go run ./cmd/collector` (optional `USER_AGENT`)
 Daily sweep at 01:17 on macOS (from `backend/`, rebuild after collector changes): `go build -o collector ./cmd/collector && cp launchd/com.eshopradar.collector.plist ~/Library/LaunchAgents/ && launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.eshopradar.collector.plist`. It writes to Supabase, reading `SUPABASE_SESSION_URL` from the root `.env`. Log: `~/Library/Logs/eshop-radar-collector.log`; failures are also recorded in `collection_runs`.
