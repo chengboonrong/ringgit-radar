@@ -188,6 +188,9 @@ func TestWebServesTheAppWithTheRightHeaders(t *testing.T) {
 	if rec.Header().Get("Cross-Origin-Opener-Policy") != "same-origin" || rec.Header().Get("Cross-Origin-Embedder-Policy") != "credentialless" {
 		t.Errorf("isolation headers: %v", rec.Header())
 	}
+	if rec.Header().Get("X-Content-Type-Options") != "nosniff" || rec.Header().Get("Content-Security-Policy") != "frame-ancestors 'none'" || rec.Header().Get("X-Frame-Options") != "DENY" {
+		t.Errorf("hardening headers: %v", rec.Header())
+	}
 
 	wasm := do(h, http.MethodGet, "/main.dart.wasm", "", "")
 	if ct := wasm.Header().Get("Content-Type"); ct != "application/wasm" {
