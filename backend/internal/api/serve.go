@@ -157,6 +157,10 @@ func (wb *web) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h := w.Header()
 	h.Set("Cross-Origin-Opener-Policy", "same-origin")
 	h.Set("Cross-Origin-Embedder-Policy", "credentialless")
+	// the same hardening as vercel.json: no MIME sniffing, and no other site may frame the app
+	h.Set("X-Content-Type-Options", "nosniff")
+	h.Set("Content-Security-Policy", "frame-ancestors 'none'")
+	h.Set("X-Frame-Options", "DENY")
 	if strings.HasPrefix(name, "canvaskit/") {
 		h.Set("Cache-Control", "public, max-age=86400") // versioned with the Flutter engine
 	} else {
