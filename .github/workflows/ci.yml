@@ -27,7 +27,6 @@ jobs:
         ports: ["5432:5432"]
         options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
     env:
-      # testdb builds a private schema from db/migrations per test, so an empty database is enough
       TEST_DATABASE_URL: postgres://postgres:postgres@localhost:5432/eshop_radar_test?sslmode=disable
     steps:
       - uses: actions/checkout@v7
@@ -38,6 +37,9 @@ jobs:
       - name: gofmt
         run: test -z "$(gofmt -l . | tee /dev/stderr)"
       - run: go vet ./...
+      - name: Migrate the test database
+        # testdb gives some tests a private schema, but the collector and api tests use the public one, as in the README
+        run: for f in db/migrations/*.sql; do psql "$TEST_DATABASE_URL" -v ON_ERROR_STOP=1 -q -f "$f"; done
       - run: go test ./...
 
   flutter:
