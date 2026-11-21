@@ -115,14 +115,12 @@ func (e *testEnv) get(path string, into any) int {
 
 type listResp struct {
 	Items []struct {
-		Nsuid       string   `json:"nsuid"`
-		Title       string   `json:"title"`
-		Publisher   string   `json:"publisher"`
-		Rank        *int     `json:"rank"`
-		Age         *int     `json:"age"`
-		AgeDesc     []string `json:"age_descriptors"`
-		ReleaseDate *string  `json:"release_date"`
-		ReleaseText string   `json:"release_text"`
+		Nsuid       string  `json:"nsuid"`
+		Title       string  `json:"title"`
+		Publisher   string  `json:"publisher"`
+		Rank        *int    `json:"rank"`
+		ReleaseDate *string `json:"release_date"`
+		ReleaseText string  `json:"release_text"`
 		Price       *struct {
 			RegularMinor  int64      `json:"regular_minor"`
 			CurrentMinor  int64      `json:"current_minor"`
@@ -593,90 +591,6 @@ func TestNewestListsReleasedBeforeUpcoming(t *testing.T) {
 	}
 }
 
-func (e *testEnv) rate(nsuid string, age int, descriptors ...string) {
-	e.t.Helper()
-	if descriptors == nil {
-		descriptors = []string{}
-	}
-	if _, err := e.pool.Exec(context.Background(), `INSERT INTO title_ratings (nsuid, age, descriptors, source, matched_name) VALUES ($1,$2,$3,'test','x')`, nsuid, age, descriptors); err != nil {
-		e.t.Fatal(err)
-	}
-}
-
-func TestAgeFilterKeepsUnratedGamesListed(t *testing.T) {
-	e := newEnv(t)
-	e.add(game{nsuid: "1", title: "Twelve", publisher: "A", regular: 1000})
-	e.add(game{nsuid: "2", title: "Sixteen", publisher: "B", regular: 1000})
-	e.add(game{nsuid: "3", title: "Unrated", publisher: "C", regular: 1000})
-	e.add(game{nsuid: "4", title: "Plain Three", publisher: "D", regular: 1000})
-	e.rate("1", 12, "Violence", "Bad Language")
-	e.rate("2", 16, "Strong Violence")
-	e.rate("4", 3)
-
-	var l listResp
-	e.get("/v1/games?sort=title", &l)
-	if got := l.ids(); len(got) != 4 {
-		t.Fatalf("without a filter every game is listed, got %v", got)
-	}
-	byID := map[string]int{}
-	for i, it := range l.Items {
-		byID[it.Nsuid] = i
-	}
-	if it := l.Items[byID["1"]]; it.Age == nil || *it.Age != 12 || strings.Join(it.AgeDesc, ",") != "Violence,Bad Language" {
-		t.Errorf("rated card: %+v", it)
-	}
-	if it := l.Items[byID["3"]]; it.Age != nil || it.AgeDesc != nil {
-		t.Errorf("an unrated card must have null age and descriptors: %+v", it)
-	}
-	if it := l.Items[byID["4"]]; it.Age == nil || *it.Age != 3 || it.AgeDesc == nil || len(it.AgeDesc) != 0 {
-		t.Errorf("a rated game with no descriptors has an empty list, not null: %+v", it)
-	}
-
-	for path, want := range map[string]string{
-		"/v1/games?age=12&sort=title":    "[1]",
-		"/v1/games?age=12,16&sort=title": "[2 1]",
-		"/v1/games?age=3&sort=title":     "[4]",
-		"/v1/games?age=18&sort=title":    "[]", // unrated games are not "18"; with a filter set they drop out
-	} {
-		e.get(path, &l)
-		if got := fmt.Sprint(l.ids()); got != want {
-			t.Errorf("%s = %s, want %s", path, got, want)
-		}
-	}
-	if code := e.get("/v1/games?age=old", nil); code != http.StatusBadRequest {
-		t.Errorf("bad age = %d", code)
-	}
-
-	var d struct {
-		Age     *int     `json:"age"`
-		AgeDesc []string `json:"age_descriptors"`
-	}
-	e.get("/v1/games/1", &d)
-	if d.Age == nil || *d.Age != 12 || len(d.AgeDesc) != 2 {
-		t.Errorf("detail rating = %+v", d)
-	}
-	d = struct {
-		Age     *int     `json:"age"`
-		AgeDesc []string `json:"age_descriptors"`
-	}{}
-	e.get("/v1/games/3", &d)
-	if d.Age != nil || d.AgeDesc != nil {
-		t.Errorf("unrated detail = %+v", d)
-	}
-}
-
-func TestSexualDescriptorsDoNotFlagAGame(t *testing.T) {
-	// the rating-filter test (docs/research/rating-filter-test.md) found every descriptor rule hides real games
-	e := newEnv(t)
-	e.add(game{nsuid: "1", title: "Octopath Traveler Like", publisher: "A", regular: 1000})
-	e.rate("1", 12, "Bad Language", "Sex")
-	var l listResp
-	e.get("/v1/games", &l)
-	if !has(l.ids(), "1") {
-		t.Fatalf("a rated 12 with Sex is still listed, got %v", l.ids())
-	}
-}
-
 func hashOf(nsuid string) string {
 	sum := sha256.Sum256([]byte(nsuid))
 	return hex.EncodeToString(sum[:])
@@ -813,5 +727,93 @@ func TestImageRedirectsToStore(t *testing.T) {
 	h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/v1/img/zzz", nil))
 	if rec.Code != http.StatusBadRequest {
 		t.Fatalf("bad hash: got %d, want 400", rec.Code)
+	}
+}
+
+func TestRemovedProductHiddenEverywhere(t *testing.T) {
+	e := newEnv(t)
+	today := time.Now().In(time.FixedZone("MYT", 8*3600)).Format("2006-01-02")
+	// "1" (to be removed) and "3" (kept) are alike: on sale since yesterday, ending in 2 days, released
+	// today, genre Action, each with the DLC "2" (also removed). Different publishers, so no cap applies.
+	for _, g := range []struct{ id, pub string }{{"1", "A"}, {"3", "B"}} {
+		s := onSale(10000, 5000, 2)
+		s.nsuid, s.title, s.publisher = g.id, "Game "+g.id, g.pub
+		s.raw = map[string]any{"genre": []string{"Action"}, "dsdate": today, "cnsuid": []string{"2"}}
+		e.add(s)
+	}
+	e.add(game{nsuid: "2", title: "Game 2 DLC", publisher: "A", sctg: "aoc", regular: 500})
+	if _, err := e.pool.Exec(context.Background(), `INSERT INTO removed_products (nsuid, note) VALUES ('1','test'),('2','test')`); err != nil {
+		t.Fatal(err)
+	}
+	hidden := func(where string, ids []string) {
+		t.Helper()
+		for _, id := range ids {
+			if id == "1" || id == "2" {
+				t.Errorf("%s still shows removed product %s: %v", where, id, ids)
+			}
+		}
+	}
+	for _, path := range []string{"/v1/games", "/v1/games?sale=true", "/v1/games?q=game", "/v1/games?ids=1,2,3",
+		"/v1/games?type=addon", "/v1/games?release=recent", "/v1/games?genre=Action", "/v1/games?age=12"} {
+		var l listResp
+		if code := e.get(path, &l); code != http.StatusOK { // ?age= from old links is ignored, not a 400
+			t.Fatalf("%s = %d", path, code)
+		}
+		hidden(path, l.ids())
+		if path == "/v1/games" && !has(l.ids(), "3") {
+			t.Fatalf("the kept game is missing, so the test proves nothing: %v", l.ids())
+		}
+	}
+	var rails map[string]json.RawMessage
+	e.get("/v1/highlights", &rails)
+	for _, name := range []string{"top_savings", "ending_soon", "new_sales", "recent"} {
+		var items []struct {
+			Nsuid string `json:"nsuid"`
+		}
+		if err := json.Unmarshal(rails[name], &items); err != nil {
+			t.Fatalf("highlights %s: %v", name, err)
+		}
+		var ids []string
+		for _, it := range items {
+			ids = append(ids, it.Nsuid)
+		}
+		if !has(ids, "3") {
+			t.Errorf("highlights %s lacks the kept game, so it proves nothing: %v", name, ids)
+		}
+		hidden("highlights "+name, ids)
+	}
+	var rank listResp
+	e.get("/v1/ranking", &rank)
+	hidden("ranking", rank.ids())
+	var genres struct {
+		Items []struct {
+			Name  string `json:"name"`
+			Count int    `json:"count"`
+		} `json:"items"`
+	}
+	e.get("/v1/genres", &genres)
+	for _, g := range genres.Items {
+		if g.Name == "Action" && g.Count != 1 {
+			t.Errorf("Action counts %d games, want 1", g.Count)
+		}
+	}
+	var st struct {
+		ProductCount int `json:"product_count"`
+	}
+	e.get("/v1/status/prices", &st)
+	if st.ProductCount != 1 {
+		t.Errorf("product_count = %d, want 1", st.ProductCount)
+	}
+	if code := e.get("/v1/games/1", nil); code != http.StatusNotFound {
+		t.Errorf("removed game page = %d, want 404", code)
+	}
+	var d struct {
+		Addons []struct {
+			Nsuid string `json:"nsuid"`
+		} `json:"addons"`
+	}
+	e.get("/v1/games/3", &d)
+	if len(d.Addons) != 0 {
+		t.Errorf("a removed DLC is still listed: %+v", d.Addons)
 	}
 }

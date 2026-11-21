@@ -19,7 +19,6 @@ Screenshots of the live site on 5 Nov 2026. Game art belongs to Nintendo and the
 Setup: `createdb eshop_radar && for f in backend/db/migrations/*.sql; do psql -d eshop_radar -f $f; done`
 Collect one sweep (from `backend/`): `go run ./cmd/collector` (optional `USER_AGENT`)
 Daily sweep at 01:17 on macOS (from `backend/`, rebuild after collector changes): `go build -o collector ./cmd/collector && cp launchd/com.eshopradar.collector.plist ~/Library/LaunchAgents/ && launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.eshopradar.collector.plist`. It writes to Supabase, reading `SUPABASE_SESSION_URL` from the root `.env`. Log: `~/Library/Logs/eshop-radar-collector.log`; failures are also recorded in `collection_runs`.
-Age ratings (one shot, GitHub only; `TITLEDB_PATH` reads a local copy): `go run ./cmd/importratings`
 API on 127.0.0.1:8088 (`PORT`, `DATABASE_URL`): `go run ./cmd/api`
 App (from `apps/flutter_app/`): `flutter run -d chrome --dart-define=API_BASE=http://127.0.0.1:8088`
 Web build (from `apps/flutter_app/`): `flutter build web --wasm --no-web-resources-cdn --dart-define=API_BASE= --output <dir>`. An empty `API_BASE` makes the app call the address it was loaded from; `--no-web-resources-cdn` keeps the engine on our own server, and the one fallback font the engine asks for at start-up is bundled (`assets/gfonts`), so the only other server the browser contacts is Nintendo's image server: cover art and screenshots load from `img-eshop.cdn.nintendo.net` directly (it sends no CORS header, so on the web they are plain `<img>` elements). The API keeps no art; `/v1/img/<hash>` only redirects there, for app builds from before 1.0.1. Build to a separate `--output` while something is serving from `build/web`.
@@ -44,6 +43,16 @@ The static web app and the API run on Vercel (a free Hobby account, region `sin1
 3. **The Pi** (`backend/deploy/pi/`): from `backend/`, `CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -trimpath -ldflags="-s -w" -o deploy/pi/collector-linux-arm64 ./cmd/collector` (a 32-bit OS needs `GOARCH=arm GOARM=7`), `scp -r deploy/pi pi@<pi>:ringgit-pi`, then over SSH `sudo sh ringgit-pi/install.sh` and put the session pooler `DATABASE_URL` in `/etc/ringgit-radar/env` (root-owned, mode 600, never in the repo). It installs a timer for the sweep at 01:17 Malaysia time (`Persistent=true`) and one for a `pg_dump -Fc` backup at 03:17 that keeps 14 days and fails loudly. Test with `sudo systemctl start ringgit-collector` and `journalctl -u ringgit-collector`. `pg_dump` on the Pi must be at least the server's major version.
 4. **Android.** `(cd apps/flutter_app && flutter build apk --release --dart-define=API_BASE=https://<project>.vercel.app)`, copy `build/app/outputs/flutter-apk/app-release.apk` to `backend/public/ringgit-radar.apk` and deploy again; the site then serves the download, and `/android.html` (from `apps/flutter_app/web/`) is the page to share. Each new web build empties `backend/public`, so copy the APK in again afterwards. The APK is signed with the upload key through `android/key.properties` (see below).
 5. **Until the Pi takes over** the Mac's launchd sweep (above) is the interim. It must never run at the same time as the Pi's timer: `launchctl bootout gui/$(id -u)/com.eshopradar.collector` before the Pi's first night.
+
+## Removing a product
+
+When a rights holder asks for something to be taken down (the app gives `ringgitradar@snitco.com`), run in the Supabase SQL editor:
+
+```
+INSERT INTO removed_products (nsuid, note) VALUES ('<nsuid>', 'request from <who> on <date>');
+```
+
+The product leaves every list, search, highlight, the ranking, genre counts, Wish Lists, add-on lists and the product count at once, and its game page answers 404, on the web and in every app build. Answers the CDN already holds can still show it for up to about 40 minutes. The nightly sweep keeps storing it; nothing is deleted. To undo: `DELETE FROM removed_products WHERE nsuid = '<nsuid>';`.
 
 Android release (from `apps/flutter_app/`): create `android/key.properties` (gitignored) with `storeFile`, `storePassword`, `keyAlias`, `keyPassword` for your upload key, then `flutter build apk --release --dart-define=API_BASE=https://<your site>`. Without that file a release build is signed with the debug key and must not be shared. The app id is `my.ringgitradar.app`; the icons come from `python3 tool/make_icons.py`.
 
