@@ -61,10 +61,44 @@ void main() {
             child: const RinggitRadarApp(),
           ));
           await t.pumpAndSettle();
-          await open(t, lookupAppLocalizations(Locale(code)));
+          final l = lookupAppLocalizations(Locale(code));
+          final semantics = t.ensureSemantics();
+          await open(t, l);
+          if (name != 'Game page') {
+            // the game page has no wordmark; every screen with one says the app is unofficial
+            expect(find.text(l.unofficialLabel), findsOneWidget);
+            expect(find.bySemanticsLabel(l.wordmarkSemantics), findsOneWidget);
+            // the header was once hidden from screen readers by the content's modal barrier
+            expect(find.bySemanticsLabel(l.aboutApp), findsOneWidget);
+          }
+          semantics.dispose();
           expect(t.takeException(), isNull);
         });
       }
+      // the narrowest sidebar: the label sits on its own line under the name, inside the red bar
+      testWidgets('Sidebar label $code x$scale', (t) async {
+        t.view.physicalSize = const Size(840, 900);
+        t.view.devicePixelRatio = 1;
+        t.platformDispatcher.textScaleFactorTestValue = scale;
+        addTearDown(t.view.reset);
+        addTearDown(t.platformDispatcher.clearTextScaleFactorTestValue);
+        SharedPreferences.setMockInitialValues({localeKey: code, noticeSeenKey: true});
+        final prefs = await SharedPreferences.getInstance();
+        await t.pumpWidget(ProviderScope(
+          overrides: [sharedPreferencesProvider.overrideWithValue(prefs), apiClientProvider.overrideWithValue(FakeApiClient())],
+          child: const RinggitRadarApp(),
+        ));
+        await t.pumpAndSettle();
+        final l = lookupAppLocalizations(Locale(code));
+        final name = t.getRect(find.text('Ringgit Radar'));
+        final label = t.getRect(find.text(l.unofficialLabel));
+        expect(label.top, greaterThanOrEqualTo(name.bottom), reason: 'label under the name');
+        expect(name.top, greaterThanOrEqualTo(0));
+        expect(label.bottom, lessThanOrEqualTo(64), reason: 'inside the 64px red bar');
+        expect(t.renderObject<RenderParagraph>(find.text('Ringgit Radar')).didExceedMaxLines, isFalse);
+        expect(t.renderObject<RenderParagraph>(find.text(l.unofficialLabel)).text.style!.fontSize, greaterThanOrEqualTo(12));
+        expect(t.takeException(), isNull);
+      });
     }
   }
 }

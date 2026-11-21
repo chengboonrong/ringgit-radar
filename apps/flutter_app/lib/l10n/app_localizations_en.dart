@@ -590,4 +590,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dataSourcesTitle => 'Where our data comes from';
+
+  @override
+  String get unofficialLabel => 'Unofficial';
+
+  @override
+  String get wordmarkSemantics => 'Ringgit Radar, unofficial';
 }
