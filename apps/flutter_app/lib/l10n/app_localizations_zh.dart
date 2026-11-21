@@ -577,4 +577,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get dataSourcesTitle => '我们的数据从哪里来';
+
+  @override
+  String get unofficialLabel => '非官方';
+
+  @override
+  String get wordmarkSemantics => 'Ringgit Radar，非官方';
 }

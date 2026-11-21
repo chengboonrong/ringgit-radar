@@ -594,4 +594,10 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get dataSourcesTitle => 'Dari mana data kami datang';
+
+  @override
+  String get unofficialLabel => 'Tidak rasmi';
+
+  @override
+  String get wordmarkSemantics => 'Ringgit Radar, tidak rasmi';
 }

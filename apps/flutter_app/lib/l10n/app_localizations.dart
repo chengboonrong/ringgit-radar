@@ -1065,6 +1065,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Where our data comes from'**
   String get dataSourcesTitle;
+
+  /// Small chip next to the Ringgit Radar wordmark at the top of every screen. Keep it very short: about 12 characters at most; it sits beside the name on a 390px phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Unofficial'**
+  String get unofficialLabel;
+
+  /// What screen readers say for the wordmark and its Unofficial chip. Keep the name Ringgit Radar as it is.
+  ///
+  /// In en, this message translates to:
+  /// **'Ringgit Radar, unofficial'**
+  String get wordmarkSemantics;
 }
 
 class _AppLocalizationsDelegate

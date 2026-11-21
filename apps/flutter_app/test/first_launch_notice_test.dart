@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'support/fake_api.dart';
 import 'support/fixtures.dart' as fx;
+import 'support/fonts.dart';
 
 final en = lookupAppLocalizations(const Locale('en'));
 
@@ -32,6 +33,8 @@ String location(WidgetTester t) =>
     GoRouter.of(t.element(find.byType(Scaffold).first)).routerDelegate.currentConfiguration.uri.toString();
 
 void main() {
+  setUpAll(loadAppFonts);
+
   testWidgets('a fresh install shows the notice once', (t) async {
     final prefs = await start(t, {});
     expect(find.text(en.noticeTitle), findsOneWidget);

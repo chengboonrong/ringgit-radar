@@ -774,5 +774,13 @@
   "dataSourcesTitle": "Where our data comes from",
   "@dataSourcesTitle": {
     "description": "Title of the page on where the data comes from; also its link in the first-launch notice and its chip on About. About 28 characters."
+  },
+  "unofficialLabel": "Unofficial",
+  "@unofficialLabel": {
+    "description": "Small chip next to the Ringgit Radar wordmark at the top of every screen. Keep it very short: about 12 characters at most; it sits beside the name on a 390px phone."
+  },
+  "wordmarkSemantics": "Ringgit Radar, unofficial",
+  "@wordmarkSemantics": {
+    "description": "What screen readers say for the wordmark and its Unofficial chip. Keep the name Ringgit Radar as it is."
   }
 }

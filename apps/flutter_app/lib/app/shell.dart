@@ -57,19 +57,38 @@ class AppShell extends StatelessWidget {
   }
 }
 
+/// The name with an "Unofficial" chip: after it in the phone header, under it in the sidebar ([stacked]).
 class _Wordmark extends StatelessWidget {
-  const _Wordmark({this.size = 18});
+  const _Wordmark({this.size = 18, this.stacked = false});
   final double size;
+  final bool stacked;
 
   @override
-  Widget build(BuildContext context) => Row(
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final name = Text('Ringgit Radar', maxLines: 1, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: size, height: 1.1));
+    final label = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+      decoration: BoxDecoration(border: Border.all(color: Colors.white, width: 1), borderRadius: BorderRadius.circular(4)),
+      child: Text(l.unofficialLabel, maxLines: 1, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 12, height: 1.2)),
+    );
+    return Semantics(
+      container: true,
+      header: true,
+      label: l.wordmarkSemantics,
+      excludeSemantics: true,
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(PhosphorIconsBold.target, color: Colors.white, size: size + 4),
           const SizedBox(width: 8),
-          Text('Ringgit Radar', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: size, height: 1.1)),
+          if (stacked)
+            Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [name, const SizedBox(height: 3), label])
+          else ...[name, const SizedBox(width: 8), label],
         ],
-      );
+      ),
+    );
+  }
 }
 
 class _Avatar extends StatelessWidget {
@@ -120,15 +139,12 @@ class _PhoneShell extends StatelessWidget {
                   height: 60,
                   child: Row(
                     children: [
-                      Semantics(
-                        header: true,
-                        child: Container(
-                          height: 44,
-                          padding: const EdgeInsets.only(left: 16, right: 18),
-                          decoration: const BoxDecoration(color: brandRed, borderRadius: BorderRadius.horizontal(right: Radius.circular(4))),
-                          alignment: Alignment.center,
-                          child: const _Wordmark(),
-                        ),
+                      Container(
+                        height: 44,
+                        padding: const EdgeInsets.only(left: 16, right: 18),
+                        decoration: const BoxDecoration(color: brandRed, borderRadius: BorderRadius.horizontal(right: Radius.circular(4))),
+                        alignment: Alignment.center,
+                        child: const _Wordmark(),
                       ),
                       const Spacer(),
                       const _Avatar(),
@@ -137,7 +153,8 @@ class _PhoneShell extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(child: child),
+              // its own semantics container: a route's modal barrier blocks earlier siblings, which hid the header
+              Expanded(child: Semantics(container: true, child: child)),
             ],
           ),
           Positioned(left: 16, right: 16, bottom: 0, child: SafeArea(top: false, minimum: const EdgeInsets.only(bottom: 12), child: _BottomBar(current: current))),
@@ -258,10 +275,7 @@ class _WideShell extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Semantics(
-                  header: true,
-                  child: Container(height: 64, color: brandRed, padding: const EdgeInsets.symmetric(horizontal: 24), alignment: Alignment.centerLeft, child: const _Wordmark(size: 20)),
-                ),
+                Container(height: 64, color: brandRed, padding: const EdgeInsets.symmetric(horizontal: 24), alignment: Alignment.centerLeft, child: const _Wordmark(size: 20, stacked: true)),
                 const SizedBox(height: 12),
                 for (final item in sidebarPrimary) _SideRow(item: item, selected: item.path == current, primary: true),
                 const SizedBox(height: 8),
@@ -273,7 +287,8 @@ class _WideShell extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 76, child: Align(alignment: Alignment.centerRight, child: Padding(padding: const EdgeInsets.only(right: 24), child: const _Avatar(size: 48)))),
-                Expanded(child: child),
+                // its own semantics container: a route's modal barrier blocks earlier siblings, which hid the header
+                Expanded(child: Semantics(container: true, child: child)),
               ],
             ),
           ),
