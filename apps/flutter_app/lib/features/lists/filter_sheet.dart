@@ -28,7 +28,6 @@ Future<ListQuery?> showFilterSheet(BuildContext context, {required ListQuery que
 
 List<(String, String)> _types(AppLocalizations l) => [('game', l.kindGame), ('bundle', l.kindBundle), ('addon', l.kindAddon)];
 const _platforms = [('switch2', 'Switch 2'), ('switch', 'Switch')];
-const _ages = [3, 7, 12, 16, 18];
 const _caps = [2000, 5000, 10000, 20000];
 
 class _FilterSheet extends ConsumerStatefulWidget {
@@ -99,7 +98,6 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
         'platform' => l.platform,
         'genre' => l.genre,
         'price' => l.filterPrice,
-        'age' => l.filterAge,
         _ => l.filter,
       };
 
@@ -113,7 +111,6 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
         row('platform', l.platform, _draft.platforms.length),
         row('genre', l.genre, _draft.genres.length),
         row('price', l.filterPrice, priceCount),
-        row('age', l.filterAge, _draft.ages.length),
       ],
     );
   }
@@ -158,19 +155,6 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
           ),
           error: (e, _) => SizedBox(height: 240, child: ErrorView(error: e, onRetry: () => ref.invalidate(genresProvider))),
         );
-      case 'age':
-        return Column(children: [
-          for (final a in _ages)
-            _CheckRow(
-              label: l.ageN(a),
-              checked: _draft.ages.contains(a),
-              onChanged: () => setState(() => _draft = _draft.copyWith(ages: _draft.ages.contains(a) ? [..._draft.ages.where((e) => e != a)] : [..._draft.ages, a])),
-            ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-            child: Text(l.ageNote, style: Theme.of(context).textTheme.bodySmall),
-          ),
-        ]);
       default:
         return Column(children: [
           if (!widget.spec.lockSale)

@@ -33,12 +33,14 @@ void main() {
         textScaler: label.textScaler,
       )..layout();
       expect(label.size.width, lessThanOrEqualTo(english.width + 1), reason: 'wider than "Add to Wish List"');
+      expect(find.textContaining('PEGI'), findsNothing); // age ratings are no longer shown
     },
     'Filter sheet': (t, l) async {
       await go(t, '/sale');
       await t.tap(find.text(l.filter).first);
       await t.pumpAndSettle();
       expect(find.textContaining(l.filterProductType), findsOneWidget); // the sheet is open
+      expect(find.textContaining(RegExp(r'\bAge\b|年龄|umur', caseSensitive: false)), findsNothing); // no age filter
     },
     'Settings': (t, l) async => go(t, '/about'),
   };

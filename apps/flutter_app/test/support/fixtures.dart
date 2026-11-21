@@ -56,6 +56,4 @@ GameDetail detailOf(Game g) => GameDetail(
       firstObservedAt: DateTime.utc(2026, 10, 1),
       lowest: Lowest(priceMinor: 26320, since: DateTime.utc(2026, 11, 1), isSale: true),
       addons: [games[2]],
-      age: 12,
-      ageDescriptors: const ['Violence'],
     );

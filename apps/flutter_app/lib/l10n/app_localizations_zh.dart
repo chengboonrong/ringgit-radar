@@ -213,14 +213,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get detailsHeading => '详细信息';
 
   @override
-  String get noAgeRating => '未找到年龄分级';
-
-  @override
-  String ageRating(int age) {
-    return '年龄分级：$age（UK PEGI）';
-  }
-
-  @override
   String get onWishList => '已在愿望单';
 
   @override
@@ -276,9 +268,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get filterPrice => '特价 / 价格上限';
 
   @override
-  String get filterAge => '年龄分级';
-
-  @override
   String get filter => '筛选';
 
   @override
@@ -290,14 +279,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String filterSelected(int count) {
     return '筛选，已选 $count 项';
   }
-
-  @override
-  String ageN(int age) {
-    return '年龄 $age（UK PEGI）';
-  }
-
-  @override
-  String get ageNote => '未找到分级的游戏会留在列表里，直到你选择年龄。';
 
   @override
   String get onSaleOnly => '只看特价';

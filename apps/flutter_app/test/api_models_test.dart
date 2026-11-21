@@ -18,8 +18,7 @@ void main() {
   group('list query to request', () {
     final api = ApiClient();
 
-    test('an age filter is sent as a comma list, and left out when empty', () {
-      expect(api.params(const ListQuery(ages: [12, 16]), showAll: false)['age'], '12,16');
+    test('a list request never sends an age filter', () {
       expect(api.params(const ListQuery(), showAll: false).containsKey('age'), isFalse);
     });
 
@@ -36,16 +35,11 @@ void main() {
   group('game json', () {
     const base = {'nsuid': '1', 'title': 'T', 'publisher': 'P', 'platform': 'switch2', 'category': 'game', 'price': null};
 
-    test('a game with no rating has a null age and null descriptors', () {
-      final g = Game.fromJson({...base, 'age': null, 'age_descriptors': null});
-      expect(g.age, isNull);
-      expect(g.ageDescriptors, isNull);
-    });
-
-    test('a rated game keeps its age and descriptors', () {
-      final g = Game.fromJson({...base, 'age': 12, 'age_descriptors': ['Violence', 'Bad Language']});
-      expect(g.age, 12);
-      expect(g.ageDescriptors, ['Violence', 'Bad Language']);
+    test('an older answer that still carries an age rating parses, and the rating is dropped', () {
+      // the CDN can serve answers from before ratings were removed for a while after the release
+      final g = Game.fromJson({...base, 'age': 12, 'age_descriptors': ['Violence']});
+      expect(g.nsuid, '1');
+      expect(g.toJson().containsKey('age'), isFalse);
     });
 
     test('money stays integer sen through json', () {

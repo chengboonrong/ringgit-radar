@@ -299,19 +299,6 @@
   "@detailsHeading": {
     "description": "Section heading on a game page above the details table. About 20 characters."
   },
-  "noAgeRating": "No age rating found",
-  "@noAgeRating": {
-    "description": "Line on a game page when the store gives no age rating."
-  },
-  "ageRating": "Age rating: {age} (UK PEGI)",
-  "@ageRating": {
-    "description": "Line on a game page: the PEGI age rating, e.g. 'Age rating: 12 (UK PEGI)'. Keep 'UK PEGI'.",
-    "placeholders": {
-      "age": {
-        "type": "int"
-      }
-    }
-  },
   "onWishList": "On Wish List",
   "@onWishList": {
     "description": "Button on a game page when the game is saved. About 16 characters, next to a heart icon."
@@ -379,10 +366,6 @@
   "@filterPrice": {
     "description": "Filter section name: on-sale switch and price caps. About 22 characters."
   },
-  "filterAge": "Age Rating",
-  "@filterAge": {
-    "description": "Filter section name: PEGI ages. About 22 characters."
-  },
   "filter": "Filter",
   "@filter": {
     "description": "Filter button on list pages and the filter sheet's header. About 10 characters, next to an icon."
@@ -404,19 +387,6 @@
         "type": "int"
       }
     }
-  },
-  "ageN": "Age {age} (UK PEGI)",
-  "@ageN": {
-    "description": "Age filter option, e.g. 'Age 12 (UK PEGI)'. Keep 'UK PEGI'.",
-    "placeholders": {
-      "age": {
-        "type": "int"
-      }
-    }
-  },
-  "ageNote": "Games with no rating found stay in the list until you pick an age.",
-  "@ageNote": {
-    "description": "Small note under the age options. Can wrap."
   },
   "onSaleOnly": "On sale only",
   "@onSaleOnly": {

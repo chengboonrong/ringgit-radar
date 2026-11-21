@@ -53,7 +53,6 @@ int activeFilters(ListQuery q, ListSpec spec) {
   if (q.platforms.isNotEmpty) n++;
   if (q.genres.isNotEmpty) n++;
   if (q.types.length != 1 || q.types.first != 'game') n++;
-  if (q.ages.isNotEmpty) n++;
   if (q.sale && !spec.lockSale) n++;
   if (q.maxPrice != null) n++;
   return n;

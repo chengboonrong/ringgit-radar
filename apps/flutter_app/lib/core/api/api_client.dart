@@ -65,7 +65,6 @@ class ApiClient {
         if (q.platforms.isNotEmpty) 'platform': q.platforms.join(','),
         if (q.types.isNotEmpty) 'type': q.types.join(','),
         if (q.genres.isNotEmpty) 'genre': q.genres.join(','),
-        if (q.ages.isNotEmpty) 'age': q.ages.join(','),
         if (q.sale) 'sale': '1',
         if (q.maxPrice != null) 'max_price': q.maxPrice,
         'sort': q.sort,
