@@ -9,6 +9,7 @@ import '../../core/storage/prefs.dart';
 import '../../core/widgets/error_view.dart';
 import '../../core/widgets/page_bits.dart';
 import '../lists/game_grid.dart';
+import '../../l10n/l10n.dart';
 
 class WishlistPage extends ConsumerStatefulWidget {
   const WishlistPage({super.key});
@@ -37,10 +38,10 @@ class _WishlistPageState extends ConsumerState<WishlistPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const PageTitle('Wish List'),
+                PageTitle(context.l10n.navWishList),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12),
-                  child: Align(alignment: Alignment.centerLeft, child: OutlineChip(label: 'On Sale', selected: _onSaleOnly, onTap: () => setState(() => _onSaleOnly = !_onSaleOnly))),
+                  child: Align(alignment: Alignment.centerLeft, child: OutlineChip(label: context.l10n.onSaleChip, selected: _onSaleOnly, onTap: () => setState(() => _onSaleOnly = !_onSaleOnly))),
                 ),
               ],
             ),
@@ -55,9 +56,9 @@ class _WishlistPageState extends ConsumerState<WishlistPage> {
           data: (all) {
             final shown = _onSaleOnly ? all.where((g) => g.onSale).toList() : all;
             if (shown.isEmpty) {
-              return const SliverFillRemaining(
+              return SliverFillRemaining(
                 hasScrollBody: false,
-                child: Center(child: Padding(padding: EdgeInsets.all(32), child: Text('None of the games on your Wish List are on sale right now.', textAlign: TextAlign.center))),
+                child: Center(child: Padding(padding: const EdgeInsets.all(32), child: Text(context.l10n.noneOnSale, textAlign: TextAlign.center))),
               );
             }
             return SliverPadding(
@@ -133,10 +134,10 @@ class _EmptyWishlist extends StatelessWidget {
               const SizedBox(height: 20),
               Semantics(
                 header: true,
-                child: Text("You can add software you're interested in to your Wish List!", textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500, height: 1.4)),
+                child: Text(context.l10n.wishEmptyTitle, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500, height: 1.4)),
               ),
               const SizedBox(height: 10),
-              Text('Tap the heart on any game, in a list or on its page, to add it here.', textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: tk.hint)),
+              Text(context.l10n.wishEmptyHint, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: tk.hint)),
             ],
           ),
         ),

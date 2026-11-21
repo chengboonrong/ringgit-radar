@@ -7,6 +7,7 @@ import '../../core/widgets/error_view.dart';
 import '../../core/widgets/page_bits.dart';
 import '../../core/widgets/ring.dart';
 import '../lists/game_grid.dart';
+import '../../l10n/l10n.dart';
 
 class RankingPage extends ConsumerStatefulWidget {
   const RankingPage({super.key});
@@ -35,7 +36,7 @@ class _RankingPageState extends ConsumerState<RankingPage> with SingleTickerProv
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(padding: EdgeInsets.symmetric(horizontal: pad), child: const PageTitle('Ranking')),
+        Padding(padding: EdgeInsets.symmetric(horizontal: pad), child: PageTitle(context.l10n.navRanking)),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: pad),
           child: Row(
@@ -63,7 +64,7 @@ class _RankingPageState extends ConsumerState<RankingPage> with SingleTickerProv
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(pad, 10, pad, 6),
-          child: Text('Ranked by ringgit saved', style: Theme.of(context).textTheme.bodySmall),
+          child: Text(context.l10n.rankedBySaved, style: Theme.of(context).textTheme.bodySmall),
         ),
         Expanded(
           child: TabBarView(
@@ -93,7 +94,7 @@ class _RankedGrid extends ConsumerWidget {
         SliverPadding(padding: EdgeInsets.fromLTRB(pad, 4, pad, bottom), sliver: const GameGridSliver(games: [], heroScope: 'rank', skeletons: 8)),
       ]),
       data: (games) => games.isEmpty
-          ? const Center(child: Padding(padding: EdgeInsets.all(32), child: Text('Nothing is on sale for this console right now.', textAlign: TextAlign.center)))
+          ? Center(child: Padding(padding: const EdgeInsets.all(32), child: Text(context.l10n.nothingOnSaleConsole, textAlign: TextAlign.center)))
           : CustomScrollView(slivers: [
               SliverPadding(
                 padding: EdgeInsets.fromLTRB(pad, 4, pad, bottom),

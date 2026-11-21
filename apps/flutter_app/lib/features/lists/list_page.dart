@@ -4,12 +4,13 @@ import '../../core/api/models.dart';
 import '../../core/widgets/page_bits.dart';
 import 'game_list_view.dart';
 import 'list_spec.dart';
+import '../../l10n/l10n.dart';
 
 /// A titled, filterable, sortable list over /v1/games. Recent Releases, Coming Soon and Sale use it.
 class ListPage extends StatefulWidget {
   const ListPage({super.key, required this.title, required this.spec, required this.scope});
 
-  final String title;
+  final String Function(AppLocalizations) title;
   final ListSpec spec;
   final String scope;
 
@@ -27,8 +28,8 @@ class _ListPageState extends State<ListPage> {
       query: _query,
       onQuery: (q) => setState(() => _query = q),
       heroScope: widget.scope,
-      leading: [PageTitle(widget.title)],
-      emptyText: 'No titles match these filters. Clear a filter to see more.',
+      leading: [PageTitle(widget.title(context.l10n))],
+      emptyText: context.l10n.noFilterMatch,
     );
   }
 }

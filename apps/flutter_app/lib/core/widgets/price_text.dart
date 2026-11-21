@@ -23,8 +23,8 @@ class PriceText extends StatelessWidget {
   final String? note;
 
   /// What a screen reader says, built from the same integers.
-  static String describe(Price p) => p.onSale
-      ? 'Sale price ${plainMoney(p.currentMinor)}, was ${plainMoney(p.regularMinor)}, ${p.percentOff} percent off'
+  static String describe(Price p, AppLocalizations l) => p.onSale
+      ? l.priceOnSaleDescription(plainMoney(p.currentMinor), plainMoney(p.regularMinor), p.percentOff)
       : plainMoney(p.currentMinor);
 
   @override
@@ -42,7 +42,7 @@ class PriceText extends StatelessWidget {
       ),
     );
     return Semantics(
-      label: describe(price),
+      label: describe(price, context.l10n),
       child: ExcludeSemantics(
         child: price.onSale
             ? Column(

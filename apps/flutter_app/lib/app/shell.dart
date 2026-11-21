@@ -4,22 +4,23 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../core/widgets/ring.dart';
 import 'theme.dart';
+import '../l10n/l10n.dart';
 
 class NavItem {
   const NavItem(this.path, this.label, this.icon, this.iconFilled);
   final String path;
-  final String label;
+  final String Function(AppLocalizations) label;
   final IconData icon;
   final IconData iconFilled;
 }
 
-final _highlights = NavItem('/', 'Highlights', PhosphorIconsRegular.star, PhosphorIconsFill.star);
-final _search = NavItem('/search', 'Search', PhosphorIconsRegular.magnifyingGlass, PhosphorIconsFill.magnifyingGlass);
-final _wish = NavItem('/wish-list', 'Wish List', PhosphorIconsRegular.heart, PhosphorIconsFill.heart);
-final _sale = NavItem('/sale', 'Sale', PhosphorIconsRegular.tag, PhosphorIconsFill.tag);
-final _ranking = NavItem('/ranking', 'Ranking', PhosphorIconsRegular.listNumbers, PhosphorIconsFill.listNumbers);
-final _recent = NavItem('/recent', 'Recent Releases', PhosphorIconsRegular.calendarCheck, PhosphorIconsFill.calendarCheck);
-final _soon = NavItem('/coming-soon', 'Coming Soon', PhosphorIconsRegular.hourglass, PhosphorIconsFill.hourglass);
+final _highlights = NavItem('/', (l) => l.navHighlights, PhosphorIconsRegular.star, PhosphorIconsFill.star);
+final _search = NavItem('/search', (l) => l.navSearch, PhosphorIconsRegular.magnifyingGlass, PhosphorIconsFill.magnifyingGlass);
+final _wish = NavItem('/wish-list', (l) => l.navWishList, PhosphorIconsRegular.heart, PhosphorIconsFill.heart);
+final _sale = NavItem('/sale', (l) => l.navSale, PhosphorIconsRegular.tag, PhosphorIconsFill.tag);
+final _ranking = NavItem('/ranking', (l) => l.navRanking, PhosphorIconsRegular.listNumbers, PhosphorIconsFill.listNumbers);
+final _recent = NavItem('/recent', (l) => l.navRecent, PhosphorIconsRegular.calendarCheck, PhosphorIconsFill.calendarCheck);
+final _soon = NavItem('/coming-soon', (l) => l.navComingSoon, PhosphorIconsRegular.hourglass, PhosphorIconsFill.hourglass);
 
 /// Phone bar order.
 final phoneNav = [_highlights, _search, _sale, _ranking, _wish];
@@ -80,7 +81,7 @@ class _Avatar extends StatelessWidget {
     final tk = context.tokens;
     return RingTarget(
       radius: size / 2,
-      label: 'About Ringgit Radar',
+      label: context.l10n.aboutApp,
       onTap: () => context.go('/about'),
       child: Container(
         width: size,
@@ -162,7 +163,7 @@ class _BottomBar extends StatelessWidget {
       ),
       child: Semantics(
         container: true,
-        label: 'Sections',
+        label: context.l10n.sections,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Row(
@@ -189,7 +190,7 @@ class _BarItem extends StatelessWidget {
     return RingTarget(
       radius: 26,
       selected: selected,
-      label: item.label,
+      label: item.label(context.l10n),
       onTap: () => context.go(item.path),
       child: SizedBox(
         height: 64,
@@ -220,7 +221,7 @@ class _BarItem extends StatelessWidget {
                     const SizedBox(height: 3),
                     FittedBox(
                       fit: BoxFit.scaleDown,
-                      child: Text(item.label,
+                      child: Text(item.label(context.l10n),
                           maxLines: 1,
                           style: TextStyle(fontSize: 11, height: 1.1, fontWeight: selected ? FontWeight.w700 : FontWeight.w500, color: tk.text)),
                     ),
@@ -297,7 +298,7 @@ class _SideRow extends StatelessWidget {
       child: RingTarget(
         radius: 10,
         selected: selected,
-        label: item.label,
+        label: item.label(context.l10n),
         onTap: () => context.go(item.path),
         child: Container(
           height: primary ? 60 : 50,
@@ -313,7 +314,7 @@ class _SideRow extends StatelessWidget {
                 ),
                 if (primary) ...[Icon(selected ? item.iconFilled : item.icon, size: 26, color: tk.text), const SizedBox(width: 16)] else const SizedBox(width: 42),
                 Expanded(
-                  child: Text(item.label,
+                  child: Text(item.label(context.l10n),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: primary ? 20 : 17, fontWeight: selected ? FontWeight.w700 : FontWeight.w400, color: tk.text)),

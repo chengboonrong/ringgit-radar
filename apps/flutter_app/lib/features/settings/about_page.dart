@@ -23,6 +23,8 @@ class AboutPage extends ConsumerWidget {
     final status = ref.watch(statusProvider);
     final mode = ref.watch(themeModeProvider);
     final showAll = ref.watch(showAllProvider);
+    final locale = ref.watch(localeProvider);
+    final l = context.l10n;
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(pad, 4, pad, width < 840 ? 120 : 32),
       child: Align(
@@ -32,41 +34,55 @@ class AboutPage extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const PageTitle('About'),
-              Text('Ringgit Radar is an independent, unofficial app. Not affiliated with or endorsed by Nintendo.', style: Theme.of(context).textTheme.bodyLarge),
+              PageTitle(l.aboutTitle),
+              Text(l.aboutUnofficial, style: Theme.of(context).textTheme.bodyLarge),
               const SizedBox(height: 8),
-              Text('It keeps its own record of Malaysian eShop prices in ringgit. To buy a game, use your Switch.', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: tk.hint)),
+              Text(l.aboutRecord, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: tk.hint)),
               const SizedBox(height: 16),
-              Align(alignment: Alignment.centerLeft, child: OutlineChip(label: 'Privacy', onTap: () => context.go('/privacy'))),
-              const SectionHeading('Data'),
+              Align(alignment: Alignment.centerLeft, child: OutlineChip(label: l.privacy, onTap: () => context.go('/privacy'))),
+              SectionHeading(l.dataHeading),
               status.when(
                 loading: () => const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [SkeletonLine(width: 240), SizedBox(height: 12), SkeletonLine(width: 180)]),
                 error: (e, _) => SizedBox(height: 180, child: ErrorView(error: e, onRetry: () => ref.invalidate(statusProvider))),
                 data: (s) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _Fact('Prices last checked', s.lastRunAt == null ? 'Not yet' : '${longDateTimeMyt(s.lastRunAt!, context.l10n.localeName)} (Malaysia time)'),
-                    _Fact('Tracking began', s.historySince == null ? 'Not yet' : longDateMyt(s.historySince!, context.l10n.localeName)),
-                    _Fact('Products tracked', '${s.productCount}'),
+                    _Fact(l.pricesLastChecked, s.lastRunAt == null ? l.notYet : l.malaysiaTime(longDateTimeMyt(s.lastRunAt!, l.localeName))),
+                    _Fact(l.trackingBeganLabel, s.historySince == null ? l.notYet : longDateMyt(s.historySince!, l.localeName)),
+                    _Fact(l.productsTracked, '${s.productCount}'),
                   ],
                 ),
               ),
-              const SectionHeading('Appearance'),
+              SectionHeading(l.appearanceHeading),
               Row(
                 children: [
-                  for (final (m, name) in [(ThemeMode.system, 'System'), (ThemeMode.light, 'Light'), (ThemeMode.dark, 'Dark')]) ...[
+                  for (final (m, name) in [(ThemeMode.system, l.themeSystem), (ThemeMode.light, l.themeLight), (ThemeMode.dark, l.themeDark)]) ...[
                     OutlineChip(label: name, selected: mode == m, onTap: () => ref.read(themeModeProvider.notifier).set(m)),
                     const SizedBox(width: 10),
                   ],
                 ],
               ),
-              const SectionHeading('Lists'),
+              SectionHeading(l.languageHeading),
+              // each language is named in itself, so a reader can find their own whatever the app shows now
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: [
+                  for (final (code, name) in [(null, l.appLanguageSystem), ('en', l.languageEnglish), ('zh', l.languageChinese), ('ms', l.languageMalay)])
+                    OutlineChip(
+                      label: name,
+                      selected: locale?.languageCode == code,
+                      onTap: () => ref.read(localeProvider.notifier).set(code == null ? null : Locale(code)),
+                    ),
+                ],
+              ),
+              SectionHeading(l.listsHeading),
               MergeSemantics(
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
                   minTileHeight: 56,
-                  title: const Text('Show all titles'),
-                  subtitle: Text('Also lists titles hidden by default, such as ones flagged by keyword.', style: TextStyle(color: tk.hint, fontSize: 13)),
+                  title: Text(l.showAllTitles),
+                  subtitle: Text(l.showAllSubtitle, style: TextStyle(color: tk.hint, fontSize: 13)),
                   trailing: Switch(value: showAll, onChanged: (v) => ref.read(showAllProvider.notifier).set(v)),
                   onTap: () => ref.read(showAllProvider.notifier).set(!showAll),
                 ),

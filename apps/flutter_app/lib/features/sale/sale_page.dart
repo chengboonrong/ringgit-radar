@@ -7,5 +7,5 @@ class SalePage extends StatelessWidget {
   const SalePage({super.key});
 
   @override
-  Widget build(BuildContext context) => const ListPage(title: 'Sale', spec: ListSpec.sale, scope: 'sale');
+  Widget build(BuildContext context) => ListPage(title: (l) => l.navSale, spec: ListSpec.sale, scope: 'sale');
 }

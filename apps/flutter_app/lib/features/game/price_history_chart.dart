@@ -36,7 +36,7 @@ class PriceHistoryChart extends StatelessWidget {
     final maxY = hi / 100.0;
     final maxX = spots.last.x <= 0 ? 1.0 : spots.last.x;
     final summary =
-        'Price history from ${longDateMyt(first, context.l10n.localeName)}: ${history.map((h) => plainMoney(h.priceMinor)).join(', then ')}.';
+        context.l10n.priceHistorySummary(longDateMyt(first, context.l10n.localeName), history.map((h) => plainMoney(h.priceMinor)).join(context.l10n.priceHistoryJoiner));
 
     TextStyle label() =>
         TextStyle(fontFamily: fontFamily, fontSize: 11, color: tk.hint);

@@ -73,5 +73,720 @@
   "priceUnavailable": "Price unavailable",
   "@priceUnavailable": {
     "description": "Stands where a price would be when the store gives none for a released game. About 18 characters, right-aligned on a card."
+  },
+  "navHighlights": "Highlights",
+  "@navHighlights": {
+    "description": "Bottom-bar tab, sidebar item and section name for the home page of picked deals. Bottom bar is tight: about 10 characters."
+  },
+  "navSearch": "Search",
+  "@navSearch": {
+    "description": "Bottom-bar tab and sidebar item. About 10 characters."
+  },
+  "navWishList": "Wish List",
+  "@navWishList": {
+    "description": "Bottom-bar tab, sidebar item and page title for the device-local list of games the user saved. About 10 characters in the bar."
+  },
+  "navSale": "Sale",
+  "@navSale": {
+    "description": "Bottom-bar tab, sidebar item and page title: all games on sale now. About 10 characters."
+  },
+  "navRanking": "Ranking",
+  "@navRanking": {
+    "description": "Bottom-bar tab, sidebar item and page title: games on sale ranked by ringgit saved. About 10 characters."
+  },
+  "navRecent": "Recent Releases",
+  "@navRecent": {
+    "description": "Sidebar item, chip on Highlights and page title: games released in the last 30 days. About 20 characters."
+  },
+  "navComingSoon": "Coming Soon",
+  "@navComingSoon": {
+    "description": "Sidebar item, chip on Highlights and page title: games not released yet. About 20 characters."
+  },
+  "aboutApp": "About Ringgit Radar",
+  "@aboutApp": {
+    "description": "Screen-reader label of the round profile button that opens the About page. 'Ringgit Radar' is the app's name, never translated."
+  },
+  "sections": "Sections",
+  "@sections": {
+    "description": "Screen-reader label for the bottom navigation bar."
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Button after an error: try loading again. About 10 characters."
+  },
+  "kindBundle": "Bundle",
+  "@kindBundle": {
+    "description": "Product type: several products sold together. Shown on cards, filters and the game page. About 10 characters."
+  },
+  "kindAddon": "Add-on",
+  "@kindAddon": {
+    "description": "Product type: downloadable content for a game. About 10 characters."
+  },
+  "kindGame": "Game",
+  "@kindGame": {
+    "description": "Product type: a full game. About 10 characters."
+  },
+  "statusPreorder": "Pre-order",
+  "@statusPreorder": {
+    "description": "Small green chip on a game card: the game can be ordered before release. About 10 characters."
+  },
+  "statusNew": "NEW",
+  "@statusNew": {
+    "description": "Small amber chip on a game card: released in the last 30 days. Capitals in English. About 6 characters."
+  },
+  "rankN": "Rank {rank}",
+  "@rankN": {
+    "description": "Screen-reader text on a ranking card, e.g. 'Rank 3'.",
+    "placeholders": {
+      "rank": {
+        "type": "int"
+      }
+    }
+  },
+  "endsOn": "Ends {date}",
+  "@endsOn": {
+    "description": "Small note on a sale card left of the struck price: when the sale ends, e.g. 'Ends 15 Nov'. Very tight: about 12 characters including the date.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "wishRemove": "Remove {title} from Wish List",
+  "@wishRemove": {
+    "description": "Screen-reader label of the heart button on a card when the game is saved. title is the game title in English.",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "wishAdd": "Add {title} to Wish List",
+  "@wishAdd": {
+    "description": "Screen-reader label of the heart button on a card when the game is not saved. title is the game title in English.",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "priceOnSaleDescription": "Sale price {now}, was {was}, {percent} percent off",
+  "@priceOnSaleDescription": {
+    "description": "What a screen reader says for a price on sale. now and was are money like 'RM 64.80'.",
+    "placeholders": {
+      "now": {
+        "type": "String"
+      },
+      "was": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Screen-reader label of the back arrow on a game page."
+  },
+  "mediaPosition": "Media, {index} of {count}",
+  "@mediaPosition": {
+    "description": "Screen-reader label of the screenshot carousel, e.g. 'Media, 2 of 5'.",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nextImage": "Next image",
+  "@nextImage": {
+    "description": "Screen-reader label of the carousel's forward arrow."
+  },
+  "previousImage": "Previous image",
+  "@previousImage": {
+    "description": "Screen-reader label of the carousel's back arrow."
+  },
+  "noPriceYet": "No price recorded yet.",
+  "@noPriceYet": {
+    "description": "Price history section when we have no observation yet. A full sentence."
+  },
+  "trackingBeganOnlyPrice": "Tracking began {date}. We've only seen this price so far.",
+  "@trackingBeganOnlyPrice": {
+    "description": "Price history section with a single observation. 'We' is Ringgit Radar: only our own record, not the store's. A full sentence, can wrap.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "lowestSeenSince": "Lowest we've seen: {price} since {date}",
+  "@lowestSeenSince": {
+    "description": "Price history headline: the lowest price in OUR OWN record and since when it has been seen. Must keep 'we've seen' (our history only, not an all-time low). price is money like 'RM 64.80'. Can wrap.",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "trackingBegan": "Tracking began {date}",
+  "@trackingBegan": {
+    "description": "Small line under the lowest price: the date our own record of this game starts.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "historyHeading": "What our history shows",
+  "@historyHeading": {
+    "description": "Section heading on a game page above the price history. 'Our' is Ringgit Radar's own record. About 30 characters."
+  },
+  "priceHistorySummary": "Price history from {date}: {prices}.",
+  "@priceHistorySummary": {
+    "description": "What a screen reader says for the price chart. prices is a list of money values joined by priceHistoryJoiner.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "prices": {
+        "type": "String"
+      }
+    }
+  },
+  "priceHistoryJoiner": ", then ",
+  "@priceHistoryJoiner": {
+    "description": "Joins prices in the chart's screen-reader text: 'RM 99.00, then RM 59.40'. Keep the surrounding spaces as your language needs."
+  },
+  "descriptionHeading": "Description",
+  "@descriptionHeading": {
+    "description": "Section heading on a game page above the store's description (which stays in English). About 20 characters."
+  },
+  "dlcHeading": "Downloadable Content",
+  "@dlcHeading": {
+    "description": "Section heading on a game page above its add-ons. About 25 characters."
+  },
+  "publisher": "Publisher",
+  "@publisher": {
+    "description": "Label in the game page's details table. About 15 characters."
+  },
+  "platform": "Platform",
+  "@platform": {
+    "description": "Label in the details table and filter section: Switch 2 or Switch. About 15 characters."
+  },
+  "productTypeDetail": "Product type",
+  "@productTypeDetail": {
+    "description": "Label in the game page's details table: game, bundle or add-on. About 15 characters."
+  },
+  "releaseDate": "Release date",
+  "@releaseDate": {
+    "description": "Label in the game page's details table. About 15 characters."
+  },
+  "genre": "Genre",
+  "@genre": {
+    "description": "Label in the details table, filter section and section heading on Search. About 15 characters."
+  },
+  "players": "Players",
+  "@players": {
+    "description": "Label in the details table: number of players. About 15 characters."
+  },
+  "detailsHeading": "Details",
+  "@detailsHeading": {
+    "description": "Section heading on a game page above the details table. About 20 characters."
+  },
+  "noAgeRating": "No age rating found",
+  "@noAgeRating": {
+    "description": "Line on a game page when the store gives no age rating."
+  },
+  "ageRating": "Age rating: {age} (UK PEGI)",
+  "@ageRating": {
+    "description": "Line on a game page: the PEGI age rating, e.g. 'Age rating: 12 (UK PEGI)'. Keep 'UK PEGI'.",
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "onWishList": "On Wish List",
+  "@onWishList": {
+    "description": "Button on a game page when the game is saved. About 16 characters, next to a heart icon."
+  },
+  "addToWishList": "Add to Wish List",
+  "@addToWishList": {
+    "description": "Button on a game page when the game is not saved. About 16 characters, next to a heart icon."
+  },
+  "buyOnSwitch": "Buy on your Switch's Nintendo eShop.",
+  "@buyOnSwitch": {
+    "description": "Small note under the price: the app sells nothing, purchases happen on the console. Must not suggest the app is Nintendo. One short line."
+  },
+  "biggestSwitch2Savings": "Biggest Switch 2 savings",
+  "@biggestSwitch2Savings": {
+    "description": "Section heading on Highlights: Switch 2 games with the most ringgit saved. Keep 'Switch 2'. About 30 characters."
+  },
+  "endingSoonHeading": "Ending Soon",
+  "@endingSoonHeading": {
+    "description": "Section heading on Highlights: sales that end soonest. About 20 characters."
+  },
+  "newSales": "New Sales",
+  "@newSales": {
+    "description": "Section heading on Highlights: sales that started most recently. About 20 characters."
+  },
+  "upToRm": "Up to RM {amount}",
+  "@upToRm": {
+    "description": "Price-cap filter option, e.g. 'Up to RM 20'. Keep 'RM' as is, never translate it.",
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "showResults": "{count, plural, =0{Show 0 results} =1{Show 1 result} other{Show {count} results}}",
+  "@showResults": {
+    "description": "Big red button at the bottom of the filter sheet: apply the filters, with how many games they give. About 22 characters.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "showResultsNoCount": "Show results",
+  "@showResultsNoCount": {
+    "description": "The same button while the count is loading. About 22 characters."
+  },
+  "closeFilters": "Close filters",
+  "@closeFilters": {
+    "description": "Screen-reader label of the X in the filter sheet."
+  },
+  "backToFilters": "Back to filters",
+  "@backToFilters": {
+    "description": "Screen-reader label of the back arrow inside a filter section."
+  },
+  "clear": "Clear",
+  "@clear": {
+    "description": "Text button in the filter sheet's header: reset every filter. About 8 characters."
+  },
+  "filterProductType": "Product Type",
+  "@filterProductType": {
+    "description": "Filter section name (a row in the sheet and its header). About 22 characters."
+  },
+  "filterPrice": "On Sale / Price Cap",
+  "@filterPrice": {
+    "description": "Filter section name: on-sale switch and price caps. About 22 characters."
+  },
+  "filterAge": "Age Rating",
+  "@filterAge": {
+    "description": "Filter section name: PEGI ages. About 22 characters."
+  },
+  "filter": "Filter",
+  "@filter": {
+    "description": "Filter button on list pages and the filter sheet's header. About 10 characters, next to an icon."
+  },
+  "filterCount": "Filter ({count})",
+  "@filterCount": {
+    "description": "Filter button when filters are set, e.g. 'Filter (2)'. About 12 characters.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filterSelected": "Filter, {count} selected",
+  "@filterSelected": {
+    "description": "Screen-reader label of the filter button when filters are set.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ageN": "Age {age} (UK PEGI)",
+  "@ageN": {
+    "description": "Age filter option, e.g. 'Age 12 (UK PEGI)'. Keep 'UK PEGI'.",
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "ageNote": "Games with no rating found stay in the list until you pick an age.",
+  "@ageNote": {
+    "description": "Small note under the age options. Can wrap."
+  },
+  "onSaleOnly": "On sale only",
+  "@onSaleOnly": {
+    "description": "Filter option: show only games on sale. About 20 characters."
+  },
+  "nothingHere": "Nothing here yet.",
+  "@nothingHere": {
+    "description": "A list with no games and no filters set."
+  },
+  "retryLoadingMore": "Retry loading more",
+  "@retryLoadingMore": {
+    "description": "Button at the end of a list when the next page failed to load. About 22 characters."
+  },
+  "sortOrder": "Sort order",
+  "@sortOrder": {
+    "description": "Tooltip of the sort dropdown."
+  },
+  "sortCurrent": "Sort: {label}",
+  "@sortCurrent": {
+    "description": "Screen-reader label of the sort dropdown, e.g. 'Sort: Biggest savings'.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "sortSavings": "Biggest savings",
+  "@sortSavings": {
+    "description": "Sort option: most ringgit saved first. About 18 characters (shown in a dropdown)."
+  },
+  "sortDiscount": "Biggest discount",
+  "@sortDiscount": {
+    "description": "Sort option: highest percentage off first. About 18 characters."
+  },
+  "sortPrice": "Lowest price",
+  "@sortPrice": {
+    "description": "Sort option: cheapest first. About 18 characters."
+  },
+  "sortNewest": "Newest",
+  "@sortNewest": {
+    "description": "Sort option: latest release first. About 18 characters."
+  },
+  "sortEnding": "Ending soon",
+  "@sortEnding": {
+    "description": "Sort option: sales that end soonest first. About 18 characters."
+  },
+  "sortTitle": "Title",
+  "@sortTitle": {
+    "description": "Sort option: alphabetical by game title. About 18 characters."
+  },
+  "sortSoonest": "Soonest",
+  "@sortSoonest": {
+    "description": "Sort option on Coming Soon: earliest release date first. About 18 characters."
+  },
+  "saleHint": "Sale end dates are shown in Malaysia time.",
+  "@saleHint": {
+    "description": "Small note at the top of the Sale list."
+  },
+  "comingSoonHint": "Release dates come from the store listing.",
+  "@comingSoonHint": {
+    "description": "Small note at the top of Coming Soon: we copy the dates, we don't promise them."
+  },
+  "noFilterMatch": "No titles match these filters. Clear a filter to see more.",
+  "@noFilterMatch": {
+    "description": "A filtered list with no games."
+  },
+  "rankedBySaved": "Ranked by ringgit saved",
+  "@rankedBySaved": {
+    "description": "Small note under the Ranking tabs: the order is by ringgit saved in the sale, nothing else (not sales or popularity)."
+  },
+  "nothingOnSaleConsole": "Nothing is on sale for this console right now.",
+  "@nothingOnSaleConsole": {
+    "description": "Ranking tab with no games on sale."
+  },
+  "someProductsMissing": "Some products may not be included.",
+  "@someProductsMissing": {
+    "description": "Small note on Search: our catalogue may not hold every product."
+  },
+  "noTitlesFound": "No titles found. Try another keyword, or clear a filter.",
+  "@noTitlesFound": {
+    "description": "Search with no results."
+  },
+  "searchHint": "Search by keyword/title",
+  "@searchHint": {
+    "description": "Placeholder text and screen-reader label of the search field. About 28 characters."
+  },
+  "clearSearch": "Clear search",
+  "@clearSearch": {
+    "description": "Screen-reader label of the X in the search field."
+  },
+  "viewAllSoftware": "View All Software",
+  "@viewAllSoftware": {
+    "description": "Small white button on the red Switch 2 banner on Search. About 18 characters."
+  },
+  "switch2ViewAll": "Switch 2, View All Software",
+  "@switch2ViewAll": {
+    "description": "Screen-reader label of the Switch 2 banner on Search."
+  },
+  "genreGames": "{count, plural, =1{{name}, 1 game} other{{name}, {count} games}}",
+  "@genreGames": {
+    "description": "Screen-reader label of a genre tile on Search, e.g. 'Puzzle, 1,111 games'. name is the genre label.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "aboutTitle": "About",
+  "@aboutTitle": {
+    "description": "Page title of the About and settings page. About 15 characters."
+  },
+  "aboutUnofficial": "Ringgit Radar is an independent, unofficial app. Not affiliated with or endorsed by Nintendo.",
+  "@aboutUnofficial": {
+    "description": "First line of About. 'Ringgit Radar' is the app's name, never translated. Must say clearly that it is not Nintendo's."
+  },
+  "aboutRecord": "It keeps its own record of Malaysian eShop prices in ringgit. To buy a game, use your Switch.",
+  "@aboutRecord": {
+    "description": "Second line of About: what the app is for."
+  },
+  "privacy": "Privacy",
+  "@privacy": {
+    "description": "Chip on About that opens the Privacy page, and that page's title. About 12 characters."
+  },
+  "dataHeading": "Data",
+  "@dataHeading": {
+    "description": "Section heading on About above facts about our price data. About 20 characters."
+  },
+  "pricesLastChecked": "Prices last checked",
+  "@pricesLastChecked": {
+    "description": "Label on About: when our server last read the store's prices. About 22 characters."
+  },
+  "notYet": "Not yet",
+  "@notYet": {
+    "description": "Value on About when something has not happened yet."
+  },
+  "malaysiaTime": "{dateTime} (Malaysia time)",
+  "@malaysiaTime": {
+    "description": "A date and time on About with its time zone, e.g. '2 Nov 2026, 12:10 am (Malaysia time)'.",
+    "placeholders": {
+      "dateTime": {
+        "type": "String"
+      }
+    }
+  },
+  "trackingBeganLabel": "Tracking began",
+  "@trackingBeganLabel": {
+    "description": "Label on About: the date our own price record starts. About 22 characters."
+  },
+  "productsTracked": "Products tracked",
+  "@productsTracked": {
+    "description": "Label on About: how many products we record. About 22 characters."
+  },
+  "appearanceHeading": "Appearance",
+  "@appearanceHeading": {
+    "description": "Section heading on About above the theme chips. About 20 characters."
+  },
+  "themeSystem": "System",
+  "@themeSystem": {
+    "description": "Theme chip: follow the device's light or dark setting. About 10 characters."
+  },
+  "themeLight": "Light",
+  "@themeLight": {
+    "description": "Theme chip. About 10 characters."
+  },
+  "themeDark": "Dark",
+  "@themeDark": {
+    "description": "Theme chip. About 10 characters."
+  },
+  "listsHeading": "Lists",
+  "@listsHeading": {
+    "description": "Section heading on About above list settings. About 20 characters."
+  },
+  "showAllTitles": "Show all titles",
+  "@showAllTitles": {
+    "description": "Switch on About: also list titles hidden by default. About 25 characters."
+  },
+  "showAllSubtitle": "Also lists titles hidden by default, such as ones flagged by keyword.",
+  "@showAllSubtitle": {
+    "description": "Small line under the 'Show all titles' switch. Can wrap."
+  },
+  "languageEnglish": "English",
+  "@languageEnglish": {
+    "description": "Language chip. Always written in its own language, the same in every file."
+  },
+  "languageChinese": "简体中文",
+  "@languageChinese": {
+    "description": "Language chip. Always written in its own language, the same in every file."
+  },
+  "languageMalay": "Bahasa Melayu",
+  "@languageMalay": {
+    "description": "Language chip. Always written in its own language, the same in every file."
+  },
+  "privacyNoAccountsTitle": "No accounts",
+  "@privacyNoAccountsTitle": {
+    "description": "Privacy page heading."
+  },
+  "privacyNoAccountsBody": "There is no sign-in. Ringgit Radar does not ask for your name, email or phone number, and it has no ads and no analytics.",
+  "@privacyNoAccountsBody": {
+    "description": "Privacy page paragraph. Must say exactly what is true, no more."
+  },
+  "privacyDeviceTitle": "Your Wish List stays on your device",
+  "@privacyDeviceTitle": {
+    "description": "Privacy page heading."
+  },
+  "privacyDeviceBody": "Your Wish List, your theme and language choices and the \"Show all titles\" setting are saved on this device only: in the browser's local storage on the web, in the app's preferences on Android. When you open your Wish List, the app asks our server for those games by their ids, so the server receives the ids in that request to answer it. It does not keep them or link them to you.",
+  "@privacyDeviceBody": {
+    "description": "Privacy page paragraph. 'Show all titles' is the name of the setting on About. Must say exactly what is true, no more."
+  },
+  "privacyLogsTitle": "What our server logs",
+  "@privacyLogsTitle": {
+    "description": "Privacy page heading."
+  },
+  "privacyLogsBody": "Our server writes no access log. It logs only errors, for example a database error, and those lines hold an error message, not your address. To stop one visitor from overloading it, the server counts requests per internet address, in memory only. Those addresses are never written to disk.",
+  "@privacyLogsBody": {
+    "description": "Privacy page paragraph. Must say exactly what is true, no more."
+  },
+  "privacyPicturesTitle": "Pictures come from Nintendo's image server",
+  "@privacyPicturesTitle": {
+    "description": "Privacy page heading."
+  },
+  "privacyPicturesBody": "Game art and screenshots load straight from the store's image server (img-eshop.cdn.nintendo.net). Your browser or phone asks it for each picture, so Nintendo receives your internet address and the usual details of a request, under Nintendo's own privacy policy. Ringgit Radar does not keep or pass on any pictures.",
+  "@privacyPicturesBody": {
+    "description": "Privacy page paragraph. Keep the host name exactly. Must say exactly what is true, no more."
+  },
+  "privacyOthersTitle": "Who else sees your visit",
+  "@privacyOthersTitle": {
+    "description": "Privacy page heading."
+  },
+  "privacyOthersBody": "The site and its server run on Vercel. Vercel keeps request logs under its own policy, which can include the page you asked for, the time, your internet address and your browser type. Price data is stored with Supabase; it holds game prices and nothing about visitors, and it only ever hears from our server. Apart from those pictures, the web version loads everything, fonts included, from our own address, and the Android app talks only to our server.",
+  "@privacyOthersBody": {
+    "description": "Privacy page paragraph. Keep Vercel and Supabase as names. Must say exactly what is true, no more."
+  },
+  "privacyNotNintendoTitle": "Not Nintendo",
+  "@privacyNotNintendoTitle": {
+    "description": "Privacy page heading."
+  },
+  "privacyNotNintendoBody": "Ringgit Radar is an independent, unofficial app. Not affiliated with or endorsed by Nintendo. Prices are collected from the Malaysian Nintendo eShop and shown with their history; to buy a game, use your Switch.",
+  "@privacyNotNintendoBody": {
+    "description": "Privacy page paragraph. Must say clearly that the app is not Nintendo's."
+  },
+  "privacyEnglishPrevails": "",
+  "@privacyEnglishPrevails": {
+    "description": "One line at the end of the Privacy page, only in translations: this is a translation and the English version applies if they differ. Empty in English (not shown)."
+  },
+  "backToAbout": "Back to About",
+  "@backToAbout": {
+    "description": "Chip at the end of the Privacy page. About 15 characters."
+  },
+  "onSaleChip": "On Sale",
+  "@onSaleChip": {
+    "description": "Chip on Wish List: show only saved games on sale. About 10 characters."
+  },
+  "noneOnSale": "None of the games on your Wish List are on sale right now.",
+  "@noneOnSale": {
+    "description": "Wish List filtered to on-sale with nothing on sale."
+  },
+  "wishEmptyTitle": "You can add software you're interested in to your Wish List!",
+  "@wishEmptyTitle": {
+    "description": "Big line on an empty Wish List."
+  },
+  "wishEmptyHint": "Tap the heart on any game, in a list or on its page, to add it here.",
+  "@wishEmptyHint": {
+    "description": "Smaller line under it."
+  },
+  "genreAction": "Action",
+  "@genreAction": {
+    "description": "Genre name as the eShop groups games (API value 'Action'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreAdventure": "Adventure",
+  "@genreAdventure": {
+    "description": "Genre name as the eShop groups games (API value 'Adventure'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genrePuzzle": "Puzzle",
+  "@genrePuzzle": {
+    "description": "Genre name as the eShop groups games (API value 'Puzzle'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreSimulation": "Simulation",
+  "@genreSimulation": {
+    "description": "Genre name as the eShop groups games (API value 'Simulation'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreArcade": "Arcade",
+  "@genreArcade": {
+    "description": "Genre name as the eShop groups games (API value 'Arcade'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreRpg": "RPG",
+  "@genreRpg": {
+    "description": "Genre name as the eShop groups games (API value 'RPG'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreStrategy": "Strategy",
+  "@genreStrategy": {
+    "description": "Genre name as the eShop groups games (API value 'Strategy'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreOther": "Other",
+  "@genreOther": {
+    "description": "Genre name as the eShop groups games (API value 'Other'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genrePlatformer": "Platformer",
+  "@genrePlatformer": {
+    "description": "Genre name as the eShop groups games (API value 'Platformer'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreShooter": "Shooter",
+  "@genreShooter": {
+    "description": "Genre name as the eShop groups games (API value 'Shooter'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreParty": "Party",
+  "@genreParty": {
+    "description": "Genre name as the eShop groups games (API value 'Party'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreMultiplayer": "Multiplayer",
+  "@genreMultiplayer": {
+    "description": "Genre name as the eShop groups games (API value 'Multiplayer'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreRacing": "Racing",
+  "@genreRacing": {
+    "description": "Genre name as the eShop groups games (API value 'Racing'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreSports": "Sports",
+  "@genreSports": {
+    "description": "Genre name as the eShop groups games (API value 'Sports'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreBoardGame": "Board Game",
+  "@genreBoardGame": {
+    "description": "Genre name as the eShop groups games (API value 'Board Game'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreFighting": "Fighting",
+  "@genreFighting": {
+    "description": "Genre name as the eShop groups games (API value 'Fighting'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreLifestyle": "Lifestyle",
+  "@genreLifestyle": {
+    "description": "Genre name as the eShop groups games (API value 'Lifestyle'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreCommunication": "Communication",
+  "@genreCommunication": {
+    "description": "Genre name as the eShop groups games (API value 'Communication'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreEducation": "Education",
+  "@genreEducation": {
+    "description": "Genre name as the eShop groups games (API value 'Education'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreTraining": "Training",
+  "@genreTraining": {
+    "description": "Genre name as the eShop groups games (API value 'Training'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreStudy": "Study",
+  "@genreStudy": {
+    "description": "Genre name as the eShop groups games (API value 'Study'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreUtility": "Utility",
+  "@genreUtility": {
+    "description": "Genre name as the eShop groups games (API value 'Utility'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreFirstPersonShooter": "First-Person Shooter",
+  "@genreFirstPersonShooter": {
+    "description": "Genre name as the eShop groups games (API value 'First-Person Shooter'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreMusic": "Music",
+  "@genreMusic": {
+    "description": "Genre name as the eShop groups games (API value 'Music'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genrePractical": "Practical",
+  "@genrePractical": {
+    "description": "Genre name as the eShop groups games (API value 'Practical'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "genreVideo": "Video",
+  "@genreVideo": {
+    "description": "Genre name as the eShop groups games (API value 'Video'). Shown on Search tiles, filters and the game page. About 18 characters."
   }
 }

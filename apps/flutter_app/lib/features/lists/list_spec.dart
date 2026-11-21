@@ -1,14 +1,20 @@
 import '../../core/api/models.dart';
+import '../../l10n/l10n.dart';
 
-const sortLabels = {
-  'savings': 'Biggest savings',
-  'discount': 'Biggest discount',
-  'price': 'Lowest price',
-  'newest': 'Newest',
-  'ending': 'Ending soon',
-  'title': 'Title',
-  'soonest': 'Soonest',
-};
+/// The shown name of a sort value. An unknown value shows as it is.
+String sortLabel(AppLocalizations l, String sort) => switch (sort) {
+      'savings' => l.sortSavings,
+      'discount' => l.sortDiscount,
+      'price' => l.sortPrice,
+      'newest' => l.sortNewest,
+      'ending' => l.sortEnding,
+      'title' => l.sortTitle,
+      'soonest' => l.sortSoonest,
+      _ => sort,
+    };
+
+String _saleHint(AppLocalizations l) => l.saleHint;
+String _comingSoonHint(AppLocalizations l) => l.comingSoonHint;
 
 /// What a list page fixes and offers. [base] is where the list starts and what "clear" returns to.
 class ListSpec {
@@ -21,13 +27,13 @@ class ListSpec {
 
   final ListQuery base;
   final List<String> sorts;
-  final String? hint;
+  final String Function(AppLocalizations)? hint;
   final bool lockSale;
 
   static const all = ListSpec(base: ListQuery());
   static const sale = ListSpec(
     base: ListQuery(sale: true),
-    hint: 'Sale end dates are shown in Malaysia time.',
+    hint: _saleHint,
     lockSale: true,
   );
   static const recent = ListSpec(
@@ -37,7 +43,7 @@ class ListSpec {
   static const comingSoon = ListSpec(
     base: ListQuery(release: 'upcoming', sort: 'soonest'),
     sorts: ['soonest', 'title', 'price'],
-    hint: 'Release dates come from the store listing.',
+    hint: _comingSoonHint,
   );
 }
 

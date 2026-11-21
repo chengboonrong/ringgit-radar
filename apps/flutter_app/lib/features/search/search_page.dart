@@ -15,6 +15,8 @@ import '../../core/widgets/ring.dart';
 import '../lists/game_grid.dart';
 import '../lists/game_list_view.dart';
 import '../lists/list_spec.dart';
+import '../../l10n/l10n.dart';
+import '../../l10n/genres.dart';
 
 class SearchPage extends ConsumerStatefulWidget {
   const SearchPage({super.key});
@@ -66,7 +68,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Some products may not be included.', style: Theme.of(context).textTheme.bodySmall),
+          Text(context.l10n.someProductsMissing, style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 8),
           field,
         ],
@@ -81,7 +83,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
         onQuery: (q) => setState(() => _query = q),
         heroScope: 'search',
         leading: [header],
-        emptyText: 'No titles found. Try another keyword, or clear a filter.',
+        emptyText: context.l10n.noTitlesFound,
       );
     }
     return CustomScrollView(
@@ -95,7 +97,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                 header,
                 const SizedBox(height: 4),
                 _Switch2Banner(onTap: () => _browse(const ListQuery(platforms: ['switch2']))),
-                const SectionHeading('Genre'),
+                SectionHeading(context.l10n.genre),
               ],
             ),
           ),
@@ -119,21 +121,21 @@ class _SearchField extends StatelessWidget {
     final tk = context.tokens;
     return Semantics(
       textField: true,
-      label: 'Search by keyword/title',
+      label: context.l10n.searchHint,
       child: TextField(
         controller: controller,
         onChanged: onChanged,
         textInputAction: TextInputAction.search,
         style: const TextStyle(fontSize: 16),
         decoration: InputDecoration(
-          hintText: 'Search by keyword/title',
+          hintText: context.l10n.searchHint,
           hintStyle: TextStyle(color: tk.hint, fontSize: 16),
           filled: true,
           fillColor: tk.card,
           isDense: false,
           contentPadding: const EdgeInsets.symmetric(vertical: 14),
           prefixIcon: Icon(PhosphorIconsRegular.magnifyingGlass, color: tk.hint),
-          suffixIcon: onClear == null ? null : TapBox(label: 'Clear search', onTap: onClear!, child: Icon(PhosphorIconsRegular.x, color: tk.text, size: 20)),
+          suffixIcon: onClear == null ? null : TapBox(label: context.l10n.clearSearch, onTap: onClear!, child: Icon(PhosphorIconsRegular.x, color: tk.text, size: 20)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(28), borderSide: BorderSide(color: tk.divider)),
           enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(28), borderSide: BorderSide(color: tk.divider)),
           focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(28), borderSide: const BorderSide(color: brandRed, width: 2)),
@@ -152,7 +154,7 @@ class _Switch2Banner extends StatelessWidget {
   Widget build(BuildContext context) {
     return RingTarget(
       radius: 8,
-      label: 'Switch 2, View All Software',
+      label: context.l10n.switch2ViewAll,
       onTap: onTap,
       child: Container(
         height: 96,
@@ -171,7 +173,7 @@ class _Switch2Banner extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14)),
-                      child: const Text('View All Software', style: TextStyle(color: brandRed, fontWeight: FontWeight.w700, fontSize: 13, height: 1.3)),
+                      child: Text(context.l10n.viewAllSoftware, style: const TextStyle(color: brandRed, fontWeight: FontWeight.w700, fontSize: 13, height: 1.3)),
                     ),
                   ],
                 ),
@@ -226,7 +228,7 @@ class _GenreTiles extends ConsumerWidget {
               child: Column(children: [
                 Text(e.toString()),
                 const SizedBox(height: 8),
-                RedButton(label: 'Retry', onTap: () => ref.invalidate(genresProvider)),
+                RedButton(label: context.l10n.retry, onTap: () => ref.invalidate(genresProvider)),
               ]),
             ),
             data: (list) => SliverGrid.builder(
@@ -234,7 +236,7 @@ class _GenreTiles extends ConsumerWidget {
               itemCount: list.length,
               itemBuilder: (context, i) => RingTarget(
                 radius: 8,
-                label: '${list[i].name}, ${list[i].count} games',
+                label: context.l10n.genreGames(genreLabel(context.l10n, list[i].name), list[i].count),
                 onTap: () => onPick(list[i].name),
                 child: Container(
                   decoration: BoxDecoration(color: tk.card, borderRadius: BorderRadius.circular(8)),
@@ -246,7 +248,7 @@ class _GenreTiles extends ConsumerWidget {
                           height: titleRow,
                           child: Row(
                             children: [
-                              Expanded(child: Text(list[i].name, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
+                              Expanded(child: Text(genreLabel(context.l10n, list[i].name), maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
                               Text('${list[i].count}', style: TextStyle(color: tk.hint, fontSize: 13)),
                             ],
                           ),
