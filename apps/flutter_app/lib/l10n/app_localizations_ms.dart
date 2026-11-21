@@ -215,14 +215,6 @@ class AppLocalizationsMs extends AppLocalizations {
   String get detailsHeading => 'Butiran';
 
   @override
-  String get noAgeRating => 'Tiada penarafan umur ditemui';
-
-  @override
-  String ageRating(int age) {
-    return 'Penarafan umur: $age (UK PEGI)';
-  }
-
-  @override
   String get onWishList => 'Disimpan';
 
   @override
@@ -279,9 +271,6 @@ class AppLocalizationsMs extends AppLocalizations {
   String get filterPrice => 'Promosi / Had Harga';
 
   @override
-  String get filterAge => 'Penarafan Umur';
-
-  @override
   String get filter => 'Tapis';
 
   @override
@@ -293,15 +282,6 @@ class AppLocalizationsMs extends AppLocalizations {
   String filterSelected(int count) {
     return 'Tapis, $count dipilih';
   }
-
-  @override
-  String ageN(int age) {
-    return 'Umur $age (UK PEGI)';
-  }
-
-  @override
-  String get ageNote =>
-      'Permainan tanpa penarafan kekal dalam senarai sehingga anda memilih umur.';
 
   @override
   String get onSaleOnly => 'Promosi sahaja';

@@ -36,9 +36,6 @@ abstract class Game with _$Game {
     @Default('') String salesStatus,
     Price? price,
     int? rank,
-    // UK PEGI from a title match; null means no rating was found, not that the game is unrated-safe
-    int? age,
-    List<String>? ageDescriptors,
   }) = _Game;
 
   factory Game.fromJson(Map<String, dynamic> json) => _$GameFromJson(json);
@@ -116,8 +113,6 @@ abstract class GameDetail with _$GameDetail {
     DateTime? firstObservedAt,
     Lowest? lowest,
     @Default([]) List<Game> addons,
-    int? age,
-    List<String>? ageDescriptors,
   }) = _GameDetail;
 
   factory GameDetail.fromJson(Map<String, dynamic> json) => _$GameDetailFromJson(json);
@@ -149,7 +144,6 @@ abstract class ListQuery with _$ListQuery {
     @Default(<String>[]) List<String> platforms,
     @Default(<String>['game']) List<String> types,
     @Default(<String>[]) List<String> genres,
-    @Default(<int>[]) List<int> ages,
     @Default(false) bool sale,
     int? maxPrice,
     @Default('savings') String sort,
@@ -178,7 +172,5 @@ extension GameDetailX on GameDetail {
         sourceStatus: sourceStatus,
         salesStatus: salesStatus,
         price: price,
-        age: age,
-        ageDescriptors: ageDescriptors,
       );
 }

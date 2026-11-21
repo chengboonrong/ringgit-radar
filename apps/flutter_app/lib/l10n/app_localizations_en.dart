@@ -213,14 +213,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get detailsHeading => 'Details';
 
   @override
-  String get noAgeRating => 'No age rating found';
-
-  @override
-  String ageRating(int age) {
-    return 'Age rating: $age (UK PEGI)';
-  }
-
-  @override
   String get onWishList => 'On Wish List';
 
   @override
@@ -278,9 +270,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get filterPrice => 'On Sale / Price Cap';
 
   @override
-  String get filterAge => 'Age Rating';
-
-  @override
   String get filter => 'Filter';
 
   @override
@@ -292,15 +281,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String filterSelected(int count) {
     return 'Filter, $count selected';
   }
-
-  @override
-  String ageN(int age) {
-    return 'Age $age (UK PEGI)';
-  }
-
-  @override
-  String get ageNote =>
-      'Games with no rating found stay in the list until you pick an age.';
 
   @override
   String get onSaleOnly => 'On sale only';

@@ -412,18 +412,6 @@ abstract class AppLocalizations {
   /// **'Details'**
   String get detailsHeading;
 
-  /// Line on a game page when the store gives no age rating.
-  ///
-  /// In en, this message translates to:
-  /// **'No age rating found'**
-  String get noAgeRating;
-
-  /// Line on a game page: the PEGI age rating, e.g. 'Age rating: 12 (UK PEGI)'. Keep 'UK PEGI'.
-  ///
-  /// In en, this message translates to:
-  /// **'Age rating: {age} (UK PEGI)'**
-  String ageRating(int age);
-
   /// Button on a game page when the game is saved. About 16 characters, next to a heart icon.
   ///
   /// In en, this message translates to:
@@ -508,12 +496,6 @@ abstract class AppLocalizations {
   /// **'On Sale / Price Cap'**
   String get filterPrice;
 
-  /// Filter section name: PEGI ages. About 22 characters.
-  ///
-  /// In en, this message translates to:
-  /// **'Age Rating'**
-  String get filterAge;
-
   /// Filter button on list pages and the filter sheet's header. About 10 characters, next to an icon.
   ///
   /// In en, this message translates to:
@@ -531,18 +513,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Filter, {count} selected'**
   String filterSelected(int count);
-
-  /// Age filter option, e.g. 'Age 12 (UK PEGI)'. Keep 'UK PEGI'.
-  ///
-  /// In en, this message translates to:
-  /// **'Age {age} (UK PEGI)'**
-  String ageN(int age);
-
-  /// Small note under the age options. Can wrap.
-  ///
-  /// In en, this message translates to:
-  /// **'Games with no rating found stay in the list until you pick an age.'**
-  String get ageNote;
 
   /// Filter option: show only games on sale. About 20 characters.
   ///

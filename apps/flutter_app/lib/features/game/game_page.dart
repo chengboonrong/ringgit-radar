@@ -716,24 +716,6 @@ class _Details extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
-        const SizedBox(height: 8),
-        Text(
-          detail.age == null
-              ? context.l10n.noAgeRating
-              : context.l10n.ageRating(detail.age!),
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            height: 1.4,
-          ),
-        ),
-        if ((detail.ageDescriptors ?? const []).isNotEmpty) ...[
-          const SizedBox(height: 2),
-          Text(
-            detail.ageDescriptors!.join(', '),
-            style: TextStyle(fontSize: 14, color: tk.hint, height: 1.4),
-          ),
-        ],
         const SizedBox(height: 10),
         for (final (k, v) in rows)
           Container(

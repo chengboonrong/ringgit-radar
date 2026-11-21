@@ -53,10 +53,6 @@ _Game _$GameFromJson(Map<String, dynamic> json) => _Game(
       ? null
       : Price.fromJson(json['price'] as Map<String, dynamic>),
   rank: (json['rank'] as num?)?.toInt(),
-  age: (json['age'] as num?)?.toInt(),
-  ageDescriptors: (json['age_descriptors'] as List<dynamic>?)
-      ?.map((e) => e as String)
-      .toList(),
 );
 
 Map<String, dynamic> _$GameToJson(_Game instance) => <String, dynamic>{
@@ -72,8 +68,6 @@ Map<String, dynamic> _$GameToJson(_Game instance) => <String, dynamic>{
   'sales_status': instance.salesStatus,
   'price': instance.price?.toJson(),
   'rank': instance.rank,
-  'age': instance.age,
-  'age_descriptors': instance.ageDescriptors,
 };
 
 _GamePage _$GamePageFromJson(Map<String, dynamic> json) => _GamePage(
@@ -201,10 +195,6 @@ _GameDetail _$GameDetailFromJson(Map<String, dynamic> json) => _GameDetail(
           ?.map((e) => Game.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const [],
-  age: (json['age'] as num?)?.toInt(),
-  ageDescriptors: (json['age_descriptors'] as List<dynamic>?)
-      ?.map((e) => e as String)
-      .toList(),
 );
 
 Map<String, dynamic> _$GameDetailToJson(_GameDetail instance) =>
@@ -230,8 +220,6 @@ Map<String, dynamic> _$GameDetailToJson(_GameDetail instance) =>
       'first_observed_at': instance.firstObservedAt?.toIso8601String(),
       'lowest': instance.lowest?.toJson(),
       'addons': instance.addons.map((e) => e.toJson()).toList(),
-      'age': instance.age,
-      'age_descriptors': instance.ageDescriptors,
     };
 
 _GenreCount _$GenreCountFromJson(Map<String, dynamic> json) => _GenreCount(
