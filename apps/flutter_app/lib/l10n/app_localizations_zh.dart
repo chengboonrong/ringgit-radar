@@ -583,4 +583,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get wordmarkSemantics => 'Ringgit Radar，非官方';
+
+  @override
+  String get descriptionSource => '来自发行商的商店介绍';
 }

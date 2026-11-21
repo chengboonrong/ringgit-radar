@@ -600,4 +600,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get wordmarkSemantics => 'Ringgit Radar, tidak rasmi';
+
+  @override
+  String get descriptionSource => 'Daripada senarai kedai penerbit';
 }

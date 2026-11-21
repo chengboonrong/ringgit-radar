@@ -596,4 +596,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wordmarkSemantics => 'Ringgit Radar, unofficial';
+
+  @override
+  String get descriptionSource => 'From the publisher\'s store listing';
 }
