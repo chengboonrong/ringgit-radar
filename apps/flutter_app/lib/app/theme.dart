@@ -17,6 +17,16 @@ const ringColors = [
 
 const fontFamily = 'MPlusRounded1c';
 
+/// A subset of Resource Han Rounded CN holding only the characters of the Chinese text (tool/subset_zh_font.sh).
+const zhFontFamily = 'RinggitZh';
+
+/// The font list for a language. In Chinese the Chinese font comes first, so every Han character is drawn
+/// in Simplified style rather than borrowing the Japanese-style kanji M PLUS Rounded 1c also has; it has no
+/// Latin or digits, so those, and every price, still come from M PLUS Rounded 1c. Elsewhere the Chinese
+/// font is only the fallback for the language chip "简体中文".
+({String family, List<String> fallback}) fontsFor(String languageCode) =>
+    languageCode == 'zh' ? (family: zhFontFamily, fallback: const [fontFamily]) : (family: fontFamily, fallback: const [zhFontFamily]);
+
 @immutable
 class Tokens extends ThemeExtension<Tokens> {
   const Tokens({
@@ -80,7 +90,8 @@ extension TokensX on BuildContext {
   Tokens get tokens => Theme.of(this).extension<Tokens>()!;
 }
 
-ThemeData buildTheme(Brightness brightness) {
+ThemeData buildTheme(Brightness brightness, {String languageCode = 'en'}) {
+  final fonts = fontsFor(languageCode);
   final t = brightness == Brightness.dark ? Tokens.dark : Tokens.light;
   final scheme = ColorScheme.fromSeed(seedColor: brandRed, brightness: brightness).copyWith(
     primary: brandRed,
@@ -91,12 +102,13 @@ ThemeData buildTheme(Brightness brightness) {
   );
   TextStyle s(double size, FontWeight w, {Color? color, double? height}) =>
       // -0.02em, so text reads a little tighter than the font's own spacing. Digits keep their equal widths.
-      TextStyle(fontFamily: fontFamily, fontSize: size, fontWeight: w, color: color ?? t.text, height: height, letterSpacing: -size * 0.02);
+      TextStyle(fontFamily: fonts.family, fontFamilyFallback: fonts.fallback, fontSize: size, fontWeight: w, color: color ?? t.text, height: height, letterSpacing: -size * 0.02);
   return ThemeData(
     useMaterial3: true,
     brightness: brightness,
     colorScheme: scheme,
-    fontFamily: fontFamily,
+    fontFamily: fonts.family,
+    fontFamilyFallback: fonts.fallback,
     scaffoldBackgroundColor: t.content,
     canvasColor: t.content,
     dividerColor: t.divider,

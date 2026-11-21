@@ -38,8 +38,9 @@ class PriceHistoryChart extends StatelessWidget {
     final summary =
         context.l10n.priceHistorySummary(longDateMyt(first, context.l10n.localeName), history.map((h) => plainMoney(h.priceMinor)).join(context.l10n.priceHistoryJoiner));
 
-    TextStyle label() =>
-        TextStyle(fontFamily: fontFamily, fontSize: 11, color: tk.hint);
+    // the chart paints its own labels, so it takes the theme's fonts by hand
+    final themeText = Theme.of(context).textTheme.bodySmall!;
+    TextStyle label() => TextStyle(fontFamily: themeText.fontFamily, fontFamilyFallback: themeText.fontFamilyFallback, fontSize: 11, color: tk.hint);
 
     return Semantics(
       label: summary,
