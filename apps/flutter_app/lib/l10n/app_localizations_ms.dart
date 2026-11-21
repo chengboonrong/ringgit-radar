@@ -379,7 +379,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get aboutUnofficial =>
-      'Ringgit Radar ialah aplikasi bebas yang tidak rasmi. Ia tiada hubungan dengan Nintendo dan tidak diiktiraf oleh Nintendo.';
+      'Ringgit Radar ialah aplikasi bebas yang tidak rasmi. Ia tiada hubungan dengan Nintendo dan tidak disokong oleh Nintendo.';
 
   @override
   String get aboutRecord =>
@@ -480,7 +480,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String privacyNotNintendoBody(String email) {
-    return 'Ringgit Radar ialah aplikasi bebas yang tidak rasmi. Ia tiada hubungan dengan Nintendo dan tidak diiktiraf oleh Nintendo. Harga dikumpul daripada Nintendo eShop Malaysia dan ditunjukkan bersama sejarahnya; untuk membeli permainan, gunakan Switch anda. Untuk meminta kandungan dibuang atau dibetulkan, e-mel $email. E-mel ke alamat itu dimajukan oleh Cloudflare ke peti mel Google kami.';
+    return 'Ringgit Radar ialah aplikasi bebas yang tidak rasmi. Ia tiada hubungan dengan Nintendo dan tidak disokong oleh Nintendo. Harga dikumpul daripada Nintendo eShop Malaysia dan ditunjukkan bersama sejarahnya; untuk membeli permainan, gunakan Switch anda. Untuk meminta kandungan dibuang atau dibetulkan, e-mel $email. E-mel ke alamat itu dimajukan oleh Cloudflare ke peti mel Google kami.';
   }
 
   @override
@@ -588,7 +588,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get noticeBody =>
-      'Ringgit Radar ialah aplikasi bebas yang tidak rasmi. Ia tiada hubungan dengan Nintendo dan tidak diiktiraf oleh Nintendo. Ia menyimpan rekodnya sendiri tentang harga eShop Malaysia; untuk membeli permainan, gunakan Switch anda.';
+      'Ringgit Radar ialah aplikasi bebas yang tidak rasmi. Ia tiada hubungan dengan Nintendo dan tidak disokong oleh Nintendo. Ia menyimpan rekodnya sendiri tentang harga eShop Malaysia; untuk membeli permainan, gunakan Switch anda.';
 
   @override
   String get noticeOk => 'OK';
@@ -603,10 +603,10 @@ class AppLocalizationsMs extends AppLocalizations {
   String get wordmarkSemantics => 'Ringgit Radar, tidak rasmi';
 
   @override
-  String get descriptionSource => 'Daripada senarai kedai penerbit';
+  String get descriptionSource => 'Teks penerbit daripada senarai eShop';
 
   @override
-  String get dataFromTitle => 'Sumber';
+  String get dataFromTitle => 'Asal data';
 
   @override
   String get dataFromBody =>
@@ -627,7 +627,7 @@ class AppLocalizationsMs extends AppLocalizations {
       'Salinan gambar: gambar dimuatkan daripada pelayan gambar Nintendo. Kami tidak menjual apa-apa dan tiada butang Beli; permainan dibeli pada Switch.';
 
   @override
-  String get dataRightsTitle => 'Pemilik hak';
+  String get dataRightsTitle => 'Pemegang hak';
 
   @override
   String dataRightsBody(String email) {

@@ -467,7 +467,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String privacyNotNintendoBody(String email) {
-    return 'Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。价格收集自马来西亚 Nintendo eShop，并与其历史价格一同显示；要购买游戏，请使用你的 Switch。如需删除或更正内容，请发送电邮至 $email。发往该地址的电邮由 Cloudflare 转发到我们的 Google 邮箱。';
+    return 'Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。价格收集自马来西亚 Nintendo eShop，并与我们记录的历史价格一同显示；要购买游戏，请使用你的 Switch。如需删除或更正内容，请发送电邮至 $email。发往该地址的电邮由 Cloudflare 转发到我们的 Google 邮箱。';
   }
 
   @override
@@ -586,10 +586,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get wordmarkSemantics => 'Ringgit Radar，非官方';
 
   @override
-  String get descriptionSource => '来自发行商的商店介绍';
+  String get descriptionSource => '来自发行商在 eShop 上的介绍';
 
   @override
-  String get dataFromTitle => '来源';
+  String get dataFromTitle => '数据来源';
 
   @override
   String get dataFromBody =>
@@ -610,7 +610,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '图片副本：图片直接从任天堂的图片服务器加载。我们不出售任何东西，也没有购买按钮；游戏请在 Switch 上购买。';
 
   @override
-  String get dataRightsTitle => '权利人';
+  String get dataRightsTitle => '版权所有者';
 
   @override
   String dataRightsBody(String email) {
