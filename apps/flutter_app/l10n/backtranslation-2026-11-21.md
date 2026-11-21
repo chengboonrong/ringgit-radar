@@ -64,6 +64,15 @@ Columns: key, what the agent read back, the problem, and the fix (the new text, 
 | genreLifestyle | Way of life | Back: 'Way of life', which is what lifestyle means. The style flag swaps with every round (生活↔生活方式). Ruling: keep 生活方式. | No change. |
 | lowestSeenSince | The lowest price we have seen: {price}, first appeared on {date} | Back: 'first appeared on {date}'. That is exactly what the API's since means, so the flag confirms the fix. No change. | No change. |
 
+### Rounds 5 and 6 (after the final code review): 1 key
+
+The final reviewer read "并附上价格记录显示" in privacyNotNintendoBody as ungrammatical.
+
+| Round | Back-translation | Problem | Fix |
+|---|---|---|---|
+| 5 | Prices … are shown together with price records | Grammatical now (与价格记录一同显示), but it is unclear what the prices are shown alongside. | 并与其历史价格一同显示 |
+| 6 | … displayed together with their historical prices | Clean. The reviewer's other notes (与任天堂无关 reads stronger than "not affiliated", 其 could point elsewhere) were ruled: 与任天堂无关 is the glossary's wording for "not affiliated", also on About. | No change. |
+
 ## Malay (Bahasa Melayu)
 
 ### Round 1: 162 keys, 22 listed
@@ -140,4 +149,4 @@ The screenshots showed the Malay wish-list button drawn smaller than English: th
 
 ## Result
 
-Chinese settled after round 4 and Malay after round 6. The last rounds read back the English meaning. Their remaining notes are style preferences that swapped from round to round, and the tables above give a ruling for each.
+Chinese settled after round 4 (round 6 for the privacy key the code review flagged) and Malay after round 6. The last rounds read back the English meaning. Their remaining notes are style preferences that swapped from round to round, and the tables above give a ruling for each.

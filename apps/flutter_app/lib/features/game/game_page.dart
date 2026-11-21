@@ -791,6 +791,7 @@ class _PricePanel extends ConsumerWidget {
 
     final button = RedButton(
       label: saved ? context.l10n.onWishList : context.l10n.addToWishList,
+      semanticsLabel: saved ? context.l10n.wishRemove(game.title) : context.l10n.wishAdd(game.title),
       icon: saved ? PhosphorIconsFill.heart : PhosphorIconsRegular.heart,
       minWidth: wide ? 0 : 150,
       expand: wide,

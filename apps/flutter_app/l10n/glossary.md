@@ -38,4 +38,4 @@ times are Malaysia time in every language.
 | Age rating (UK PEGI) | 年龄分级 | penarafan umur | "UK PEGI" kept as is. |
 | Malaysia time | 马来西亚时间 | waktu Malaysia | Standard. |
 | Store / eShop | 商店 / eShop | kedai / eShop | "Nintendo eShop" and "Switch" stay as product names. |
-| Clear (reset filters) | 清除 | Set semula | ms "set semula" (reset) says what the button does; "kosongkan" (empty) was rejected after back-translation. Clear search: 清除搜索 / Padam carian. |
+| Clear (reset filters) | 清除 | Set semula | ms "set semula" (reset) says what the button does; "kosongkan" (empty) was rejected for filters after back-translation. Clear search (a text field): 清除搜索 / Kosongkan carian, the usual wording for emptying a field; "Padam carian" read back as "delete search". |

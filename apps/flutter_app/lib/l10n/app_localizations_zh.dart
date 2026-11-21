@@ -486,7 +486,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get privacyNotNintendoBody =>
-      'Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。价格收集自马来西亚 Nintendo eShop，并附上价格记录显示；要购买游戏，请使用你的 Switch。';
+      'Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。价格收集自马来西亚 Nintendo eShop，并与其历史价格一同显示；要购买游戏，请使用你的 Switch。';
 
   @override
   String get privacyEnglishPrevails => '本页为英文版的翻译；如两者有出入，以英文版为准。';

@@ -117,4 +117,13 @@ void main() {
     }
     expect(offenders, isEmpty, reason: offenders.join('\n'));
   });
+
+  test('no error is shown with toString(): errorText words it in the reader language', () {
+    final bad = RegExp(r'''Text\(\s*(e|err|error)\.toString\(\)|Text\(\s*['"]\$\{?(e|err|error)\}?['"]''');
+    final hits = [
+      for (final f in Directory('lib').listSync(recursive: true).whereType<File>().where((f) => f.path.endsWith('.dart')))
+        for (final m in bad.allMatches(f.readAsStringSync())) '${f.path}: ${m[0]}',
+    ];
+    expect(hits, isEmpty);
+  });
 }

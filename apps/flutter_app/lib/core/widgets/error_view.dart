@@ -47,7 +47,7 @@ class ErrorView extends StatelessWidget {
 
 /// The red button. Always at least 44 tall.
 class RedButton extends StatelessWidget {
-  const RedButton({super.key, required this.label, required this.onTap, this.outlined = false, this.icon, this.minWidth = 120, this.expand = false});
+  const RedButton({super.key, required this.label, required this.onTap, this.outlined = false, this.icon, this.minWidth = 120, this.expand = false, this.semanticsLabel});
 
   final String label;
   final VoidCallback onTap;
@@ -55,6 +55,8 @@ class RedButton extends StatelessWidget {
   final IconData? icon;
   final double minWidth;
   final bool expand;
+  /// What a screen reader says when the visible label is too short to say it alone. Defaults to [label].
+  final String? semanticsLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class RedButton extends StatelessWidget {
     return RingTarget(
       onTap: onTap,
       radius: 10,
-      label: label,
+      label: semanticsLabel ?? label,
       child: Container(
         width: expand ? double.infinity : null,
         constraints: BoxConstraints(minHeight: 48, minWidth: minWidth),
