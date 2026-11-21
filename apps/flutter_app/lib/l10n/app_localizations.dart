@@ -844,11 +844,11 @@ abstract class AppLocalizations {
   /// **'Not Nintendo'**
   String get privacyNotNintendoTitle;
 
-  /// Privacy page paragraph. Must say clearly that the app is not Nintendo's.
+  /// Privacy page paragraph. Must say clearly that the app is not Nintendo's. Ends with the removal contact and one true sentence on how its mail is forwarded (Cloudflare to a Google inbox); keep both names.
   ///
   /// In en, this message translates to:
-  /// **'Ringgit Radar is an independent, unofficial app. Not affiliated with or endorsed by Nintendo. Prices are collected from the Malaysian Nintendo eShop and shown with their history; to buy a game, use your Switch.'**
-  String get privacyNotNintendoBody;
+  /// **'Ringgit Radar is an independent, unofficial app. Not affiliated with or endorsed by Nintendo. Prices are collected from the Malaysian Nintendo eShop and shown with their history; to buy a game, use your Switch. To ask for content to be removed or corrected, email {email}. Emails to that address are forwarded by Cloudflare to our Google mail inbox.'**
+  String privacyNotNintendoBody(String email);
 
   /// One line at the end of the Privacy page, only in translations: this is a translation and the English version applies if they differ. Empty in English (not shown).
   ///
@@ -1083,6 +1083,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'From the publisher\'s store listing'**
   String get descriptionSource;
+
+  /// Heading on the data-sources page. About 20 characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Where from'**
+  String get dataFromTitle;
+
+  /// Data-sources page paragraph: where the data comes from and when our history starts. Keep the date.
+  ///
+  /// In en, this message translates to:
+  /// **'Collected from the Malaysian Nintendo eShop once a day. Our own price history starts on 1 November 2026.'**
+  String get dataFromBody;
+
+  /// Heading on the data-sources page. About 20 characters.
+  ///
+  /// In en, this message translates to:
+  /// **'What we keep'**
+  String get dataKeptTitle;
+
+  /// Data-sources page paragraph. Must stay true: the full catalogue entry, description included, is stored; only its first part is shown.
+  ///
+  /// In en, this message translates to:
+  /// **'Each game\'s catalogue entry as the eShop publishes it (title, publisher, release date, genres, description and picture addresses), and every price and sale we record. The app shows only the first part of each description.'**
+  String get dataKeptBody;
+
+  /// Heading on the data-sources page. About 22 characters.
+  ///
+  /// In en, this message translates to:
+  /// **'What we don\'t keep'**
+  String get dataNotKeptTitle;
+
+  /// Data-sources page paragraph.
+  ///
+  /// In en, this message translates to:
+  /// **'Copies of pictures: they load from Nintendo\'s image server. We sell nothing and there is no Buy button; games are bought on the Switch.'**
+  String get dataNotKeptBody;
+
+  /// Heading on the data-sources page, for owners of the games, text or pictures shown. About 20 characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Rights holders'**
+  String get dataRightsTitle;
+
+  /// Data-sources page paragraph for rights holders. Must not promise a time (no 'within N days').
+  ///
+  /// In en, this message translates to:
+  /// **'If you own content shown here and want it removed or corrected, email {email} and we will remove it from Ringgit Radar.'**
+  String dataRightsBody(String email);
+
+  /// Heading on the data-sources page. About 20 characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Source code'**
+  String get dataSourceCodeTitle;
+
+  /// Data-sources page line; the GitHub address follows on its own line.
+  ///
+  /// In en, this message translates to:
+  /// **'The app and its server are open source:'**
+  String get dataSourceCodeBody;
 }
 
 class _AppLocalizationsDelegate

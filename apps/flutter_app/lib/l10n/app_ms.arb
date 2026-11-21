@@ -124,7 +124,7 @@
   "privacyOthersTitle": "Siapa lagi yang melihat lawatan anda",
   "privacyOthersBody": "Laman dan pelayannya berjalan di Vercel. Vercel menyimpan log permintaan di bawah dasarnya sendiri, yang boleh termasuk halaman yang anda minta, masa, alamat internet anda dan jenis pelayar anda. Data harga disimpan di Supabase; ia hanya menyimpan harga permainan dan tiada apa-apa tentang pelawat, dan ia hanya menerima permintaan daripada pelayan kami. Selain gambar tersebut, versi web memuatkan segala-galanya, termasuk fon, daripada alamat kami sendiri, dan aplikasi Android hanya berhubung dengan pelayan kami.",
   "privacyNotNintendoTitle": "Bukan Nintendo",
-  "privacyNotNintendoBody": "Ringgit Radar ialah aplikasi bebas yang tidak rasmi. Ia tiada hubungan dengan Nintendo dan tidak diiktiraf oleh Nintendo. Harga dikumpul daripada Nintendo eShop Malaysia dan ditunjukkan bersama sejarahnya; untuk membeli permainan, gunakan Switch anda.",
+  "privacyNotNintendoBody": "Ringgit Radar ialah aplikasi bebas yang tidak rasmi. Ia tiada hubungan dengan Nintendo dan tidak diiktiraf oleh Nintendo. Harga dikumpul daripada Nintendo eShop Malaysia dan ditunjukkan bersama sejarahnya; untuk membeli permainan, gunakan Switch anda. Untuk meminta kandungan dibuang atau dibetulkan, e-mel {email}. E-mel ke alamat itu dimajukan oleh Cloudflare ke peti mel Google kami.",
   "privacyEnglishPrevails": "Halaman ini ialah terjemahan versi bahasa Inggeris; jika terdapat perbezaan, versi bahasa Inggeris terpakai.",
   "backToAbout": "Kembali ke Perihal",
   "onSaleChip": "Promosi",
@@ -163,5 +163,15 @@
   "dataSourcesTitle": "Dari mana data kami datang",
   "unofficialLabel": "Tidak rasmi",
   "wordmarkSemantics": "Ringgit Radar, tidak rasmi",
-  "descriptionSource": "Daripada senarai kedai penerbit"
+  "descriptionSource": "Daripada senarai kedai penerbit",
+  "dataFromTitle": "Sumber",
+  "dataFromBody": "Dikumpul daripada Nintendo eShop Malaysia sekali sehari. Sejarah harga kami sendiri bermula pada 1 November 2026.",
+  "dataKeptTitle": "Apa yang kami simpan",
+  "dataKeptBody": "Maklumat katalog setiap permainan seperti yang diterbitkan oleh eShop (nama, penerbit, tarikh keluaran, genre, keterangan dan alamat gambar), serta setiap harga dan jualan yang kami rekodkan. Aplikasi ini hanya menunjukkan bahagian awal setiap keterangan.",
+  "dataNotKeptTitle": "Apa yang kami tidak simpan",
+  "dataNotKeptBody": "Salinan gambar: gambar dimuatkan daripada pelayan gambar Nintendo. Kami tidak menjual apa-apa dan tiada butang Beli; permainan dibeli pada Switch.",
+  "dataRightsTitle": "Pemilik hak",
+  "dataRightsBody": "Jika anda memiliki kandungan yang ditunjukkan di sini dan mahu ia dibuang atau dibetulkan, e-mel {email} dan kami akan membuangnya daripada Ringgit Radar.",
+  "dataSourceCodeTitle": "Kod sumber",
+  "dataSourceCodeBody": "Aplikasi ini dan pelayannya adalah sumber terbuka:"
 }

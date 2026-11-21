@@ -479,8 +479,9 @@ class AppLocalizationsMs extends AppLocalizations {
   String get privacyNotNintendoTitle => 'Bukan Nintendo';
 
   @override
-  String get privacyNotNintendoBody =>
-      'Ringgit Radar ialah aplikasi bebas yang tidak rasmi. Ia tiada hubungan dengan Nintendo dan tidak diiktiraf oleh Nintendo. Harga dikumpul daripada Nintendo eShop Malaysia dan ditunjukkan bersama sejarahnya; untuk membeli permainan, gunakan Switch anda.';
+  String privacyNotNintendoBody(String email) {
+    return 'Ringgit Radar ialah aplikasi bebas yang tidak rasmi. Ia tiada hubungan dengan Nintendo dan tidak diiktiraf oleh Nintendo. Harga dikumpul daripada Nintendo eShop Malaysia dan ditunjukkan bersama sejarahnya; untuk membeli permainan, gunakan Switch anda. Untuk meminta kandungan dibuang atau dibetulkan, e-mel $email. E-mel ke alamat itu dimajukan oleh Cloudflare ke peti mel Google kami.';
+  }
 
   @override
   String get privacyEnglishPrevails =>
@@ -603,4 +604,40 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get descriptionSource => 'Daripada senarai kedai penerbit';
+
+  @override
+  String get dataFromTitle => 'Sumber';
+
+  @override
+  String get dataFromBody =>
+      'Dikumpul daripada Nintendo eShop Malaysia sekali sehari. Sejarah harga kami sendiri bermula pada 1 November 2026.';
+
+  @override
+  String get dataKeptTitle => 'Apa yang kami simpan';
+
+  @override
+  String get dataKeptBody =>
+      'Maklumat katalog setiap permainan seperti yang diterbitkan oleh eShop (nama, penerbit, tarikh keluaran, genre, keterangan dan alamat gambar), serta setiap harga dan jualan yang kami rekodkan. Aplikasi ini hanya menunjukkan bahagian awal setiap keterangan.';
+
+  @override
+  String get dataNotKeptTitle => 'Apa yang kami tidak simpan';
+
+  @override
+  String get dataNotKeptBody =>
+      'Salinan gambar: gambar dimuatkan daripada pelayan gambar Nintendo. Kami tidak menjual apa-apa dan tiada butang Beli; permainan dibeli pada Switch.';
+
+  @override
+  String get dataRightsTitle => 'Pemilik hak';
+
+  @override
+  String dataRightsBody(String email) {
+    return 'Jika anda memiliki kandungan yang ditunjukkan di sini dan mahu ia dibuang atau dibetulkan, e-mel $email dan kami akan membuangnya daripada Ringgit Radar.';
+  }
+
+  @override
+  String get dataSourceCodeTitle => 'Kod sumber';
+
+  @override
+  String get dataSourceCodeBody =>
+      'Aplikasi ini dan pelayannya adalah sumber terbuka:';
 }

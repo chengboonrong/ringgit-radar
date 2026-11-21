@@ -47,6 +47,7 @@ void main() {
       expect(find.textContaining(RegExp(r'\bAge\b|年龄|umur', caseSensitive: false)), findsNothing); // no age filter
     },
     'Settings': (t, l) async => go(t, '/about'),
+    'Data sources': (t, l) async => go(t, '/data-sources'),
   };
 
   for (final code in ['en', 'zh', 'ms']) {
