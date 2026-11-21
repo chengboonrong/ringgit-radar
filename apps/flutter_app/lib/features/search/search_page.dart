@@ -226,7 +226,7 @@ class _GenreTiles extends ConsumerWidget {
             ),
             error: (e, _) => SliverToBoxAdapter(
               child: Column(children: [
-                Text(e.toString()),
+                Text(errorText(context.l10n, e), textAlign: TextAlign.center),
                 const SizedBox(height: 8),
                 RedButton(label: context.l10n.retry, onTap: () => ref.invalidate(genresProvider)),
               ]),

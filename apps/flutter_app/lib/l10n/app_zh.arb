@@ -129,7 +129,7 @@
   "privacyOthersTitle": "还有谁会看到你的访问",
   "privacyOthersBody": "网站及其服务器运行在 Vercel 上。Vercel 按其自己的政策保存请求日志，其中可能包括你请求的页面、时间、你的网络地址和浏览器类型。价格数据存放在 Supabase；那里只有游戏价格，没有任何访客信息，而且只接收我们服务器的请求。除了那些图片，网页版的所有内容（包括字体）都从我们自己的地址载入，Android 应用也只与我们的服务器通信。",
   "privacyNotNintendoTitle": "不是任天堂",
-  "privacyNotNintendoBody": "Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。价格收集自马来西亚 Nintendo eShop，并附上价格记录显示；要购买游戏，请使用你的 Switch。",
+  "privacyNotNintendoBody": "Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。价格收集自马来西亚 Nintendo eShop，并与其历史价格一同显示；要购买游戏，请使用你的 Switch。",
   "privacyEnglishPrevails": "本页为英文版的翻译；如两者有出入，以英文版为准。",
   "backToAbout": "返回关于",
   "onSaleChip": "特价",

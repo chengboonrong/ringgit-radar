@@ -69,10 +69,14 @@ class AboutPage extends ConsumerWidget {
                 runSpacing: 10,
                 children: [
                   for (final (code, name) in [(null, l.appLanguageSystem), ('en', l.languageEnglish), ('zh', l.languageChinese), ('ms', l.languageMalay)])
-                    OutlineChip(
-                      label: name,
-                      selected: locale?.languageCode == code,
-                      onTap: () => ref.read(localeProvider.notifier).set(code == null ? null : Locale(code)),
+                    // 简体中文 in the Chinese font in every language, not part Japanese-style kanji from M PLUS
+                    DefaultTextStyle.merge(
+                      style: code == 'zh' ? const TextStyle(fontFamily: zhFontFamily) : null,
+                      child: OutlineChip(
+                        label: name,
+                        selected: locale?.languageCode == code,
+                        onTap: () => ref.read(localeProvider.notifier).set(code == null ? null : Locale(code)),
+                      ),
                     ),
                 ],
               ),
