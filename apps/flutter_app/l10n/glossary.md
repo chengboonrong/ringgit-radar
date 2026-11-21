@@ -38,3 +38,10 @@ times are Malaysia time in every language.
 | Malaysia time | 马来西亚时间 | waktu Malaysia | Standard. |
 | Store / eShop | 商店 / eShop | kedai / eShop | "Nintendo eShop" and "Switch" stay as product names. |
 | Clear (reset filters) | 清除 | Set semula | ms "set semula" (reset) says what the button does; "kosongkan" (empty) was rejected for filters after back-translation. Clear search (a text field): 清除搜索 / Kosongkan carian, the usual wording for emptying a field; "Padam carian" read back as "delete search". |
+| Unofficial (the chip by the wordmark) | 非官方 | Tidak rasmi | Matches "independent, unofficial" in the About and privacy text (独立的非官方应用 / bebas yang tidak rasmi). `arb_test` forbids 官方 and "rasmi" unless preceded by 非 / "tidak". |
+| Independent app | 独立应用 | Aplikasi bebas | As in the About text. ms "bebas" (free-standing) as Malaysian apps describe themselves; not "independen". |
+| The publisher's store listing (where a description comes from) | 来自发行商在 eShop 上的介绍 | Teks penerbit daripada senarai eShop | Names the eShop and the publisher (发行商 / penerbit). Rejected after back-translation: 发行商的商店介绍 (does not name the eShop) and "senarai kedai penerbit" (reads as "the publisher's shop list"). |
+| Rights holder | 版权所有者 | Pemegang hak | The words readers know from copyright notices. Rejected after back-translation: 权利人 (stiff, legal) and "pemilik hak" (less usual than "pemegang hak"). |
+| Where our data comes from (page and link) | 我们的数据从哪里来 | Dari mana data kami datang | A plain question, as the English. |
+| Not endorsed by Nintendo | 未获其认可 | tidak disokong oleh Nintendo | ms: "tidak diiktiraf" back-translated as "not recognised", weaker than "not endorsed"; "disokong" (supported, endorsed) says it. |
+| Where from (data-sources heading) | 数据来源 | Asal data | A bare 来源 / "Sumber" was vague, and "Sumber" clashed with "Kod sumber" (source code) on the same page. |
