@@ -9,47 +9,47 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get languageHeading => 'Language';
+  String get languageHeading => '语言';
 
   @override
-  String get appLanguageSystem => 'System';
+  String get appLanguageSystem => '跟随系统';
 
   @override
   String couldNotLoad(String what) {
     String _temp0 = intl.Intl.selectLogic(what, {
-      'list': 'Couldn\'t load the list.',
-      'highlights': 'Couldn\'t load Highlights.',
-      'ranking': 'Couldn\'t load the ranking.',
-      'genres': 'Couldn\'t load genres.',
-      'status': 'Couldn\'t load data status.',
-      'game': 'Couldn\'t load this game.',
-      'other': 'Couldn\'t load this.',
+      'list': '无法载入列表。',
+      'highlights': '无法载入精选。',
+      'ranking': '无法载入排行。',
+      'genres': '无法载入游戏类型。',
+      'status': '无法载入数据状态。',
+      'game': '无法载入这款游戏。',
+      'other': '无法载入。',
     });
     return '$_temp0';
   }
 
   @override
   String serverAnswered(int status) {
-    return 'The server answered $status.';
+    return '服务器返回了代码 $status。';
   }
 
   @override
-  String get serverUnreachable => 'The Ringgit Radar server can\'t be reached.';
+  String get serverUnreachable => '无法连接 Ringgit Radar 服务器。';
 
   @override
-  String get unexpectedAnswer => 'The answer was not in the expected shape.';
+  String get unexpectedAnswer => '服务器返回的数据格式不对。';
 
   @override
-  String get somethingWentWrong => 'Something went wrong.';
+  String get somethingWentWrong => '出了点问题。';
 
   @override
   String saleEnds(String dateTime) {
-    return 'Sale ends $dateTime';
+    return '特价截止：$dateTime';
   }
 
   @override
   String percentOff(int percent) {
-    return '$percent% OFF';
+    return '省$percent%';
   }
 
   @override
@@ -61,186 +61,186 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Items: $countString',
+      other: '共 $countString 项',
     );
     return '$_temp0';
   }
 
   @override
-  String get comingSoon => 'Coming soon';
+  String get comingSoon => '即将发售';
 
   @override
-  String get priceUnavailable => 'Price unavailable';
+  String get priceUnavailable => '暂无价格';
 
   @override
-  String get navHighlights => 'Highlights';
+  String get navHighlights => '精选';
 
   @override
-  String get navSearch => 'Search';
+  String get navSearch => '搜索';
 
   @override
-  String get navWishList => 'Wish List';
+  String get navWishList => '愿望单';
 
   @override
-  String get navSale => 'Sale';
+  String get navSale => '特价';
 
   @override
-  String get navRanking => 'Ranking';
+  String get navRanking => '排行';
 
   @override
-  String get navRecent => 'Recent Releases';
+  String get navRecent => '新近发售';
 
   @override
-  String get navComingSoon => 'Coming Soon';
+  String get navComingSoon => '即将发售';
 
   @override
-  String get aboutApp => 'About Ringgit Radar';
+  String get aboutApp => '关于 Ringgit Radar';
 
   @override
-  String get sections => 'Sections';
+  String get sections => '栏目';
 
   @override
-  String get retry => 'Retry';
+  String get retry => '重试';
 
   @override
-  String get kindBundle => 'Bundle';
+  String get kindBundle => '套装';
 
   @override
-  String get kindAddon => 'Add-on';
+  String get kindAddon => '追加内容';
 
   @override
-  String get kindGame => 'Game';
+  String get kindGame => '游戏';
 
   @override
-  String get statusPreorder => 'Pre-order';
+  String get statusPreorder => '预购';
 
   @override
-  String get statusNew => 'NEW';
+  String get statusNew => '新品';
 
   @override
   String rankN(int rank) {
-    return 'Rank $rank';
+    return '第 $rank 名';
   }
 
   @override
   String endsOn(String date) {
-    return 'Ends $date';
+    return '$date截止';
   }
 
   @override
   String wishRemove(String title) {
-    return 'Remove $title from Wish List';
+    return '把 $title 移出愿望单';
   }
 
   @override
   String wishAdd(String title) {
-    return 'Add $title to Wish List';
+    return '把 $title 加入愿望单';
   }
 
   @override
   String priceOnSaleDescription(String now, String was, int percent) {
-    return 'Sale price $now, was $was, $percent percent off';
+    return '特价 $now，原价 $was，省 $percent%';
   }
 
   @override
-  String get back => 'Back';
+  String get back => '返回';
 
   @override
   String mediaPosition(int index, int count) {
-    return 'Media, $index of $count';
+    return '图片，第 $index 张，共 $count 张';
   }
 
   @override
-  String get nextImage => 'Next image';
+  String get nextImage => '下一张';
 
   @override
-  String get previousImage => 'Previous image';
+  String get previousImage => '上一张';
 
   @override
-  String get noPriceYet => 'No price recorded yet.';
+  String get noPriceYet => '还没有价格记录。';
 
   @override
   String trackingBeganOnlyPrice(String date) {
-    return 'Tracking began $date. We\'ve only seen this price so far.';
+    return '$date开始记录。到目前为止，我们只见过这个价格。';
   }
 
   @override
   String lowestSeenSince(String price, String date) {
-    return 'Lowest we\'ve seen: $price since $date';
+    return '我们见过的最低价：$price，$date首次出现';
   }
 
   @override
   String trackingBegan(String date) {
-    return 'Tracking began $date';
+    return '$date开始记录';
   }
 
   @override
-  String get historyHeading => 'What our history shows';
+  String get historyHeading => '我们的价格记录';
 
   @override
   String priceHistorySummary(String date, String prices) {
-    return 'Price history from $date: $prices.';
+    return '自$date起的价格记录：$prices。';
   }
 
   @override
-  String get priceHistoryJoiner => ', then ';
+  String get priceHistoryJoiner => '，之后 ';
 
   @override
-  String get descriptionHeading => 'Description';
+  String get descriptionHeading => '简介';
 
   @override
-  String get dlcHeading => 'Downloadable Content';
+  String get dlcHeading => '可下载内容';
 
   @override
-  String get publisher => 'Publisher';
+  String get publisher => '发行商';
 
   @override
-  String get platform => 'Platform';
+  String get platform => '平台';
 
   @override
-  String get productTypeDetail => 'Product type';
+  String get productTypeDetail => '产品类型';
 
   @override
-  String get releaseDate => 'Release date';
+  String get releaseDate => '发售日期';
 
   @override
-  String get genre => 'Genre';
+  String get genre => '游戏类型';
 
   @override
-  String get players => 'Players';
+  String get players => '玩家人数';
 
   @override
-  String get detailsHeading => 'Details';
+  String get detailsHeading => '详细信息';
 
   @override
-  String get noAgeRating => 'No age rating found';
+  String get noAgeRating => '未找到年龄分级';
 
   @override
   String ageRating(int age) {
-    return 'Age rating: $age (UK PEGI)';
+    return '年龄分级：$age（UK PEGI）';
   }
 
   @override
-  String get onWishList => 'On Wish List';
+  String get onWishList => '已在愿望单';
 
   @override
-  String get addToWishList => 'Add to Wish List';
+  String get addToWishList => '加入愿望单';
 
   @override
-  String get buyOnSwitch => 'Buy on your Switch\'s Nintendo eShop.';
+  String get buyOnSwitch => '请在你的 Switch 上通过 Nintendo eShop 购买。';
 
   @override
-  String get biggestSwitch2Savings => 'Biggest Switch 2 savings';
+  String get biggestSwitch2Savings => 'Switch 2 节省金额最高';
 
   @override
-  String get endingSoonHeading => 'Ending Soon';
+  String get endingSoonHeading => '即将截止';
 
   @override
-  String get newSales => 'New Sales';
+  String get newSales => '新特价';
 
   @override
   String upToRm(int amount) {
-    return 'Up to RM $amount';
+    return 'RM $amount 以下';
   }
 
   @override
@@ -252,129 +252,123 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Show $countString results',
-      one: 'Show 1 result',
-      zero: 'Show 0 results',
+      other: '显示 $countString 个结果',
     );
     return '$_temp0';
   }
 
   @override
-  String get showResultsNoCount => 'Show results';
+  String get showResultsNoCount => '显示结果';
 
   @override
-  String get closeFilters => 'Close filters';
+  String get closeFilters => '关闭筛选';
 
   @override
-  String get backToFilters => 'Back to filters';
+  String get backToFilters => '返回筛选';
 
   @override
-  String get clear => 'Clear';
+  String get clear => '清除';
 
   @override
-  String get filterProductType => 'Product Type';
+  String get filterProductType => '产品类型';
 
   @override
-  String get filterPrice => 'On Sale / Price Cap';
+  String get filterPrice => '特价 / 价格上限';
 
   @override
-  String get filterAge => 'Age Rating';
+  String get filterAge => '年龄分级';
 
   @override
-  String get filter => 'Filter';
+  String get filter => '筛选';
 
   @override
   String filterCount(int count) {
-    return 'Filter ($count)';
+    return '筛选（$count）';
   }
 
   @override
   String filterSelected(int count) {
-    return 'Filter, $count selected';
+    return '筛选，已选 $count 项';
   }
 
   @override
   String ageN(int age) {
-    return 'Age $age (UK PEGI)';
+    return '年龄 $age（UK PEGI）';
   }
 
   @override
-  String get ageNote =>
-      'Games with no rating found stay in the list until you pick an age.';
+  String get ageNote => '未找到分级的游戏会留在列表里，直到你选择年龄。';
 
   @override
-  String get onSaleOnly => 'On sale only';
+  String get onSaleOnly => '只看特价';
 
   @override
-  String get nothingHere => 'Nothing here yet.';
+  String get nothingHere => '这里还没有内容。';
 
   @override
-  String get retryLoadingMore => 'Retry loading more';
+  String get retryLoadingMore => '重新载入更多';
 
   @override
-  String get sortOrder => 'Sort order';
+  String get sortOrder => '排序方式';
 
   @override
   String sortCurrent(String label) {
-    return 'Sort: $label';
+    return '排序：$label';
   }
 
   @override
-  String get sortSavings => 'Biggest savings';
+  String get sortSavings => '节省金额最高';
 
   @override
-  String get sortDiscount => 'Biggest discount';
+  String get sortDiscount => '折扣最大';
 
   @override
-  String get sortPrice => 'Lowest price';
+  String get sortPrice => '价格最低';
 
   @override
-  String get sortNewest => 'Newest';
+  String get sortNewest => '最新';
 
   @override
-  String get sortEnding => 'Ending soon';
+  String get sortEnding => '即将截止';
 
   @override
-  String get sortTitle => 'Title';
+  String get sortTitle => '名称';
 
   @override
-  String get sortSoonest => 'Soonest';
+  String get sortSoonest => '最早发售';
 
   @override
-  String get saleHint => 'Sale end dates are shown in Malaysia time.';
+  String get saleHint => '特价截止时间均为马来西亚时间。';
 
   @override
-  String get comingSoonHint => 'Release dates come from the store listing.';
+  String get comingSoonHint => '发售日期取自商店页面。';
 
   @override
-  String get noFilterMatch =>
-      'No titles match these filters. Clear a filter to see more.';
+  String get noFilterMatch => '没有符合这些筛选条件的游戏。清除一项筛选可以看到更多。';
 
   @override
-  String get rankedBySaved => 'Ranked by ringgit saved';
+  String get rankedBySaved => '按省下的令吉排序';
 
   @override
-  String get nothingOnSaleConsole =>
-      'Nothing is on sale for this console right now.';
+  String get nothingOnSaleConsole => '这台主机目前没有特价游戏。';
 
   @override
-  String get someProductsMissing => 'Some products may not be included.';
+  String get someProductsMissing => '部分产品可能未收录。';
 
   @override
-  String get noTitlesFound =>
-      'No titles found. Try another keyword, or clear a filter.';
+  String get noTitlesFound => '没有找到游戏。试试别的关键词，或清除一项筛选。';
 
   @override
-  String get searchHint => 'Search by keyword/title';
+  String get searchHint => '按关键词或名称搜索';
 
   @override
-  String get clearSearch => 'Clear search';
+  String get clearSearch => '清除搜索';
 
   @override
-  String get viewAllSoftware => 'View All Software';
+  String get viewAllSoftware => '查看全部软件';
 
   @override
-  String get switch2ViewAll => 'Switch 2, View All Software';
+  String get switch2ViewAll => 'Switch 2，查看全部软件';
 
   @override
   String genreGames(String name, int count) {
@@ -385,67 +379,63 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$name, $countString games',
-      one: '$name, 1 game',
+      other: '$name，$countString 款游戏',
     );
     return '$_temp0';
   }
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => '关于';
 
   @override
-  String get aboutUnofficial =>
-      'Ringgit Radar is an independent, unofficial app. Not affiliated with or endorsed by Nintendo.';
+  String get aboutUnofficial => 'Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。';
 
   @override
-  String get aboutRecord =>
-      'It keeps its own record of Malaysian eShop prices in ringgit. To buy a game, use your Switch.';
+  String get aboutRecord => '本应用保存自己的马来西亚 eShop 令吉价格记录。要购买游戏，请使用你的 Switch。';
 
   @override
-  String get privacy => 'Privacy';
+  String get privacy => '隐私';
 
   @override
-  String get dataHeading => 'Data';
+  String get dataHeading => '数据';
 
   @override
-  String get pricesLastChecked => 'Prices last checked';
+  String get pricesLastChecked => '上次查看价格';
 
   @override
-  String get notYet => 'Not yet';
+  String get notYet => '暂无';
 
   @override
   String malaysiaTime(String dateTime) {
-    return '$dateTime (Malaysia time)';
+    return '$dateTime（马来西亚时间）';
   }
 
   @override
-  String get trackingBeganLabel => 'Tracking began';
+  String get trackingBeganLabel => '开始记录于';
 
   @override
-  String get productsTracked => 'Products tracked';
+  String get productsTracked => '记录的产品数';
 
   @override
-  String get appearanceHeading => 'Appearance';
+  String get appearanceHeading => '外观';
 
   @override
-  String get themeSystem => 'System';
+  String get themeSystem => '跟随系统';
 
   @override
-  String get themeLight => 'Light';
+  String get themeLight => '浅色';
 
   @override
-  String get themeDark => 'Dark';
+  String get themeDark => '深色';
 
   @override
-  String get listsHeading => 'Lists';
+  String get listsHeading => '列表';
 
   @override
-  String get showAllTitles => 'Show all titles';
+  String get showAllTitles => '显示全部游戏';
 
   @override
-  String get showAllSubtitle =>
-      'Also lists titles hidden by default, such as ones flagged by keyword.';
+  String get showAllSubtitle => '也列出默认隐藏的游戏，例如因关键词被标记的游戏。';
 
   @override
   String get languageEnglish => 'English';
@@ -457,144 +447,140 @@ class AppLocalizationsZh extends AppLocalizations {
   String get languageMalay => 'Bahasa Melayu';
 
   @override
-  String get privacyNoAccountsTitle => 'No accounts';
+  String get privacyNoAccountsTitle => '无需账户';
 
   @override
   String get privacyNoAccountsBody =>
-      'There is no sign-in. Ringgit Radar does not ask for your name, email or phone number, and it has no ads and no analytics.';
+      '无需登录。Ringgit Radar 不会询问你的姓名、电邮或电话号码，也没有广告和数据分析。';
 
   @override
-  String get privacyDeviceTitle => 'Your Wish List stays on your device';
+  String get privacyDeviceTitle => '你的愿望单只保存在你的设备上';
 
   @override
   String get privacyDeviceBody =>
-      'Your Wish List, your theme and language choices and the \"Show all titles\" setting are saved on this device only: in the browser\'s local storage on the web, in the app\'s preferences on Android. When you open your Wish List, the app asks our server for those games by their ids, so the server receives the ids in that request to answer it. It does not keep them or link them to you.';
+      '你的愿望单、主题和语言选择以及“显示全部游戏”设置只保存在这台设备上：网页版保存在浏览器的本地存储中，Android 应用保存在应用的偏好设置中。打开愿望单时，应用会按游戏编号向我们的服务器请求这些游戏，因此服务器会在这次请求中收到这些编号，以便作出回应。服务器不会保存这些编号，也不会把它们与你关联。';
 
   @override
-  String get privacyLogsTitle => 'What our server logs';
+  String get privacyLogsTitle => '我们的服务器记录什么';
 
   @override
   String get privacyLogsBody =>
-      'Our server writes no access log. It logs only errors, for example a database error, and those lines hold an error message, not your address. To stop one visitor from overloading it, the server counts requests per internet address, in memory only. Those addresses are never written to disk.';
+      '我们的服务器不写访问日志。它只记录错误，例如数据库错误，这些记录只包含错误信息，不包含你的网络地址。为了防止单一访客使服务器过载，服务器会按网络地址计算请求次数，这些计数只保存在内存中。这些地址从不写入磁盘。';
 
   @override
-  String get privacyPicturesTitle =>
-      'Pictures come from Nintendo\'s image server';
+  String get privacyPicturesTitle => '图片来自任天堂的图片服务器';
 
   @override
   String get privacyPicturesBody =>
-      'Game art and screenshots load straight from the store\'s image server (img-eshop.cdn.nintendo.net). Your browser or phone asks it for each picture, so Nintendo receives your internet address and the usual details of a request, under Nintendo\'s own privacy policy. Ringgit Radar does not keep or pass on any pictures.';
+      '游戏封面和截图直接从商店的图片服务器（img-eshop.cdn.nintendo.net）载入。你的浏览器或手机会向它请求每张图片，因此任天堂会收到你的网络地址和一般的请求信息，适用任天堂自己的隐私政策。Ringgit Radar 不保存也不转交任何图片。';
 
   @override
-  String get privacyOthersTitle => 'Who else sees your visit';
+  String get privacyOthersTitle => '还有谁会看到你的访问';
 
   @override
   String get privacyOthersBody =>
-      'The site and its server run on Vercel. Vercel keeps request logs under its own policy, which can include the page you asked for, the time, your internet address and your browser type. Price data is stored with Supabase; it holds game prices and nothing about visitors, and it only ever hears from our server. Apart from those pictures, the web version loads everything, fonts included, from our own address, and the Android app talks only to our server.';
+      '网站及其服务器运行在 Vercel 上。Vercel 按其自己的政策保存请求日志，其中可能包括你请求的页面、时间、你的网络地址和浏览器类型。价格数据存放在 Supabase；那里只有游戏价格，没有任何访客信息，而且只接收我们服务器的请求。除了那些图片，网页版的所有内容（包括字体）都从我们自己的地址载入，Android 应用也只与我们的服务器通信。';
 
   @override
-  String get privacyNotNintendoTitle => 'Not Nintendo';
+  String get privacyNotNintendoTitle => '不是任天堂';
 
   @override
   String get privacyNotNintendoBody =>
-      'Ringgit Radar is an independent, unofficial app. Not affiliated with or endorsed by Nintendo. Prices are collected from the Malaysian Nintendo eShop and shown with their history; to buy a game, use your Switch.';
+      'Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。价格收集自马来西亚 Nintendo eShop，并附上价格记录显示；要购买游戏，请使用你的 Switch。';
 
   @override
-  String get privacyEnglishPrevails => '';
+  String get privacyEnglishPrevails => '本页为英文版的翻译；如两者有出入，以英文版为准。';
 
   @override
-  String get backToAbout => 'Back to About';
+  String get backToAbout => '返回关于';
 
   @override
-  String get onSaleChip => 'On Sale';
+  String get onSaleChip => '特价';
 
   @override
-  String get noneOnSale =>
-      'None of the games on your Wish List are on sale right now.';
+  String get noneOnSale => '你的愿望单里目前没有特价游戏。';
 
   @override
-  String get wishEmptyTitle =>
-      'You can add software you\'re interested in to your Wish List!';
+  String get wishEmptyTitle => '你可以把感兴趣的软件加入愿望单！';
 
   @override
-  String get wishEmptyHint =>
-      'Tap the heart on any game, in a list or on its page, to add it here.';
+  String get wishEmptyHint => '在列表里或游戏页面上点一下任何游戏的心形图标，就能把它加到这里。';
 
   @override
-  String get genreAction => 'Action';
+  String get genreAction => '动作';
 
   @override
-  String get genreAdventure => 'Adventure';
+  String get genreAdventure => '冒险';
 
   @override
-  String get genrePuzzle => 'Puzzle';
+  String get genrePuzzle => '益智';
 
   @override
-  String get genreSimulation => 'Simulation';
+  String get genreSimulation => '模拟';
 
   @override
-  String get genreArcade => 'Arcade';
+  String get genreArcade => '街机';
 
   @override
-  String get genreRpg => 'RPG';
+  String get genreRpg => '角色扮演';
 
   @override
-  String get genreStrategy => 'Strategy';
+  String get genreStrategy => '策略';
 
   @override
-  String get genreOther => 'Other';
+  String get genreOther => '其他';
 
   @override
-  String get genrePlatformer => 'Platformer';
+  String get genrePlatformer => '平台跳跃';
 
   @override
-  String get genreShooter => 'Shooter';
+  String get genreShooter => '射击';
 
   @override
-  String get genreParty => 'Party';
+  String get genreParty => '派对';
 
   @override
-  String get genreMultiplayer => 'Multiplayer';
+  String get genreMultiplayer => '多人游戏';
 
   @override
-  String get genreRacing => 'Racing';
+  String get genreRacing => '竞速';
 
   @override
-  String get genreSports => 'Sports';
+  String get genreSports => '体育';
 
   @override
-  String get genreBoardGame => 'Board Game';
+  String get genreBoardGame => '桌游';
 
   @override
-  String get genreFighting => 'Fighting';
+  String get genreFighting => '格斗';
 
   @override
-  String get genreLifestyle => 'Lifestyle';
+  String get genreLifestyle => '生活方式';
 
   @override
-  String get genreCommunication => 'Communication';
+  String get genreCommunication => '交流';
 
   @override
-  String get genreEducation => 'Education';
+  String get genreEducation => '教育';
 
   @override
-  String get genreTraining => 'Training';
+  String get genreTraining => '训练';
 
   @override
-  String get genreStudy => 'Study';
+  String get genreStudy => '学习';
 
   @override
-  String get genreUtility => 'Utility';
+  String get genreUtility => '实用工具';
 
   @override
-  String get genreFirstPersonShooter => 'First-Person Shooter';
+  String get genreFirstPersonShooter => '第一人称射击';
 
   @override
-  String get genreMusic => 'Music';
+  String get genreMusic => '音乐';
 
   @override
-  String get genrePractical => 'Practical';
+  String get genrePractical => '实用软件';
 
   @override
-  String get genreVideo => 'Video';
+  String get genreVideo => '视频';
 }

@@ -9,47 +9,49 @@ class AppLocalizationsMs extends AppLocalizations {
   AppLocalizationsMs([String locale = 'ms']) : super(locale);
 
   @override
-  String get languageHeading => 'Language';
+  String get languageHeading => 'Bahasa';
 
   @override
-  String get appLanguageSystem => 'System';
+  String get appLanguageSystem => 'Ikut sistem';
 
   @override
   String couldNotLoad(String what) {
     String _temp0 = intl.Intl.selectLogic(what, {
-      'list': 'Couldn\'t load the list.',
-      'highlights': 'Couldn\'t load Highlights.',
-      'ranking': 'Couldn\'t load the ranking.',
-      'genres': 'Couldn\'t load genres.',
-      'status': 'Couldn\'t load data status.',
-      'game': 'Couldn\'t load this game.',
-      'other': 'Couldn\'t load this.',
+      'list': 'Senarai tidak dapat dimuatkan.',
+      'highlights': 'Sorotan tidak dapat dimuatkan.',
+      'ranking': 'Kedudukan tidak dapat dimuatkan.',
+      'genres': 'Genre tidak dapat dimuatkan.',
+      'status': 'Status data tidak dapat dimuatkan.',
+      'game': 'Permainan ini tidak dapat dimuatkan.',
+      'other': 'Tidak dapat dimuatkan.',
     });
     return '$_temp0';
   }
 
   @override
   String serverAnswered(int status) {
-    return 'The server answered $status.';
+    return 'Pelayan membalas dengan kod $status.';
   }
 
   @override
-  String get serverUnreachable => 'The Ringgit Radar server can\'t be reached.';
+  String get serverUnreachable =>
+      'Pelayan Ringgit Radar tidak dapat dihubungi.';
 
   @override
-  String get unexpectedAnswer => 'The answer was not in the expected shape.';
+  String get unexpectedAnswer =>
+      'Jawapan pelayan tidak dalam bentuk yang dijangka.';
 
   @override
-  String get somethingWentWrong => 'Something went wrong.';
+  String get somethingWentWrong => 'Ada sesuatu yang tidak kena.';
 
   @override
   String saleEnds(String dateTime) {
-    return 'Sale ends $dateTime';
+    return 'Promosi sehingga $dateTime';
   }
 
   @override
   String percentOff(int percent) {
-    return '$percent% OFF';
+    return 'DISKAUN $percent%';
   }
 
   @override
@@ -61,186 +63,186 @@ class AppLocalizationsMs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Items: $countString',
+      other: 'Item: $countString',
     );
     return '$_temp0';
   }
 
   @override
-  String get comingSoon => 'Coming soon';
+  String get comingSoon => 'Akan datang';
 
   @override
-  String get priceUnavailable => 'Price unavailable';
+  String get priceUnavailable => 'Tiada harga';
 
   @override
-  String get navHighlights => 'Highlights';
+  String get navHighlights => 'Sorotan';
 
   @override
-  String get navSearch => 'Search';
+  String get navSearch => 'Cari';
 
   @override
-  String get navWishList => 'Wish List';
+  String get navWishList => 'Senarai Hajat';
 
   @override
-  String get navSale => 'Sale';
+  String get navSale => 'Promosi';
 
   @override
-  String get navRanking => 'Ranking';
+  String get navRanking => 'Kedudukan';
 
   @override
-  String get navRecent => 'Recent Releases';
+  String get navRecent => 'Keluaran Terkini';
 
   @override
-  String get navComingSoon => 'Coming Soon';
+  String get navComingSoon => 'Akan Datang';
 
   @override
-  String get aboutApp => 'About Ringgit Radar';
+  String get aboutApp => 'Perihal Ringgit Radar';
 
   @override
-  String get sections => 'Sections';
+  String get sections => 'Bahagian';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Cuba lagi';
 
   @override
-  String get kindBundle => 'Bundle';
+  String get kindBundle => 'Pakej';
 
   @override
-  String get kindAddon => 'Add-on';
+  String get kindAddon => 'Kandungan tambahan';
 
   @override
-  String get kindGame => 'Game';
+  String get kindGame => 'Permainan';
 
   @override
-  String get statusPreorder => 'Pre-order';
+  String get statusPreorder => 'Pra-tempah';
 
   @override
-  String get statusNew => 'NEW';
+  String get statusNew => 'BAHARU';
 
   @override
   String rankN(int rank) {
-    return 'Rank $rank';
+    return 'Kedudukan $rank';
   }
 
   @override
   String endsOn(String date) {
-    return 'Ends $date';
+    return 'Hingga $date';
   }
 
   @override
   String wishRemove(String title) {
-    return 'Remove $title from Wish List';
+    return 'Buang $title daripada Senarai Hajat';
   }
 
   @override
   String wishAdd(String title) {
-    return 'Add $title to Wish List';
+    return 'Tambah $title ke Senarai Hajat';
   }
 
   @override
   String priceOnSaleDescription(String now, String was, int percent) {
-    return 'Sale price $now, was $was, $percent percent off';
+    return 'Harga promosi $now, harga asal $was, diskaun $percent peratus';
   }
 
   @override
-  String get back => 'Back';
+  String get back => 'Kembali';
 
   @override
   String mediaPosition(int index, int count) {
-    return 'Media, $index of $count';
+    return 'Media, $index daripada $count';
   }
 
   @override
-  String get nextImage => 'Next image';
+  String get nextImage => 'Gambar seterusnya';
 
   @override
-  String get previousImage => 'Previous image';
+  String get previousImage => 'Gambar sebelumnya';
 
   @override
-  String get noPriceYet => 'No price recorded yet.';
+  String get noPriceYet => 'Belum ada harga direkodkan.';
 
   @override
   String trackingBeganOnlyPrice(String date) {
-    return 'Tracking began $date. We\'ve only seen this price so far.';
+    return 'Rekod bermula $date. Setakat ini kami hanya pernah melihat harga ini.';
   }
 
   @override
   String lowestSeenSince(String price, String date) {
-    return 'Lowest we\'ve seen: $price since $date';
+    return 'Harga terendah yang pernah kami lihat: $price sejak $date';
   }
 
   @override
   String trackingBegan(String date) {
-    return 'Tracking began $date';
+    return 'Rekod bermula $date';
   }
 
   @override
-  String get historyHeading => 'What our history shows';
+  String get historyHeading => 'Apa yang ditunjukkan rekod kami';
 
   @override
   String priceHistorySummary(String date, String prices) {
-    return 'Price history from $date: $prices.';
+    return 'Sejarah harga sejak $date: $prices.';
   }
 
   @override
-  String get priceHistoryJoiner => ', then ';
+  String get priceHistoryJoiner => ', kemudian ';
 
   @override
-  String get descriptionHeading => 'Description';
+  String get descriptionHeading => 'Keterangan';
 
   @override
-  String get dlcHeading => 'Downloadable Content';
+  String get dlcHeading => 'Kandungan Boleh Muat Turun';
 
   @override
-  String get publisher => 'Publisher';
+  String get publisher => 'Penerbit';
 
   @override
   String get platform => 'Platform';
 
   @override
-  String get productTypeDetail => 'Product type';
+  String get productTypeDetail => 'Jenis produk';
 
   @override
-  String get releaseDate => 'Release date';
+  String get releaseDate => 'Tarikh keluaran';
 
   @override
   String get genre => 'Genre';
 
   @override
-  String get players => 'Players';
+  String get players => 'Bilangan pemain';
 
   @override
-  String get detailsHeading => 'Details';
+  String get detailsHeading => 'Butiran';
 
   @override
-  String get noAgeRating => 'No age rating found';
+  String get noAgeRating => 'Tiada penarafan umur ditemui';
 
   @override
   String ageRating(int age) {
-    return 'Age rating: $age (UK PEGI)';
+    return 'Penarafan umur: $age (UK PEGI)';
   }
 
   @override
-  String get onWishList => 'On Wish List';
+  String get onWishList => 'Dalam Senarai Hajat';
 
   @override
-  String get addToWishList => 'Add to Wish List';
+  String get addToWishList => 'Tambah ke Senarai Hajat';
 
   @override
-  String get buyOnSwitch => 'Buy on your Switch\'s Nintendo eShop.';
+  String get buyOnSwitch => 'Beli di Nintendo eShop pada Switch anda.';
 
   @override
-  String get biggestSwitch2Savings => 'Biggest Switch 2 savings';
+  String get biggestSwitch2Savings => 'Penjimatan Switch 2 terbesar';
 
   @override
-  String get endingSoonHeading => 'Ending Soon';
+  String get endingSoonHeading => 'Hampir Tamat';
 
   @override
-  String get newSales => 'New Sales';
+  String get newSales => 'Promosi Baharu';
 
   @override
   String upToRm(int amount) {
-    return 'Up to RM $amount';
+    return 'Hingga RM $amount';
   }
 
   @override
@@ -252,129 +254,130 @@ class AppLocalizationsMs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Show $countString results',
-      one: 'Show 1 result',
-      zero: 'Show 0 results',
+      other: 'Tunjuk $countString hasil',
+      one: 'Tunjuk 1 hasil',
     );
     return '$_temp0';
   }
 
   @override
-  String get showResultsNoCount => 'Show results';
+  String get showResultsNoCount => 'Tunjuk hasil';
 
   @override
-  String get closeFilters => 'Close filters';
+  String get closeFilters => 'Tutup penapis';
 
   @override
-  String get backToFilters => 'Back to filters';
+  String get backToFilters => 'Kembali ke penapis';
 
   @override
-  String get clear => 'Clear';
+  String get clear => 'Set semula';
 
   @override
-  String get filterProductType => 'Product Type';
+  String get filterProductType => 'Jenis Produk';
 
   @override
-  String get filterPrice => 'On Sale / Price Cap';
+  String get filterPrice => 'Promosi / Had Harga';
 
   @override
-  String get filterAge => 'Age Rating';
+  String get filterAge => 'Penarafan Umur';
 
   @override
-  String get filter => 'Filter';
+  String get filter => 'Tapis';
 
   @override
   String filterCount(int count) {
-    return 'Filter ($count)';
+    return 'Tapis ($count)';
   }
 
   @override
   String filterSelected(int count) {
-    return 'Filter, $count selected';
+    return 'Tapis, $count dipilih';
   }
 
   @override
   String ageN(int age) {
-    return 'Age $age (UK PEGI)';
+    return 'Umur $age (UK PEGI)';
   }
 
   @override
   String get ageNote =>
-      'Games with no rating found stay in the list until you pick an age.';
+      'Permainan tanpa penarafan kekal dalam senarai sehingga anda memilih umur.';
 
   @override
-  String get onSaleOnly => 'On sale only';
+  String get onSaleOnly => 'Promosi sahaja';
 
   @override
-  String get nothingHere => 'Nothing here yet.';
+  String get nothingHere => 'Belum ada apa-apa di sini.';
 
   @override
-  String get retryLoadingMore => 'Retry loading more';
+  String get retryLoadingMore => 'Cuba muatkan lagi';
 
   @override
-  String get sortOrder => 'Sort order';
+  String get sortOrder => 'Susunan isihan';
 
   @override
   String sortCurrent(String label) {
-    return 'Sort: $label';
+    return 'Isih: $label';
   }
 
   @override
-  String get sortSavings => 'Biggest savings';
+  String get sortSavings => 'Penjimatan terbesar';
 
   @override
-  String get sortDiscount => 'Biggest discount';
+  String get sortDiscount => 'Diskaun terbesar';
 
   @override
-  String get sortPrice => 'Lowest price';
+  String get sortPrice => 'Harga terendah';
 
   @override
-  String get sortNewest => 'Newest';
+  String get sortNewest => 'Terbaharu';
 
   @override
-  String get sortEnding => 'Ending soon';
+  String get sortEnding => 'Hampir tamat';
 
   @override
-  String get sortTitle => 'Title';
+  String get sortTitle => 'Tajuk';
 
   @override
-  String get sortSoonest => 'Soonest';
+  String get sortSoonest => 'Paling awal';
 
   @override
-  String get saleHint => 'Sale end dates are shown in Malaysia time.';
+  String get saleHint =>
+      'Tarikh tamat promosi ditunjukkan dalam waktu Malaysia.';
 
   @override
-  String get comingSoonHint => 'Release dates come from the store listing.';
+  String get comingSoonHint =>
+      'Tarikh keluaran diambil daripada halaman kedai.';
 
   @override
   String get noFilterMatch =>
-      'No titles match these filters. Clear a filter to see more.';
+      'Tiada tajuk sepadan dengan penapis ini. Buang satu penapis untuk melihat lebih banyak.';
 
   @override
-  String get rankedBySaved => 'Ranked by ringgit saved';
+  String get rankedBySaved => 'Disusun mengikut ringgit yang dijimatkan';
 
   @override
-  String get nothingOnSaleConsole =>
-      'Nothing is on sale for this console right now.';
+  String get nothingOnSaleConsole => 'Tiada promosi untuk konsol ini sekarang.';
 
   @override
-  String get someProductsMissing => 'Some products may not be included.';
+  String get someProductsMissing =>
+      'Sesetengah produk mungkin tidak disenaraikan.';
 
   @override
   String get noTitlesFound =>
-      'No titles found. Try another keyword, or clear a filter.';
+      'Tiada tajuk ditemui. Cuba kata kunci lain, atau buang satu penapis.';
 
   @override
-  String get searchHint => 'Search by keyword/title';
+  String get searchHint => 'Cari ikut kata kunci/tajuk';
 
   @override
-  String get clearSearch => 'Clear search';
+  String get clearSearch => 'Kosongkan carian';
 
   @override
-  String get viewAllSoftware => 'View All Software';
+  String get viewAllSoftware => 'Lihat Semua Perisian';
 
   @override
-  String get switch2ViewAll => 'Switch 2, View All Software';
+  String get switch2ViewAll => 'Switch 2, Lihat Semua Perisian';
 
   @override
   String genreGames(String name, int count) {
@@ -385,67 +388,67 @@ class AppLocalizationsMs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$name, $countString games',
-      one: '$name, 1 game',
+      other: '$name, $countString permainan',
+      one: '$name, 1 permainan',
     );
     return '$_temp0';
   }
 
   @override
-  String get aboutTitle => 'About';
+  String get aboutTitle => 'Perihal';
 
   @override
   String get aboutUnofficial =>
-      'Ringgit Radar is an independent, unofficial app. Not affiliated with or endorsed by Nintendo.';
+      'Ringgit Radar ialah aplikasi bebas yang tidak rasmi. Ia tiada hubungan dengan Nintendo dan tidak diiktiraf oleh Nintendo.';
 
   @override
   String get aboutRecord =>
-      'It keeps its own record of Malaysian eShop prices in ringgit. To buy a game, use your Switch.';
+      'Ia menyimpan rekodnya sendiri tentang harga eShop Malaysia dalam ringgit. Untuk membeli permainan, gunakan Switch anda.';
 
   @override
-  String get privacy => 'Privacy';
+  String get privacy => 'Privasi';
 
   @override
   String get dataHeading => 'Data';
 
   @override
-  String get pricesLastChecked => 'Prices last checked';
+  String get pricesLastChecked => 'Harga terakhir disemak';
 
   @override
-  String get notYet => 'Not yet';
+  String get notYet => 'Belum';
 
   @override
   String malaysiaTime(String dateTime) {
-    return '$dateTime (Malaysia time)';
+    return '$dateTime (waktu Malaysia)';
   }
 
   @override
-  String get trackingBeganLabel => 'Tracking began';
+  String get trackingBeganLabel => 'Rekod bermula';
 
   @override
-  String get productsTracked => 'Products tracked';
+  String get productsTracked => 'Produk direkodkan';
 
   @override
-  String get appearanceHeading => 'Appearance';
+  String get appearanceHeading => 'Penampilan';
 
   @override
-  String get themeSystem => 'System';
+  String get themeSystem => 'Sistem';
 
   @override
-  String get themeLight => 'Light';
+  String get themeLight => 'Cerah';
 
   @override
-  String get themeDark => 'Dark';
+  String get themeDark => 'Gelap';
 
   @override
-  String get listsHeading => 'Lists';
+  String get listsHeading => 'Senarai';
 
   @override
-  String get showAllTitles => 'Show all titles';
+  String get showAllTitles => 'Tunjuk semua tajuk';
 
   @override
   String get showAllSubtitle =>
-      'Also lists titles hidden by default, such as ones flagged by keyword.';
+      'Turut menyenaraikan tajuk yang tersembunyi secara lalai, seperti yang ditanda kerana kata kunci.';
 
   @override
   String get languageEnglish => 'English';
@@ -457,143 +460,144 @@ class AppLocalizationsMs extends AppLocalizations {
   String get languageMalay => 'Bahasa Melayu';
 
   @override
-  String get privacyNoAccountsTitle => 'No accounts';
+  String get privacyNoAccountsTitle => 'Tiada akaun';
 
   @override
   String get privacyNoAccountsBody =>
-      'There is no sign-in. Ringgit Radar does not ask for your name, email or phone number, and it has no ads and no analytics.';
+      'Tiada log masuk. Ringgit Radar tidak meminta nama, e-mel atau nombor telefon anda, dan ia tidak mempunyai iklan atau analitik.';
 
   @override
-  String get privacyDeviceTitle => 'Your Wish List stays on your device';
+  String get privacyDeviceTitle => 'Senarai Hajat anda kekal pada peranti anda';
 
   @override
   String get privacyDeviceBody =>
-      'Your Wish List, your theme and language choices and the \"Show all titles\" setting are saved on this device only: in the browser\'s local storage on the web, in the app\'s preferences on Android. When you open your Wish List, the app asks our server for those games by their ids, so the server receives the ids in that request to answer it. It does not keep them or link them to you.';
+      'Senarai Hajat anda, pilihan tema dan bahasa anda serta tetapan \"Tunjuk semua tajuk\" disimpan pada peranti ini sahaja: dalam storan setempat pelayar di web, dalam keutamaan aplikasi di Android. Apabila anda membuka Senarai Hajat, aplikasi meminta permainan-permainan itu daripada pelayan kami mengikut id permainan, jadi pelayan menerima id tersebut dalam permintaan itu untuk menjawabnya. Pelayan tidak menyimpan id itu atau mengaitkannya dengan anda.';
 
   @override
-  String get privacyLogsTitle => 'What our server logs';
+  String get privacyLogsTitle => 'Apa yang dilog oleh pelayan kami';
 
   @override
   String get privacyLogsBody =>
-      'Our server writes no access log. It logs only errors, for example a database error, and those lines hold an error message, not your address. To stop one visitor from overloading it, the server counts requests per internet address, in memory only. Those addresses are never written to disk.';
+      'Pelayan kami tidak menulis log akses. Ia hanya melog ralat, contohnya ralat pangkalan data, dan baris log tersebut mengandungi mesej ralat, bukan alamat internet anda. Untuk mengelakkan seorang pelawat membebankannya, pelayan mengira permintaan bagi setiap alamat internet, dalam memori sahaja. Alamat itu tidak pernah ditulis ke cakera.';
 
   @override
   String get privacyPicturesTitle =>
-      'Pictures come from Nintendo\'s image server';
+      'Gambar datang daripada pelayan imej Nintendo';
 
   @override
   String get privacyPicturesBody =>
-      'Game art and screenshots load straight from the store\'s image server (img-eshop.cdn.nintendo.net). Your browser or phone asks it for each picture, so Nintendo receives your internet address and the usual details of a request, under Nintendo\'s own privacy policy. Ringgit Radar does not keep or pass on any pictures.';
+      'Seni permainan dan tangkapan skrin dimuatkan terus daripada pelayan imej kedai (img-eshop.cdn.nintendo.net). Pelayar atau telefon anda meminta setiap gambar daripada pelayan itu, jadi Nintendo menerima alamat internet anda dan butiran biasa sesuatu permintaan, di bawah dasar privasi Nintendo sendiri. Ringgit Radar tidak menyimpan sebarang gambar dan tidak menyerahkannya kepada pihak lain.';
 
   @override
-  String get privacyOthersTitle => 'Who else sees your visit';
+  String get privacyOthersTitle => 'Siapa lagi yang melihat lawatan anda';
 
   @override
   String get privacyOthersBody =>
-      'The site and its server run on Vercel. Vercel keeps request logs under its own policy, which can include the page you asked for, the time, your internet address and your browser type. Price data is stored with Supabase; it holds game prices and nothing about visitors, and it only ever hears from our server. Apart from those pictures, the web version loads everything, fonts included, from our own address, and the Android app talks only to our server.';
+      'Laman dan pelayannya berjalan di Vercel. Vercel menyimpan log permintaan di bawah dasarnya sendiri, yang boleh termasuk halaman yang anda minta, masa, alamat internet anda dan jenis pelayar anda. Data harga disimpan di Supabase; ia hanya menyimpan harga permainan dan tiada apa-apa tentang pelawat, dan ia hanya menerima permintaan daripada pelayan kami. Selain gambar tersebut, versi web memuatkan segala-galanya, termasuk fon, daripada alamat kami sendiri, dan aplikasi Android hanya berhubung dengan pelayan kami.';
 
   @override
-  String get privacyNotNintendoTitle => 'Not Nintendo';
+  String get privacyNotNintendoTitle => 'Bukan Nintendo';
 
   @override
   String get privacyNotNintendoBody =>
-      'Ringgit Radar is an independent, unofficial app. Not affiliated with or endorsed by Nintendo. Prices are collected from the Malaysian Nintendo eShop and shown with their history; to buy a game, use your Switch.';
+      'Ringgit Radar ialah aplikasi bebas yang tidak rasmi. Ia tiada hubungan dengan Nintendo dan tidak diiktiraf oleh Nintendo. Harga dikumpul daripada Nintendo eShop Malaysia dan ditunjukkan bersama sejarahnya; untuk membeli permainan, gunakan Switch anda.';
 
   @override
-  String get privacyEnglishPrevails => '';
+  String get privacyEnglishPrevails =>
+      'Halaman ini ialah terjemahan versi bahasa Inggeris; jika terdapat perbezaan, versi bahasa Inggeris terpakai.';
 
   @override
-  String get backToAbout => 'Back to About';
+  String get backToAbout => 'Kembali ke Perihal';
 
   @override
-  String get onSaleChip => 'On Sale';
+  String get onSaleChip => 'Promosi';
 
   @override
   String get noneOnSale =>
-      'None of the games on your Wish List are on sale right now.';
+      'Tiada permainan dalam Senarai Hajat anda yang dalam promosi sekarang.';
 
   @override
   String get wishEmptyTitle =>
-      'You can add software you\'re interested in to your Wish List!';
+      'Anda boleh menambah perisian yang anda minati ke Senarai Hajat anda!';
 
   @override
   String get wishEmptyHint =>
-      'Tap the heart on any game, in a list or on its page, to add it here.';
+      'Ketik ikon hati pada mana-mana permainan, dalam senarai atau pada halamannya, untuk menambahnya di sini.';
 
   @override
-  String get genreAction => 'Action';
+  String get genreAction => 'Aksi';
 
   @override
-  String get genreAdventure => 'Adventure';
+  String get genreAdventure => 'Pengembaraan';
 
   @override
-  String get genrePuzzle => 'Puzzle';
+  String get genrePuzzle => 'Teka-teki';
 
   @override
-  String get genreSimulation => 'Simulation';
+  String get genreSimulation => 'Simulasi';
 
   @override
-  String get genreArcade => 'Arcade';
+  String get genreArcade => 'Arked';
 
   @override
   String get genreRpg => 'RPG';
 
   @override
-  String get genreStrategy => 'Strategy';
+  String get genreStrategy => 'Strategi';
 
   @override
-  String get genreOther => 'Other';
+  String get genreOther => 'Lain-lain';
 
   @override
   String get genrePlatformer => 'Platformer';
 
   @override
-  String get genreShooter => 'Shooter';
+  String get genreShooter => 'Tembak-menembak';
 
   @override
-  String get genreParty => 'Party';
+  String get genreParty => 'Parti';
 
   @override
-  String get genreMultiplayer => 'Multiplayer';
+  String get genreMultiplayer => 'Berbilang Pemain';
 
   @override
-  String get genreRacing => 'Racing';
+  String get genreRacing => 'Perlumbaan';
 
   @override
-  String get genreSports => 'Sports';
+  String get genreSports => 'Sukan';
 
   @override
-  String get genreBoardGame => 'Board Game';
+  String get genreBoardGame => 'Permainan Papan';
 
   @override
-  String get genreFighting => 'Fighting';
+  String get genreFighting => 'Pertarungan';
 
   @override
-  String get genreLifestyle => 'Lifestyle';
+  String get genreLifestyle => 'Gaya Hidup';
 
   @override
-  String get genreCommunication => 'Communication';
+  String get genreCommunication => 'Komunikasi';
 
   @override
-  String get genreEducation => 'Education';
+  String get genreEducation => 'Pendidikan';
 
   @override
-  String get genreTraining => 'Training';
+  String get genreTraining => 'Latihan';
 
   @override
-  String get genreStudy => 'Study';
+  String get genreStudy => 'Pembelajaran';
 
   @override
-  String get genreUtility => 'Utility';
+  String get genreUtility => 'Utiliti';
 
   @override
-  String get genreFirstPersonShooter => 'First-Person Shooter';
+  String get genreFirstPersonShooter => 'Tembak-menembak FPS';
 
   @override
-  String get genreMusic => 'Music';
+  String get genreMusic => 'Muzik';
 
   @override
-  String get genrePractical => 'Practical';
+  String get genrePractical => 'Praktikal';
 
   @override
   String get genreVideo => 'Video';
