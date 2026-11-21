@@ -28,25 +28,39 @@ class RinggitRadarApp extends ConsumerStatefulWidget {
   ConsumerState<RinggitRadarApp> createState() => _RinggitRadarAppState();
 }
 
-class _RinggitRadarAppState extends ConsumerState<RinggitRadarApp> {
+class _RinggitRadarAppState extends ConsumerState<RinggitRadarApp> with WidgetsBindingObserver {
   final _router = buildRouter();
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _router.dispose();
     super.dispose();
   }
 
+  // System follows the device, so the theme's fonts must follow a device language change too
+  @override
+  void didChangeLocales(List<Locale>? locales) => setState(() {});
+
   @override
   Widget build(BuildContext context) {
+    final locale = ref.watch(localeProvider);
+    // the same answer MaterialApp reaches, needed here because the theme is built above it
+    final code = (locale ?? resolveAppLocale(WidgetsBinding.instance.platformDispatcher.locales)).languageCode;
     return MaterialApp.router(
       title: 'Ringgit Radar',
       debugShowCheckedModeBanner: false,
       routerConfig: _router,
       themeMode: ref.watch(themeModeProvider),
-      theme: buildTheme(Brightness.light),
-      darkTheme: buildTheme(Brightness.dark),
-      locale: ref.watch(localeProvider),
+      theme: buildTheme(Brightness.light, languageCode: code),
+      darkTheme: buildTheme(Brightness.dark, languageCode: code),
+      locale: locale,
       supportedLocales: appLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       localeListResolutionCallback: (device, _) => resolveAppLocale(device),

@@ -48,6 +48,7 @@ void main() {
     expect(find.text(zh.languageHeading), findsOneWidget);
     expect(Localizations.localeOf(t.element(find.text(zh.languageHeading))), const Locale('zh'));
     expect(prefs.getString(localeKey), 'zh');
+    expect(Theme.of(t.element(find.text(zh.languageHeading))).textTheme.bodyMedium!.fontFamily, 'RinggitZh');
 
     await t.tap(find.text('Bahasa Melayu'));
     await t.pumpAndSettle();
