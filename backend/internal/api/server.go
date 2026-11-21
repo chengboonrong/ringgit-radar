@@ -99,9 +99,6 @@ type gameJSON struct {
 	SalesStatus  string     `json:"sales_status,omitempty"`
 	Price        *priceJSON `json:"price"`
 	Rank         *int       `json:"rank,omitempty"`
-	// UK PEGI age and content descriptors from the titledb match; null when no rating was found
-	Age            *int     `json:"age"`
-	AgeDescriptors []string `json:"age_descriptors"`
 }
 
 type historyJSON struct {
@@ -152,11 +149,6 @@ func toGame(c db.Catalog) gameJSON {
 	g := gameJSON{
 		Nsuid: c.Nsuid, Title: c.Title, Publisher: c.Publisher, Platform: c.Platform, Category: c.Category,
 		Image: c.Image, SourceStatus: c.SourceStatus, SalesStatus: c.SalesStatus.String,
-	}
-	if c.Age.Valid {
-		a := int(c.Age.Int32)
-		g.Age = &a
-		g.AgeDescriptors = append([]string{}, c.AgeDescriptors...)
 	}
 	if c.ReleaseDate.Valid {
 		d := c.ReleaseDate.Time.Format(time.DateOnly)
@@ -310,16 +302,6 @@ func (s *Server) games(w http.ResponseWriter, r *http.Request) {
 	}
 	if g := splitList(v.Get("genre")); len(g) > 0 {
 		p.Genres = g
-	}
-	if raw := splitList(v.Get("age")); len(raw) > 0 {
-		for _, a := range raw {
-			n, err := strconv.Atoi(a)
-			if err != nil || n < 0 || n > 21 {
-				writeErr(w, http.StatusBadRequest, "age must be whole PEGI ages such as 3,7,12,16,18")
-				return
-			}
-			p.Ages = append(p.Ages, int32(n))
-		}
 	}
 	q := strings.TrimSpace(v.Get("q"))
 	if q != "" {

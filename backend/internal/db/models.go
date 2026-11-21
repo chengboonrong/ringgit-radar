@@ -11,36 +11,34 @@ import (
 )
 
 type Catalog struct {
-	Nsuid          string
-	Title          string
-	Publisher      string
-	Category       string
-	Platform       string
-	ReleaseDate    pgtype.Date
-	Sdate          string
-	Image          string
-	Screenshots    []string
-	Dcolors        []string
-	Genres         []string
-	Description    string
-	Tagline        string
-	Players        string
-	Addons         []string
-	Age            pgtype.Int4
-	AgeDescriptors []string
-	SourceStatus   string
-	Currency       pgtype.Text
-	RegularMinor   pgtype.Int8
-	DiscountMinor  pgtype.Int8
-	DiscountStart  pgtype.Timestamptz
-	DiscountEnd    pgtype.Timestamptz
-	SalesStatus    pgtype.Text
-	CheckedAt      pgtype.Timestamptz
-	OnSale         bool
-	PriceMinor     pgtype.Int8
-	SavedMinor     int64
-	PercentOff     int32
-	Flagged        bool
+	Nsuid         string
+	Title         string
+	Publisher     string
+	Category      string
+	Platform      string
+	ReleaseDate   pgtype.Date
+	Sdate         string
+	Image         string
+	Screenshots   []string
+	Dcolors       []string
+	Genres        []string
+	Description   string
+	Tagline       string
+	Players       string
+	Addons        []string
+	SourceStatus  string
+	Currency      pgtype.Text
+	RegularMinor  pgtype.Int8
+	DiscountMinor pgtype.Int8
+	DiscountStart pgtype.Timestamptz
+	DiscountEnd   pgtype.Timestamptz
+	SalesStatus   pgtype.Text
+	CheckedAt     pgtype.Timestamptz
+	OnSale        bool
+	PriceMinor    pgtype.Int8
+	SavedMinor    int64
+	PercentOff    int32
+	Flagged       bool
 }
 
 type CollectionRun struct {
@@ -95,11 +93,8 @@ type Product struct {
 	LastSeenAt   pgtype.Timestamptz
 }
 
-type TitleRating struct {
-	Nsuid       string
-	Age         int32
-	Descriptors []string
-	Source      string
-	MatchedName string
-	ImportedAt  pgtype.Timestamptz
+type RemovedProduct struct {
+	Nsuid     string
+	RemovedAt pgtype.Timestamptz
+	Note      string
 }

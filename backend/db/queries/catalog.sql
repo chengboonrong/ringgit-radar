@@ -1,15 +1,13 @@
 -- Read queries for the API. All of them read the catalog view.
 
 -- name: ListGames :many
--- types, platforms, genres, ages (PEGI), ids, q (an ILIKE pattern), max_price (sen) and release are optional
--- filters. A game with no rating is listed unless ages is set.
+-- types, platforms, genres, ids, q (an ILIKE pattern), max_price (sen) and release are optional filters.
 SELECT sqlc.embed(c), (count(*) OVER ())::bigint AS total
 FROM catalog c
 WHERE c.category = ANY(sqlc.arg(types)::text[])
   AND (sqlc.narg(platforms)::text[] IS NULL OR c.platform = ANY(sqlc.narg(platforms)::text[]))
   AND (sqlc.narg(genres)::text[] IS NULL OR c.genres && sqlc.narg(genres)::text[])
   AND (sqlc.narg(q)::text IS NULL OR c.title ILIKE sqlc.narg(q)::text ESCAPE '\')
-  AND (sqlc.narg(ages)::int[] IS NULL OR c.age = ANY(sqlc.narg(ages)::int[]))
   AND (NOT sqlc.arg(on_sale)::bool OR c.on_sale)
   AND (sqlc.narg(max_price)::bigint IS NULL OR c.price_minor <= sqlc.narg(max_price)::bigint)
   AND (sqlc.narg(ids)::text[] IS NULL OR c.nsuid = ANY(sqlc.narg(ids)::text[]))
@@ -126,5 +124,5 @@ ORDER BY count(*) DESC, g.name;
 -- name: StatusPrices :one
 SELECT
   (SELECT max(finished_at) FROM collection_runs WHERE status = 'succeeded')::timestamptz AS last_run_at,
-  (SELECT count(*) FROM products)::bigint AS product_count,
+  (SELECT count(*) FROM products p WHERE NOT EXISTS (SELECT 1 FROM removed_products r WHERE r.nsuid = p.nsuid))::bigint AS product_count,
   (SELECT min(observed_at) FROM price_history)::timestamptz AS history_since;

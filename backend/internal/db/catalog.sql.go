@@ -20,7 +20,7 @@ WITH ranked AS (
     AND c.source_status NOT IN ('sales_termination', 'not_found')
     AND c.discount_end <= now() + interval '3 days'
 )
-SELECT c.nsuid, c.title, c.publisher, c.category, c.platform, c.release_date, c.sdate, c.image, c.screenshots, c.dcolors, c.genres, c.description, c.tagline, c.players, c.addons, c.age, c.age_descriptors, c.source_status, c.currency, c.regular_minor, c.discount_minor, c.discount_start, c.discount_end, c.sales_status, c.checked_at, c.on_sale, c.price_minor, c.saved_minor, c.percent_off, c.flagged
+SELECT c.nsuid, c.title, c.publisher, c.category, c.platform, c.release_date, c.sdate, c.image, c.screenshots, c.dcolors, c.genres, c.description, c.tagline, c.players, c.addons, c.source_status, c.currency, c.regular_minor, c.discount_minor, c.discount_start, c.discount_end, c.sales_status, c.checked_at, c.on_sale, c.price_minor, c.saved_minor, c.percent_off, c.flagged
 FROM ranked r JOIN catalog c ON c.nsuid = r.nsuid
 WHERE r.pub_rank <= 3
 ORDER BY r.discount_end, c.nsuid
@@ -56,8 +56,6 @@ func (q *Queries) EndingSoon(ctx context.Context, lim int32) ([]EndingSoonRow, e
 			&i.Catalog.Tagline,
 			&i.Catalog.Players,
 			&i.Catalog.Addons,
-			&i.Catalog.Age,
-			&i.Catalog.AgeDescriptors,
 			&i.Catalog.SourceStatus,
 			&i.Catalog.Currency,
 			&i.Catalog.RegularMinor,
@@ -83,7 +81,7 @@ func (q *Queries) EndingSoon(ctx context.Context, lim int32) ([]EndingSoonRow, e
 }
 
 const getGame = `-- name: GetGame :one
-SELECT nsuid, title, publisher, category, platform, release_date, sdate, image, screenshots, dcolors, genres, description, tagline, players, addons, age, age_descriptors, source_status, currency, regular_minor, discount_minor, discount_start, discount_end, sales_status, checked_at, on_sale, price_minor, saved_minor, percent_off, flagged FROM catalog WHERE nsuid = $1
+SELECT nsuid, title, publisher, category, platform, release_date, sdate, image, screenshots, dcolors, genres, description, tagline, players, addons, source_status, currency, regular_minor, discount_minor, discount_start, discount_end, sales_status, checked_at, on_sale, price_minor, saved_minor, percent_off, flagged FROM catalog WHERE nsuid = $1
 `
 
 func (q *Queries) GetGame(ctx context.Context, nsuid string) (Catalog, error) {
@@ -105,8 +103,6 @@ func (q *Queries) GetGame(ctx context.Context, nsuid string) (Catalog, error) {
 		&i.Tagline,
 		&i.Players,
 		&i.Addons,
-		&i.Age,
-		&i.AgeDescriptors,
 		&i.SourceStatus,
 		&i.Currency,
 		&i.RegularMinor,
@@ -126,38 +122,37 @@ func (q *Queries) GetGame(ctx context.Context, nsuid string) (Catalog, error) {
 
 const listGames = `-- name: ListGames :many
 
-SELECT c.nsuid, c.title, c.publisher, c.category, c.platform, c.release_date, c.sdate, c.image, c.screenshots, c.dcolors, c.genres, c.description, c.tagline, c.players, c.addons, c.age, c.age_descriptors, c.source_status, c.currency, c.regular_minor, c.discount_minor, c.discount_start, c.discount_end, c.sales_status, c.checked_at, c.on_sale, c.price_minor, c.saved_minor, c.percent_off, c.flagged, (count(*) OVER ())::bigint AS total
+SELECT c.nsuid, c.title, c.publisher, c.category, c.platform, c.release_date, c.sdate, c.image, c.screenshots, c.dcolors, c.genres, c.description, c.tagline, c.players, c.addons, c.source_status, c.currency, c.regular_minor, c.discount_minor, c.discount_start, c.discount_end, c.sales_status, c.checked_at, c.on_sale, c.price_minor, c.saved_minor, c.percent_off, c.flagged, (count(*) OVER ())::bigint AS total
 FROM catalog c
 WHERE c.category = ANY($1::text[])
   AND ($2::text[] IS NULL OR c.platform = ANY($2::text[]))
   AND ($3::text[] IS NULL OR c.genres && $3::text[])
   AND ($4::text IS NULL OR c.title ILIKE $4::text ESCAPE '\')
-  AND ($5::int[] IS NULL OR c.age = ANY($5::int[]))
-  AND (NOT $6::bool OR c.on_sale)
-  AND ($7::bigint IS NULL OR c.price_minor <= $7::bigint)
-  AND ($8::text[] IS NULL OR c.nsuid = ANY($8::text[]))
-  AND ($8::text[] IS NOT NULL OR c.source_status NOT IN ('sales_termination', 'not_found'))
-  AND ($9::bool OR NOT c.flagged)
-  AND ($10::text IS NULL
-       OR ($10::text = 'recent'
+  AND (NOT $5::bool OR c.on_sale)
+  AND ($6::bigint IS NULL OR c.price_minor <= $6::bigint)
+  AND ($7::text[] IS NULL OR c.nsuid = ANY($7::text[]))
+  AND ($7::text[] IS NOT NULL OR c.source_status NOT IN ('sales_termination', 'not_found'))
+  AND ($8::bool OR NOT c.flagged)
+  AND ($9::text IS NULL
+       OR ($9::text = 'recent'
            AND c.release_date BETWEEN (now() AT TIME ZONE 'Asia/Kuala_Lumpur')::date - 30
                                   AND (now() AT TIME ZONE 'Asia/Kuala_Lumpur')::date)
-       OR ($10::text = 'upcoming'
+       OR ($9::text = 'upcoming'
            AND (c.release_date > (now() AT TIME ZONE 'Asia/Kuala_Lumpur')::date
                 OR (c.release_date IS NULL AND c.source_status IN ('unreleased', 'preorder')))))
 ORDER BY
-  CASE WHEN $11::text = 'savings' THEN c.saved_minor END DESC NULLS LAST,
-  CASE WHEN $11::text = 'discount' THEN c.percent_off END DESC NULLS LAST,
-  CASE WHEN $11::text IN ('savings', 'discount') THEN c.percent_off END DESC NULLS LAST,
-  CASE WHEN $11::text = 'discount' THEN c.saved_minor END DESC NULLS LAST,
-  CASE WHEN $11::text = 'price' THEN c.price_minor END ASC NULLS LAST,
-  CASE WHEN $11::text = 'newest' AND c.release_date > (now() AT TIME ZONE 'Asia/Kuala_Lumpur')::date THEN 1 ELSE 0 END ASC,
-  CASE WHEN $11::text = 'newest' THEN c.release_date END DESC NULLS LAST,
-  CASE WHEN $11::text = 'soonest' THEN c.release_date END ASC NULLS LAST,
-  CASE WHEN $11::text = 'ending' AND c.on_sale THEN c.discount_end END ASC NULLS LAST,
+  CASE WHEN $10::text = 'savings' THEN c.saved_minor END DESC NULLS LAST,
+  CASE WHEN $10::text = 'discount' THEN c.percent_off END DESC NULLS LAST,
+  CASE WHEN $10::text IN ('savings', 'discount') THEN c.percent_off END DESC NULLS LAST,
+  CASE WHEN $10::text = 'discount' THEN c.saved_minor END DESC NULLS LAST,
+  CASE WHEN $10::text = 'price' THEN c.price_minor END ASC NULLS LAST,
+  CASE WHEN $10::text = 'newest' AND c.release_date > (now() AT TIME ZONE 'Asia/Kuala_Lumpur')::date THEN 1 ELSE 0 END ASC,
+  CASE WHEN $10::text = 'newest' THEN c.release_date END DESC NULLS LAST,
+  CASE WHEN $10::text = 'soonest' THEN c.release_date END ASC NULLS LAST,
+  CASE WHEN $10::text = 'ending' AND c.on_sale THEN c.discount_end END ASC NULLS LAST,
   lower(c.title) ASC,
   c.nsuid ASC
-LIMIT $13::int OFFSET $12::int
+LIMIT $12::int OFFSET $11::int
 `
 
 type ListGamesParams struct {
@@ -165,7 +160,6 @@ type ListGamesParams struct {
 	Platforms      []string
 	Genres         []string
 	Q              pgtype.Text
-	Ages           []int32
 	OnSale         bool
 	MaxPrice       pgtype.Int8
 	Ids            []string
@@ -182,15 +176,13 @@ type ListGamesRow struct {
 }
 
 // Read queries for the API. All of them read the catalog view.
-// types, platforms, genres, ages (PEGI), ids, q (an ILIKE pattern), max_price (sen) and release are optional
-// filters. A game with no rating is listed unless ages is set.
+// types, platforms, genres, ids, q (an ILIKE pattern), max_price (sen) and release are optional filters.
 func (q *Queries) ListGames(ctx context.Context, arg ListGamesParams) ([]ListGamesRow, error) {
 	rows, err := q.db.Query(ctx, listGames,
 		arg.Types,
 		arg.Platforms,
 		arg.Genres,
 		arg.Q,
-		arg.Ages,
 		arg.OnSale,
 		arg.MaxPrice,
 		arg.Ids,
@@ -223,8 +215,6 @@ func (q *Queries) ListGames(ctx context.Context, arg ListGamesParams) ([]ListGam
 			&i.Catalog.Tagline,
 			&i.Catalog.Players,
 			&i.Catalog.Addons,
-			&i.Catalog.Age,
-			&i.Catalog.AgeDescriptors,
 			&i.Catalog.SourceStatus,
 			&i.Catalog.Currency,
 			&i.Catalog.RegularMinor,
@@ -343,7 +333,7 @@ WITH ranked AS (
     AND c.source_status NOT IN ('sales_termination', 'not_found')
     AND c.discount_start >= now() - interval '7 days'
 )
-SELECT c.nsuid, c.title, c.publisher, c.category, c.platform, c.release_date, c.sdate, c.image, c.screenshots, c.dcolors, c.genres, c.description, c.tagline, c.players, c.addons, c.age, c.age_descriptors, c.source_status, c.currency, c.regular_minor, c.discount_minor, c.discount_start, c.discount_end, c.sales_status, c.checked_at, c.on_sale, c.price_minor, c.saved_minor, c.percent_off, c.flagged
+SELECT c.nsuid, c.title, c.publisher, c.category, c.platform, c.release_date, c.sdate, c.image, c.screenshots, c.dcolors, c.genres, c.description, c.tagline, c.players, c.addons, c.source_status, c.currency, c.regular_minor, c.discount_minor, c.discount_start, c.discount_end, c.sales_status, c.checked_at, c.on_sale, c.price_minor, c.saved_minor, c.percent_off, c.flagged
 FROM ranked r JOIN catalog c ON c.nsuid = r.nsuid
 WHERE r.pub_rank <= 3
 ORDER BY r.saved_minor DESC, c.nsuid
@@ -379,8 +369,6 @@ func (q *Queries) NewSales(ctx context.Context, lim int32) ([]NewSalesRow, error
 			&i.Catalog.Tagline,
 			&i.Catalog.Players,
 			&i.Catalog.Addons,
-			&i.Catalog.Age,
-			&i.Catalog.AgeDescriptors,
 			&i.Catalog.SourceStatus,
 			&i.Catalog.Currency,
 			&i.Catalog.RegularMinor,
@@ -415,7 +403,7 @@ WITH ranked AS (
     AND c.release_date BETWEEN (now() AT TIME ZONE 'Asia/Kuala_Lumpur')::date - 30
                            AND (now() AT TIME ZONE 'Asia/Kuala_Lumpur')::date
 )
-SELECT c.nsuid, c.title, c.publisher, c.category, c.platform, c.release_date, c.sdate, c.image, c.screenshots, c.dcolors, c.genres, c.description, c.tagline, c.players, c.addons, c.age, c.age_descriptors, c.source_status, c.currency, c.regular_minor, c.discount_minor, c.discount_start, c.discount_end, c.sales_status, c.checked_at, c.on_sale, c.price_minor, c.saved_minor, c.percent_off, c.flagged
+SELECT c.nsuid, c.title, c.publisher, c.category, c.platform, c.release_date, c.sdate, c.image, c.screenshots, c.dcolors, c.genres, c.description, c.tagline, c.players, c.addons, c.source_status, c.currency, c.regular_minor, c.discount_minor, c.discount_start, c.discount_end, c.sales_status, c.checked_at, c.on_sale, c.price_minor, c.saved_minor, c.percent_off, c.flagged
 FROM ranked r JOIN catalog c ON c.nsuid = r.nsuid
 WHERE r.pub_rank <= 3
 ORDER BY r.release_date DESC, c.nsuid
@@ -451,8 +439,6 @@ func (q *Queries) RecentReleases(ctx context.Context, lim int32) ([]RecentReleas
 			&i.Catalog.Tagline,
 			&i.Catalog.Players,
 			&i.Catalog.Addons,
-			&i.Catalog.Age,
-			&i.Catalog.AgeDescriptors,
 			&i.Catalog.SourceStatus,
 			&i.Catalog.Currency,
 			&i.Catalog.RegularMinor,
@@ -480,7 +466,7 @@ func (q *Queries) RecentReleases(ctx context.Context, lim int32) ([]RecentReleas
 const statusPrices = `-- name: StatusPrices :one
 SELECT
   (SELECT max(finished_at) FROM collection_runs WHERE status = 'succeeded')::timestamptz AS last_run_at,
-  (SELECT count(*) FROM products)::bigint AS product_count,
+  (SELECT count(*) FROM products p WHERE NOT EXISTS (SELECT 1 FROM removed_products r WHERE r.nsuid = p.nsuid))::bigint AS product_count,
   (SELECT min(observed_at) FROM price_history)::timestamptz AS history_since
 `
 
@@ -506,7 +492,7 @@ WITH ranked AS (
     AND c.source_status NOT IN ('sales_termination', 'not_found')
     AND ($2::text IS NULL OR c.platform = $2::text)
 )
-SELECT c.nsuid, c.title, c.publisher, c.category, c.platform, c.release_date, c.sdate, c.image, c.screenshots, c.dcolors, c.genres, c.description, c.tagline, c.players, c.addons, c.age, c.age_descriptors, c.source_status, c.currency, c.regular_minor, c.discount_minor, c.discount_start, c.discount_end, c.sales_status, c.checked_at, c.on_sale, c.price_minor, c.saved_minor, c.percent_off, c.flagged
+SELECT c.nsuid, c.title, c.publisher, c.category, c.platform, c.release_date, c.sdate, c.image, c.screenshots, c.dcolors, c.genres, c.description, c.tagline, c.players, c.addons, c.source_status, c.currency, c.regular_minor, c.discount_minor, c.discount_start, c.discount_end, c.sales_status, c.checked_at, c.on_sale, c.price_minor, c.saved_minor, c.percent_off, c.flagged
 FROM ranked r JOIN catalog c ON c.nsuid = r.nsuid
 WHERE r.pub_rank <= 3
 ORDER BY r.saved_minor DESC, c.nsuid
@@ -548,8 +534,6 @@ func (q *Queries) TopSavings(ctx context.Context, arg TopSavingsParams) ([]TopSa
 			&i.Catalog.Tagline,
 			&i.Catalog.Players,
 			&i.Catalog.Addons,
-			&i.Catalog.Age,
-			&i.Catalog.AgeDescriptors,
 			&i.Catalog.SourceStatus,
 			&i.Catalog.Currency,
 			&i.Catalog.RegularMinor,
