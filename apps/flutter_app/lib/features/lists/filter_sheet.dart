@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../app/theme.dart';
@@ -10,6 +9,8 @@ import '../../core/widgets/error_view.dart';
 import '../../core/widgets/ring.dart';
 import '../../core/widgets/skeleton.dart';
 import 'list_spec.dart';
+import '../../l10n/l10n.dart';
+import '../../l10n/genres.dart';
 
 /// Opens the filter bottom sheet. Returns the chosen query, or null if it was dismissed.
 Future<ListQuery?> showFilterSheet(BuildContext context, {required ListQuery query, required ListSpec spec}) {
@@ -25,10 +26,10 @@ Future<ListQuery?> showFilterSheet(BuildContext context, {required ListQuery que
   );
 }
 
-const _types = [('game', 'Game'), ('bundle', 'Bundle'), ('addon', 'Add-on')];
+List<(String, String)> _types(AppLocalizations l) => [('game', l.kindGame), ('bundle', l.kindBundle), ('addon', l.kindAddon)];
 const _platforms = [('switch2', 'Switch 2'), ('switch', 'Switch')];
 const _ages = [3, 7, 12, 16, 18];
-const _caps = [(2000, 'Up to RM 20'), (5000, 'Up to RM 50'), (10000, 'Up to RM 100'), (20000, 'Up to RM 200')];
+const _caps = [2000, 5000, 10000, 20000];
 
 class _FilterSheet extends ConsumerStatefulWidget {
   const _FilterSheet({required this.initial, required this.spec});
@@ -56,7 +57,8 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
   Widget build(BuildContext context) {
     final tk = context.tokens;
     final count = ref.watch(resultCountProvider(_draft));
-    final label = count.maybeWhen(data: (n) => 'Show ${NumberFormat.decimalPattern('en').format(n)} results', orElse: () => 'Show results');
+    final l = context.l10n;
+    final label = count.maybeWhen(data: l.showResults, orElse: () => l.showResultsNoCount);
     return Column(
       children: [
         Padding(
@@ -64,16 +66,16 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
           child: Row(
             children: [
               TapBox(
-                label: _section == null ? 'Close filters' : 'Back to filters',
+                label: _section == null ? l.closeFilters : l.backToFilters,
                 onTap: () => _section == null ? Navigator.of(context).pop() : setState(() => _section = null),
                 child: Icon(_section == null ? PhosphorIconsRegular.x : PhosphorIconsRegular.arrowLeft, color: tk.text),
               ),
-              Expanded(child: Text(_sectionTitle(), style: Theme.of(context).textTheme.titleMedium)),
+              Expanded(child: Text(_sectionTitle(l), style: Theme.of(context).textTheme.titleMedium)),
               if (_section == null)
                 TextButton(
                   onPressed: () => setState(() => _draft = widget.spec.base),
                   style: TextButton.styleFrom(minimumSize: const Size(64, 44), foregroundColor: tk.text),
-                  child: const Text('Clear', style: TextStyle(fontWeight: FontWeight.w700)),
+                  child: Text(l.clear, style: const TextStyle(fontWeight: FontWeight.w700)),
                 ),
             ],
           ),
@@ -92,34 +94,36 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
     );
   }
 
-  String _sectionTitle() => switch (_section) {
-        'type' => 'Product Type',
-        'platform' => 'Platform',
-        'genre' => 'Genre',
-        'price' => 'On Sale / Price Cap',
-        'age' => 'Age Rating',
-        _ => 'Filter',
+  String _sectionTitle(AppLocalizations l) => switch (_section) {
+        'type' => l.filterProductType,
+        'platform' => l.platform,
+        'genre' => l.genre,
+        'price' => l.filterPrice,
+        'age' => l.filterAge,
+        _ => l.filter,
       };
 
   Widget _root() {
+    final l = context.l10n;
     final priceCount = (_draft.sale && !widget.spec.lockSale ? 1 : 0) + (_draft.maxPrice != null ? 1 : 0);
     Widget row(String id, String name, int n) => _SectionRow(label: n > 0 ? '$name ($n)' : name, onTap: () => setState(() => _section = id));
     return Column(
       children: [
-        row('type', 'Product Type', _draft.types.length),
-        row('platform', 'Platform', _draft.platforms.length),
-        row('genre', 'Genre', _draft.genres.length),
-        row('price', 'On Sale / Price Cap', priceCount),
-        row('age', 'Age Rating', _draft.ages.length),
+        row('type', l.filterProductType, _draft.types.length),
+        row('platform', l.platform, _draft.platforms.length),
+        row('genre', l.genre, _draft.genres.length),
+        row('price', l.filterPrice, priceCount),
+        row('age', l.filterAge, _draft.ages.length),
       ],
     );
   }
 
   Widget _options() {
+    final l = context.l10n;
     switch (_section) {
       case 'type':
         return Column(children: [
-          for (final (id, name) in _types)
+          for (final (id, name) in _types(l))
             _CheckRow(
               label: name,
               checked: _draft.types.contains(id),
@@ -141,7 +145,7 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
           data: (list) => Column(children: [
             for (final g in list)
               _CheckRow(
-                label: '${g.name} (${g.count})',
+                label: '${genreLabel(l, g.name)} (${g.count})',
                 checked: _draft.genres.contains(g.name),
                 onChanged: () => setState(() => _draft = _draft.copyWith(genres: _toggle(_draft.genres, g.name))),
               ),
@@ -158,22 +162,22 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
         return Column(children: [
           for (final a in _ages)
             _CheckRow(
-              label: 'Age $a (UK PEGI)',
+              label: l.ageN(a),
               checked: _draft.ages.contains(a),
               onChanged: () => setState(() => _draft = _draft.copyWith(ages: _draft.ages.contains(a) ? [..._draft.ages.where((e) => e != a)] : [..._draft.ages, a])),
             ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-            child: Text('Games with no rating found stay in the list until you pick an age.', style: Theme.of(context).textTheme.bodySmall),
+            child: Text(l.ageNote, style: Theme.of(context).textTheme.bodySmall),
           ),
         ]);
       default:
         return Column(children: [
           if (!widget.spec.lockSale)
-            _CheckRow(label: 'On sale only', checked: _draft.sale, onChanged: () => setState(() => _draft = _draft.copyWith(sale: !_draft.sale))),
-          for (final (sen, name) in _caps)
+            _CheckRow(label: l.onSaleOnly, checked: _draft.sale, onChanged: () => setState(() => _draft = _draft.copyWith(sale: !_draft.sale))),
+          for (final sen in _caps)
             _CheckRow(
-              label: name,
+              label: l.upToRm(sen ~/ 100),
               checked: _draft.maxPrice == sen,
               onChanged: () => setState(() => _draft = _draft.copyWith(maxPrice: _draft.maxPrice == sen ? null : sen)),
             ),

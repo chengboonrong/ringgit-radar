@@ -22,7 +22,7 @@ class GameListView extends ConsumerStatefulWidget {
     required this.onQuery,
     required this.heroScope,
     this.leading = const [],
-    this.emptyText = 'Nothing here yet.',
+    this.emptyText,
   });
 
   final ListSpec spec;
@@ -30,7 +30,8 @@ class GameListView extends ConsumerStatefulWidget {
   final ValueChanged<ListQuery> onQuery;
   final String heroScope;
   final List<Widget> leading;
-  final String emptyText;
+  /// Defaults to "Nothing here yet." in the reader's language.
+  final String? emptyText;
 
   @override
   ConsumerState<GameListView> createState() => _GameListViewState();
@@ -80,7 +81,7 @@ class _GameListViewState extends ConsumerState<GameListView> {
         if (widget.spec.hint != null)
           SliverPadding(
             padding: EdgeInsets.fromLTRB(pad, 4, pad, 8),
-            sliver: SliverToBoxAdapter(child: Text(widget.spec.hint!, style: Theme.of(context).textTheme.bodySmall)),
+            sliver: SliverToBoxAdapter(child: Text(widget.spec.hint!(context.l10n), style: Theme.of(context).textTheme.bodySmall)),
           ),
         SliverPersistentHeader(
           pinned: true,
@@ -101,7 +102,7 @@ class _GameListViewState extends ConsumerState<GameListView> {
         if (state.error != null && state.items.isEmpty)
           SliverFillRemaining(hasScrollBody: false, child: ErrorView(error: state.error!, onRetry: () => ref.read(gameListProvider(widget.query).notifier).loadMore()))
         else if (!state.loading && state.items.isEmpty)
-          SliverFillRemaining(hasScrollBody: false, child: Center(child: Padding(padding: const EdgeInsets.all(32), child: Text(widget.emptyText, textAlign: TextAlign.center))))
+          SliverFillRemaining(hasScrollBody: false, child: Center(child: Padding(padding: const EdgeInsets.all(32), child: Text(widget.emptyText ?? context.l10n.nothingHere, textAlign: TextAlign.center))))
         else
           SliverPadding(
             padding: EdgeInsets.fromLTRB(pad, 4, pad, 0),
@@ -115,7 +116,7 @@ class _GameListViewState extends ConsumerState<GameListView> {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: Center(child: RedButton(label: 'Retry loading more', onTap: () => ref.read(gameListProvider(widget.query).notifier).loadMore())),
+              child: Center(child: RedButton(label: context.l10n.retryLoadingMore, onTap: () => ref.read(gameListProvider(widget.query).notifier).loadMore())),
             ),
           ),
         SliverToBoxAdapter(child: SizedBox(height: bottom)),
@@ -161,7 +162,7 @@ class _ItemsRow extends StatelessWidget {
         ),
         RingTarget(
           radius: 8,
-          label: active > 0 ? 'Filter, $active selected' : 'Filter',
+          label: active > 0 ? context.l10n.filterSelected(active) : context.l10n.filter,
           onTap: () async {
             final next = await showFilterSheet(context, query: query, spec: spec);
             if (next != null) onQuery(next);
@@ -174,7 +175,7 @@ class _ItemsRow extends StatelessWidget {
               child: Row(mainAxisSize: MainAxisSize.min, children: [
                 Icon(PhosphorIconsRegular.funnel, size: 18, color: tk.text),
                 const SizedBox(width: 6),
-                Text(active > 0 ? 'Filter ($active)' : 'Filter', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                Text(active > 0 ? context.l10n.filterCount(active) : context.l10n.filter, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
               ]),
             ),
           ),
@@ -199,7 +200,7 @@ class SortMenu extends StatelessWidget {
     final tk = context.tokens;
     final options = spec.sorts.contains(value) ? spec.sorts : [value, ...spec.sorts];
     return PopupMenuButton<String>(
-      tooltip: 'Sort order',
+      tooltip: context.l10n.sortOrder,
       onSelected: onChanged,
       color: tk.card,
       offset: const Offset(0, 44),
@@ -208,12 +209,12 @@ class SortMenu extends StatelessWidget {
           PopupMenuItem<String>(
             value: s,
             height: 48,
-            child: Text(sortLabels[s] ?? s, style: TextStyle(fontWeight: s == value ? FontWeight.w700 : FontWeight.w400, color: tk.text)),
+            child: Text(sortLabel(context.l10n, s), style: TextStyle(fontWeight: s == value ? FontWeight.w700 : FontWeight.w400, color: tk.text)),
           ),
       ],
       child: Semantics(
         button: true,
-        label: 'Sort: ${sortLabels[value] ?? value}',
+        label: context.l10n.sortCurrent(sortLabel(context.l10n, value)),
         excludeSemantics: true,
         child: Container(
           height: 44,
@@ -221,7 +222,7 @@ class SortMenu extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(border: Border(bottom: BorderSide(color: tk.hint, width: 1.5))),
           child: Row(mainAxisSize: MainAxisSize.min, children: [
-            Flexible(child: Text(sortLabels[value] ?? value, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500))),
+            Flexible(child: Text(sortLabel(context.l10n, value), maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500))),
             const SizedBox(width: 4),
             Icon(PhosphorIconsRegular.caretDown, size: 14, color: tk.text),
           ]),

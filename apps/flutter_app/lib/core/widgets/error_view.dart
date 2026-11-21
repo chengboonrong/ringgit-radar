@@ -37,7 +37,7 @@ class ErrorView extends StatelessWidget {
             const SizedBox(height: 12),
             Text(errorText(context.l10n, error), textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
             const SizedBox(height: 16),
-            RedButton(label: 'Retry', onTap: onRetry),
+            RedButton(label: context.l10n.retry, onTap: onRetry),
           ],
         ),
       ),

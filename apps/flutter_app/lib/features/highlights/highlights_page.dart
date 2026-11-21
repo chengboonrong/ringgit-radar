@@ -10,6 +10,7 @@ import '../../core/widgets/game_card.dart';
 import '../../core/widgets/page_bits.dart';
 import '../../core/widgets/skeleton.dart';
 import '../lists/game_grid.dart';
+import '../../l10n/l10n.dart';
 
 class HighlightsPage extends ConsumerWidget {
   const HighlightsPage({super.key});
@@ -39,18 +40,18 @@ class HighlightsPage extends ConsumerWidget {
       data: (h) => _scroll(pad, bottom, [
         const SliverToBoxAdapter(child: _ChipRow()),
         if (h.topSavings.isNotEmpty) ...[
-          const SliverToBoxAdapter(child: SectionHeading('Biggest Switch 2 savings')),
+          SliverToBoxAdapter(child: SectionHeading(context.l10n.biggestSwitch2Savings)),
           if (width >= 840)
             GameGridSliverTiles(games: h.topSavings)
           else
             SliverToBoxAdapter(child: _TileCarousel(games: h.topSavings)),
         ],
         if (h.endingSoon.isNotEmpty) ...[
-          const SliverToBoxAdapter(child: SectionHeading('Ending Soon')),
+          SliverToBoxAdapter(child: SectionHeading(context.l10n.endingSoonHeading)),
           GameGridSliver(games: h.endingSoon, heroScope: 'ending'),
         ],
         if (h.newSales.isNotEmpty) ...[
-          const SliverToBoxAdapter(child: SectionHeading('New Sales')),
+          SliverToBoxAdapter(child: SectionHeading(context.l10n.newSales)),
           GameGridSliver(games: h.newSales, heroScope: 'newsales'),
         ],
       ]),
@@ -75,8 +76,8 @@ class _ChipRow extends StatelessWidget {
       spacing: 10,
       runSpacing: 10,
       children: [
-        OutlineChip(label: 'Recent Releases', onTap: () => context.go('/recent')),
-        OutlineChip(label: 'Coming Soon', onTap: () => context.go('/coming-soon')),
+        OutlineChip(label: context.l10n.navRecent, onTap: () => context.go('/recent')),
+        OutlineChip(label: context.l10n.navComingSoon, onTap: () => context.go('/coming-soon')),
       ],
     );
   }

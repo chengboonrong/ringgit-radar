@@ -35,9 +35,9 @@ extension GameLabels on Game {
     return l.priceUnavailable;
   }
 
-  String get kindLabel => switch (category) {
-        'bundle' => 'Bundle',
-        'addon' => 'Add-on',
+  String kindLabel(AppLocalizations l) => switch (category) {
+        'bundle' => l.kindBundle,
+        'addon' => l.kindAddon,
         _ => '',
       };
 

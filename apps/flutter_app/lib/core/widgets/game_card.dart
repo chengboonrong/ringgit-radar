@@ -91,16 +91,16 @@ class GameCard extends ConsumerWidget {
 
     final isNew = game.isNewAt(now);
     final chips = <Widget>[
-      if (game.isPreorder) const StatusChip(label: 'Pre-order', color: green) else if (isNew) const StatusChip(label: 'NEW', color: amber),
+      if (game.isPreorder) StatusChip(label: context.l10n.statusPreorder, color: green) else if (isNew) StatusChip(label: context.l10n.statusNew, color: amber),
     ];
 
     final label = [
       game.title,
       if (game.isSwitch2) 'Switch 2',
-      if (game.kindLabel.isNotEmpty) game.kindLabel,
-      if (showRank && game.rank != null) 'Rank ${game.rank}',
-      if (price != null) PriceText.describe(price) else game.noPriceLabel(now, context.l10n),
-      if (price?.onSale == true && price?.discountEnd != null) 'Ends ${shortDateMyt(price!.discountEnd!, context.l10n.localeName)}',
+      if (game.kindLabel(context.l10n).isNotEmpty) game.kindLabel(context.l10n),
+      if (showRank && game.rank != null) context.l10n.rankN(game.rank!),
+      if (price != null) PriceText.describe(price, context.l10n) else game.noPriceLabel(now, context.l10n),
+      if (price?.onSale == true && price?.discountEnd != null) context.l10n.endsOn(shortDateMyt(price!.discountEnd!, context.l10n.localeName)),
     ].join(', ');
 
     final scale = cardTextScale(context);
@@ -151,14 +151,14 @@ class GameCard extends ConsumerWidget {
                           children: [
                             Hero(tag: heroTag, child: ArtImage(hash: game.image, logicalWidth: width)),
                             if (style == GameCardStyle.list && chips.isNotEmpty) Positioned(left: 6, top: 6, child: chips.first),
-                            if (game.kindLabel.isNotEmpty)
+                            if (game.kindLabel(context.l10n).isNotEmpty)
                               Positioned(
                                 right: 0,
                                 bottom: 0,
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                                   color: Colors.black.withValues(alpha: 0.62),
-                                  child: Text(game.kindLabel, style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w700)),
+                                  child: Text(game.kindLabel(context.l10n), style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w700)),
                                 ),
                               ),
                             if (showRank && game.rank != null) Positioned(left: 0, bottom: 0, child: RankChip(rank: game.rank!)),
@@ -191,7 +191,7 @@ class GameCard extends ConsumerWidget {
                                     ? PriceText(
                                         price: price,
                                         digitSize: style.digitSize,
-                                        note: price.onSale && price.discountEnd != null ? 'Ends ${shortDateMyt(price.discountEnd!, context.l10n.localeName)}' : null,
+                                        note: price.onSale && price.discountEnd != null ? context.l10n.endsOn(shortDateMyt(price.discountEnd!, context.l10n.localeName)) : null,
                                       )
                                     : FittedBox(
                                         fit: BoxFit.scaleDown,
@@ -213,7 +213,7 @@ class GameCard extends ConsumerWidget {
             right: 0,
             child: TapBox(
               ringRadius: 15,
-              label: saved ? 'Remove ${game.title} from Wish List' : 'Add ${game.title} to Wish List',
+              label: saved ? context.l10n.wishRemove(game.title) : context.l10n.wishAdd(game.title),
               toggled: saved,
               onTap: () {
                 tick();

@@ -18,6 +18,7 @@ import '../../core/widgets/ring.dart';
 import '../../core/widgets/skeleton.dart';
 import 'price_history_chart.dart';
 import '../../l10n/l10n.dart';
+import '../../l10n/genres.dart';
 
 const _wideBreakpoint = 1200.0;
 
@@ -93,7 +94,7 @@ class GamePage extends ConsumerWidget {
             left: 4,
             child: TapBox(
               ringRadius: 20,
-              label: 'Back',
+              label: context.l10n.back,
               onTap: () => context.canPop() ? context.pop() : context.go('/'),
               child: Icon(
                 PhosphorIconsBold.arrowLeft,
@@ -320,7 +321,7 @@ class _MediaState extends State<_Media> {
                       show: _focused || widget.flash,
                       radius: 10,
                       child: Semantics(
-                        label: 'Media, ${_page + 1} of ${hashes.length}',
+                        label: context.l10n.mediaPosition(_page + 1, hashes.length),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: PageView.builder(
@@ -419,7 +420,7 @@ class _Arrow extends StatelessWidget {
   Widget build(BuildContext context) {
     if (!enabled) return const SizedBox(width: 44, height: 44);
     return TapBox(
-      label: forward ? 'Next image' : 'Previous image',
+      label: forward ? context.l10n.nextImage : context.l10n.previousImage,
       onTap: onTap,
       child: Container(
         width: 36,
@@ -493,7 +494,7 @@ class _HistorySection extends StatelessWidget {
               children: [
                 Expanded(child: Text(errorText(context.l10n, error!))),
                 const SizedBox(width: 12),
-                RedButton(label: 'Retry', onTap: onRetry, minWidth: 80),
+                RedButton(label: context.l10n.retry, onTap: onRetry, minWidth: 80),
               ],
             )
           : const Column(
@@ -506,13 +507,13 @@ class _HistorySection extends StatelessWidget {
             );
     } else if (d.history.isEmpty) {
       content = Text(
-        'No price recorded yet.',
+        context.l10n.noPriceYet,
         style: TextStyle(fontSize: 15, color: tk.hint),
       );
     } else if (d.history.length < 2 && d.firstObservedAt != null) {
       // one observation so far: the whole story is one line, with no lowest price and no chart
       content = Text(
-        "Tracking began ${longDateMyt(d.firstObservedAt!, context.l10n.localeName)}. We've only seen this price so far.",
+        context.l10n.trackingBeganOnlyPrice(longDateMyt(d.firstObservedAt!, context.l10n.localeName)),
         style: TextStyle(fontSize: 15, color: tk.hint, height: 1.4),
       );
     } else {
@@ -522,7 +523,7 @@ class _HistorySection extends StatelessWidget {
         children: [
           if (lowest != null)
             Text(
-              "Lowest we've seen: ${plainMoney(lowest.priceMinor)} since ${longDateMyt(lowest.since, context.l10n.localeName)}",
+              context.l10n.lowestSeenSince(plainMoney(lowest.priceMinor), longDateMyt(lowest.since, context.l10n.localeName)),
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -532,7 +533,7 @@ class _HistorySection extends StatelessWidget {
           if (d.firstObservedAt != null) ...[
             const SizedBox(height: 4),
             Text(
-              'Tracking began ${longDateMyt(d.firstObservedAt!, context.l10n.localeName)}',
+              context.l10n.trackingBegan(longDateMyt(d.firstObservedAt!, context.l10n.localeName)),
               style: TextStyle(fontSize: 14, color: tk.hint, height: 1.4),
             ),
           ],
@@ -547,7 +548,7 @@ class _HistorySection extends StatelessWidget {
         Semantics(
           header: true,
           child: Text(
-            'What our history shows',
+            context.l10n.historyHeading,
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
@@ -573,7 +574,7 @@ class _Description extends StatelessWidget {
         Semantics(
           header: true,
           child: Text(
-            'Description',
+            context.l10n.descriptionHeading,
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
@@ -617,7 +618,7 @@ class _Dlc extends StatelessWidget {
         Semantics(
           header: true,
           child: Text(
-            'Downloadable Content',
+            context.l10n.dlcHeading,
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
@@ -626,7 +627,7 @@ class _Dlc extends StatelessWidget {
           RingTarget(
             radius: 8,
             label:
-                '${a.title}, ${a.price == null ? a.noPriceLabel(now, context.l10n) : PriceText.describe(a.price!)}',
+                '${a.title}, ${a.price == null ? a.noPriceLabel(now, context.l10n) : PriceText.describe(a.price!, context.l10n)}',
             onTap: () async {
               final container = ProviderScope.containerOf(context);
               await context.push<void>(
@@ -688,22 +689,22 @@ class _Details extends StatelessWidget {
   Widget build(BuildContext context) {
     final tk = context.tokens;
     final rows = <(String, String)>[
-      ('Publisher', game.publisher),
-      if (game.platformLabel.isNotEmpty) ('Platform', game.platformLabel),
+      (context.l10n.publisher, game.publisher),
+      if (game.platformLabel.isNotEmpty) (context.l10n.platform, game.platformLabel),
       (
-        'Product type',
+        context.l10n.productTypeDetail,
         switch (game.category) {
-          'bundle' => 'Bundle',
-          'addon' => 'Add-on',
-          _ => 'Game',
+          'bundle' => context.l10n.kindBundle,
+          'addon' => context.l10n.kindAddon,
+          _ => context.l10n.kindGame,
         },
       ),
       if (game.releaseDate != null)
-        ('Release date', releaseDateLabel(game.releaseDate!, context.l10n.localeName))
+        (context.l10n.releaseDate, releaseDateLabel(game.releaseDate!, context.l10n.localeName))
       else if (game.releaseText.isNotEmpty)
-        ('Release date', game.releaseText),
-      if (detail.genres.isNotEmpty) ('Genre', detail.genres.join(', ')),
-      if (detail.players.isNotEmpty) ('Players', detail.players),
+        (context.l10n.releaseDate, game.releaseText),
+      if (detail.genres.isNotEmpty) (context.l10n.genre, detail.genres.map((g) => genreLabel(context.l10n, g)).join(', ')),
+      if (detail.players.isNotEmpty) (context.l10n.players, detail.players),
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -711,15 +712,15 @@ class _Details extends StatelessWidget {
         Semantics(
           header: true,
           child: Text(
-            'Details',
+            context.l10n.detailsHeading,
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
         const SizedBox(height: 8),
         Text(
           detail.age == null
-              ? 'No age rating found'
-              : 'Age rating: ${detail.age} (UK PEGI)',
+              ? context.l10n.noAgeRating
+              : context.l10n.ageRating(detail.age!),
           style: const TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w500,
@@ -783,13 +784,13 @@ class _PricePanel extends ConsumerWidget {
     final price = game.price;
     final chips = [
       if (game.isPreorder)
-        const StatusChip(label: 'Pre-order', color: green, size: 13)
+        StatusChip(label: context.l10n.statusPreorder, color: green, size: 13)
       else if (game.isNewAt(now))
-        const StatusChip(label: 'NEW', color: amber, size: 13),
+        StatusChip(label: context.l10n.statusNew, color: amber, size: 13),
     ];
 
     final button = RedButton(
-      label: saved ? 'On Wish List' : 'Add to Wish List',
+      label: saved ? context.l10n.onWishList : context.l10n.addToWishList,
       icon: saved ? PhosphorIconsFill.heart : PhosphorIconsRegular.heart,
       minWidth: wide ? 0 : 150,
       expand: wide,
@@ -809,7 +810,7 @@ class _PricePanel extends ConsumerWidget {
             ),
           );
     final quiet = Text(
-      "Buy on your Switch's Nintendo eShop.",
+      context.l10n.buyOnSwitch,
       style: TextStyle(fontSize: 13, color: tk.hint, height: 1.3),
     );
 
