@@ -817,3 +817,24 @@ func TestRemovedProductHiddenEverywhere(t *testing.T) {
 		t.Errorf("a removed DLC is still listed: %+v", d.Addons)
 	}
 }
+
+// The release deploys this code before migration 0004 runs on the live database, so every endpoint must
+// work against the 0003 schema too: the old view, with its age columns and no removed_products table.
+func TestEndpointsWorkBeforeMigration0004(t *testing.T) {
+	pool := testdb.PoolBefore(t, "0004")
+	h := New(pool, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	ctx := context.Background()
+	if _, err := pool.Exec(ctx, `INSERT INTO products (nsuid, title, publisher, platform, kind, source_status, raw) VALUES ('1','Game 1','A','05_BEE','','onsale','{"sctg":"dl_soft","genre":["Action"]}')`); err != nil {
+		t.Fatal(err)
+	}
+	for path, want := range map[string]int{
+		"/v1/games": 200, "/v1/games?age=12": 200, "/v1/games/1": 200, "/v1/games/nope": 404,
+		"/v1/highlights": 200, "/v1/ranking": 200, "/v1/genres": 200, "/v1/status/prices": 200,
+	} {
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, path, nil))
+		if rec.Code != want {
+			t.Errorf("%s on the 0003 schema = %d, want %d: %s", path, rec.Code, want, rec.Body.String())
+		}
+	}
+}

@@ -27,7 +27,7 @@ For the App Store and Google Play listings. Ringgit Radar shows Nintendo's catal
 
 Reply along these lines, adjusting only the facts if they have changed:
 
-> Ringgit Radar is an independent, unofficial price tracker for the Malaysian Nintendo eShop. It is not affiliated with or endorsed by Nintendo, and says so on first launch, beside its name on every screen, on its About page and in this listing.
+> Ringgit Radar is an independent, unofficial price tracker for the Malaysian Nintendo eShop. It is not affiliated with or endorsed by Nintendo, and says so on first launch, beside its name in the header and sidebar, on its About page and in this listing.
 >
 > It shows the public catalogue information the eShop publishes (titles, publishers, release dates, prices and sale times) and keeps its own daily price history. Descriptions are shown as a short quote, labelled as the publisher's text. Pictures are not copied or stored: the app loads them from Nintendo's own image server. The app sells nothing and links to no purchase; games are bought on the Switch.
 >

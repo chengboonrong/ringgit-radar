@@ -18,6 +18,14 @@ import (
 // Pool fails the test if TEST_DATABASE_URL is unset; it never skips.
 func Pool(t *testing.T) *pgxpool.Pool {
 	t.Helper()
+	return PoolBefore(t, "")
+}
+
+// PoolBefore builds the schema from the migrations whose file names sort before stop ("0004" stops before
+// 0004_*.sql), so a test can run today's code against the schema a live database has before a release's
+// migration. An empty stop applies every migration.
+func PoolBefore(t *testing.T, stop string) *pgxpool.Pool {
+	t.Helper()
 	url := os.Getenv("TEST_DATABASE_URL")
 	if url == "" {
 		t.Fatal("TEST_DATABASE_URL is not set (e.g. postgres:///eshop_radar_test)")
@@ -52,6 +60,9 @@ func Pool(t *testing.T) *pgxpool.Pool {
 		t.Fatalf("migrations not found: %v", files)
 	}
 	for _, f := range files {
+		if stop != "" && filepath.Base(f) >= stop {
+			break
+		}
 		sql, err := os.ReadFile(f)
 		if err != nil {
 			t.Fatal(err)
