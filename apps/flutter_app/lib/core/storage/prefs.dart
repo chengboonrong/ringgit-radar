@@ -70,3 +70,18 @@ class LocaleNotifier extends Notifier<Locale?> {
 }
 
 final localeProvider = NotifierProvider<LocaleNotifier, Locale?>(LocaleNotifier.new);
+
+const noticeSeenKey = 'notice_seen';
+
+/// Whether this device has seen the first-launch notice that the app is independent and unofficial.
+class NoticeSeenNotifier extends Notifier<bool> {
+  @override
+  bool build() => ref.read(sharedPreferencesProvider).getBool(noticeSeenKey) ?? false;
+
+  Future<void> markSeen() {
+    state = true;
+    return ref.read(sharedPreferencesProvider).setBool(noticeSeenKey, true);
+  }
+}
+
+final noticeSeenProvider = NotifierProvider<NoticeSeenNotifier, bool>(NoticeSeenNotifier.new);

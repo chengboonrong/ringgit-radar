@@ -1041,6 +1041,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Video'**
   String get genreVideo;
+
+  /// Title of the one-time notice shown on first launch. About 24 characters.
+  ///
+  /// In en, this message translates to:
+  /// **'An independent app'**
+  String get noticeTitle;
+
+  /// Body of the one-time first-launch notice. Must never suggest the app is official or approved by Nintendo. Up to about 200 characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Ringgit Radar is independent and unofficial. It is not affiliated with or endorsed by Nintendo. It keeps its own record of Malaysian eShop prices; to buy a game, use your Switch.'**
+  String get noticeBody;
+
+  /// The button that closes the first-launch notice. About 8 characters.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get noticeOk;
+
+  /// Title of the page on where the data comes from; also its link in the first-launch notice and its chip on About. About 28 characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Where our data comes from'**
+  String get dataSourcesTitle;
 }
 
 class _AppLocalizationsDelegate

@@ -564,4 +564,17 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get genreVideo => '视频';
+
+  @override
+  String get noticeTitle => '一款独立应用';
+
+  @override
+  String get noticeBody =>
+      'Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。本应用保存自己的马来西亚 eShop 价格记录；要购买游戏，请使用你的 Switch。';
+
+  @override
+  String get noticeOk => '好的';
+
+  @override
+  String get dataSourcesTitle => '我们的数据从哪里来';
 }

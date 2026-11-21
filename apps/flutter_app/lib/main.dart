@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'app/first_launch_notice.dart';
 import 'app/router.dart';
 import 'app/theme.dart';
 import 'core/storage/prefs.dart';
@@ -35,6 +36,14 @@ class _RinggitRadarAppState extends ConsumerState<RinggitRadarApp> with WidgetsB
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    if (!ref.read(noticeSeenProvider)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        final nav = _router.routerDelegate.navigatorKey.currentContext;
+        if (nav == null || !mounted) return;
+        await showFirstLaunchNotice(nav, onDataSources: () => _router.go('/data-sources'));
+        await ref.read(noticeSeenProvider.notifier).markSeen();
+      });
+    }
   }
 
   @override

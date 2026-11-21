@@ -54,7 +54,7 @@ void main() {
           t.platformDispatcher.textScaleFactorTestValue = scale;
           addTearDown(t.view.reset);
           addTearDown(t.platformDispatcher.clearTextScaleFactorTestValue);
-          SharedPreferences.setMockInitialValues({localeKey: code});
+          SharedPreferences.setMockInitialValues({localeKey: code, noticeSeenKey: true});
           final prefs = await SharedPreferences.getInstance();
           await t.pumpWidget(ProviderScope(
             overrides: [sharedPreferencesProvider.overrideWithValue(prefs), apiClientProvider.overrideWithValue(FakeApiClient())],

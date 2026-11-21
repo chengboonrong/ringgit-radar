@@ -156,5 +156,9 @@
   "genreFirstPersonShooter": "第一人称射击",
   "genreMusic": "音乐",
   "genrePractical": "实用软件",
-  "genreVideo": "视频"
+  "genreVideo": "视频",
+  "noticeTitle": "一款独立应用",
+  "noticeBody": "Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。本应用保存自己的马来西亚 eShop 价格记录；要购买游戏，请使用你的 Switch。",
+  "noticeOk": "好的",
+  "dataSourcesTitle": "我们的数据从哪里来"
 }
