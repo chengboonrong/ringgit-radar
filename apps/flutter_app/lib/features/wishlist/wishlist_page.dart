@@ -47,7 +47,7 @@ class _WishlistPageState extends ConsumerState<WishlistPage> {
           ),
         ),
         games.when(
-          error: (e, _) => SliverFillRemaining(hasScrollBody: false, child: ErrorView(message: e.toString(), onRetry: () => ref.invalidate(wishlistGamesProvider))),
+          error: (e, _) => SliverFillRemaining(hasScrollBody: false, child: ErrorView(error: e, onRetry: () => ref.invalidate(wishlistGamesProvider))),
           loading: () => SliverPadding(
             padding: EdgeInsets.fromLTRB(pad, 0, pad, bottom),
             sliver: GameGridSliver(games: const [], heroScope: 'wish', skeletons: ids.length.clamp(2, 6)),

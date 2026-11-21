@@ -36,40 +36,35 @@ DateTime todayMyt(DateTime now) {
   return DateTime.utc(m.year, m.month, m.day);
 }
 
-final _day = DateFormat('d MMM', 'en');
-final _dayYear = DateFormat('d MMM y', 'en');
-final _clock = DateFormat('h:mm a', 'en');
+// Chinese uses its own pattern for dates ("12月31日"); English and Malay share "31 Dec" / "31 Dis".
+// English keeps the 12-hour clock it always had, the others use 24 hours.
+DateFormat _day(String l) => l == 'zh' ? DateFormat.MMMd(l) : DateFormat('d MMM', l);
+DateFormat _dayYear(String l) => l == 'zh' ? DateFormat.yMMMd(l) : DateFormat('d MMM y', l);
+String _clock(DateTime m, String l) => l == 'en' ? DateFormat('h:mm a', l).format(m).toLowerCase() : DateFormat('HH:mm', l).format(m);
 
-/// "15 Nov" for a sale end on a card.
-String shortDateMyt(DateTime instant) => _day.format(toMyt(instant));
+/// "15 Nov" for a sale end on a card. zh "11月15日", ms "15 Nov".
+String shortDateMyt(DateTime instant, String locale) => _day(locale).format(toMyt(instant));
 
-/// "1 Nov 2026".
-String longDateMyt(DateTime instant) => _dayYear.format(toMyt(instant));
+/// "1 Nov 2026". zh "2026年11月1日".
+String longDateMyt(DateTime instant, String locale) => _dayYear(locale).format(toMyt(instant));
 
-/// "15 Nov 11:59 pm", used where the year is obvious.
-String dateTimeMyt(DateTime instant) {
+/// "15 Nov 11:59 pm", used where the year is obvious. zh "11月15日 23:59", ms "15 Nov 23:59".
+String dateTimeMyt(DateTime instant, String locale) {
   final m = toMyt(instant);
-  return '${_day.format(m)} ${_clock.format(m).toLowerCase()}';
+  return '${_day(locale).format(m)} ${_clock(m, locale)}';
 }
 
-/// "2 Nov 2026, 12:10 am".
-String longDateTimeMyt(DateTime instant) {
+/// "2 Nov 2026, 12:10 am". zh "2026年11月2日 00:10", ms "2 Nov 2026, 00:10".
+String longDateTimeMyt(DateTime instant, String locale) {
   final m = toMyt(instant);
-  return '${_dayYear.format(m)}, ${_clock.format(m).toLowerCase()}';
-}
-
-/// "Sale ends 16 Dec 2026, 11:59 pm".
-String saleEndsMyt(DateTime end) {
-  final m = toMyt(end);
-  return 'Sale ends ${_dayYear.format(m)}, ${_clock.format(m).toLowerCase()}';
+  return '${_dayYear(locale).format(m)}${locale == 'zh' ? ' ' : ', '}${_clock(m, locale)}';
 }
 
 /// A calendar date from the API ("2027-03-08"), which carries no time zone, as "8 Mar 2027".
-String releaseDateLabel(String isoDate) {
+String releaseDateLabel(String isoDate, String locale) {
   final d = DateTime.tryParse(isoDate);
-  return d == null ? isoDate : _dayYear.format(d);
+  return d == null ? isoDate : _dayYear(locale).format(d);
 }
 
-String percentOffLabel(int percent) => '$percent% OFF';
-
-String itemsLabel(int count) => 'Items: ${NumberFormat.decimalPattern('en').format(count)}';
+/// "7,827".
+String groupedCount(int n, String locale) => NumberFormat.decimalPattern(locale).format(n);

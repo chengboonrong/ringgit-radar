@@ -8,12 +8,21 @@ import 'models.dart';
 /// the API serves itself.
 const apiBase = String.fromEnvironment('API_BASE', defaultValue: 'http://127.0.0.1:8088');
 
-/// An API failure phrased for the person looking at the screen.
+/// Which request failed, so the screen can say it in the reader's language.
+enum ApiWhat { list, highlights, ranking, genres, status, game }
+
+enum ApiFailure { status, unreachable, badShape }
+
+/// An API failure as a value. The UI turns it into words (errorText), so a language switch rewords it.
 class ApiException implements Exception {
-  ApiException(this.message);
-  final String message;
+  ApiException(this.what, this.failure, [this.status]);
+  final ApiWhat what;
+  final ApiFailure failure;
+
+  /// The HTTP status, for [ApiFailure.status].
+  final int? status;
   @override
-  String toString() => message;
+  String toString() => 'ApiException(${what.name}, ${failure.name}${status == null ? '' : ', $status'})';
 }
 
 /// Where art comes from: the store's own image server, full size (1920x1080). Ringgit Radar keeps no copies.
@@ -38,16 +47,16 @@ class ApiClient {
 
   final Dio _dio;
 
-  Future<T> _get<T>(String what, String path, T Function(dynamic json) parse, [Map<String, dynamic>? query]) async {
+  Future<T> _get<T>(ApiWhat what, String path, T Function(dynamic json) parse, [Map<String, dynamic>? query]) async {
     try {
       final res = await _dio.get<dynamic>(path, queryParameters: query);
       return parse(res.data);
     } on DioException catch (e) {
       final status = e.response?.statusCode;
-      if (status != null) throw ApiException("Couldn't load $what. The server answered $status.");
-      throw ApiException("Couldn't load $what. The Ringgit Radar server can't be reached.");
+      if (status != null) throw ApiException(what, ApiFailure.status, status);
+      throw ApiException(what, ApiFailure.unreachable);
     } on Object {
-      throw ApiException("Couldn't load $what. The answer was not in the expected shape.");
+      throw ApiException(what, ApiFailure.badShape);
     }
   }
 
@@ -68,30 +77,30 @@ class ApiClient {
       };
 
   Future<GamePage> games(ListQuery q, {required bool showAll, int page = 1, int limit = 24}) =>
-      _get('the list', '/v1/games', (j) => GamePage.fromJson(j as Map<String, dynamic>),
+      _get(ApiWhat.list, '/v1/games', (j) => GamePage.fromJson(j as Map<String, dynamic>),
           params(q, showAll: showAll, page: page, limit: limit));
 
   Future<Highlights> highlights() =>
-      _get('Highlights', '/v1/highlights', (j) => Highlights.fromJson(j as Map<String, dynamic>));
+      _get(ApiWhat.highlights, '/v1/highlights', (j) => Highlights.fromJson(j as Map<String, dynamic>));
 
   Future<List<Game>> ranking(String platform) => _get(
-        'the ranking',
+        ApiWhat.ranking,
         '/v1/ranking',
         (j) => GamePage.fromJson(j as Map<String, dynamic>).items,
         {'platform': platform},
       );
 
   Future<List<GenreCount>> genres() => _get(
-        'genres',
+        ApiWhat.genres,
         '/v1/genres',
         (j) => [for (final g in (j as Map<String, dynamic>)['items'] as List) GenreCount.fromJson(g as Map<String, dynamic>)],
       );
 
   Future<PriceStatus> status() =>
-      _get('data status', '/v1/status/prices', (j) => PriceStatus.fromJson(j as Map<String, dynamic>));
+      _get(ApiWhat.status, '/v1/status/prices', (j) => PriceStatus.fromJson(j as Map<String, dynamic>));
 
   Future<GameDetail> detail(String nsuid) =>
-      _get('this game', '/v1/games/$nsuid', (j) => GameDetail.fromJson(j as Map<String, dynamic>));
+      _get(ApiWhat.game, '/v1/games/$nsuid', (j) => GameDetail.fromJson(j as Map<String, dynamic>));
 }
 
 final apiClientProvider = Provider<ApiClient>((ref) => ApiClient());

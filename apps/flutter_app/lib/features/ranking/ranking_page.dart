@@ -88,7 +88,7 @@ class _RankedGrid extends ConsumerWidget {
     final pad = pagePadding(width);
     final bottom = width < 840 ? 120.0 : 32.0;
     return data.when(
-      error: (e, _) => ErrorView(message: e.toString(), onRetry: () => ref.invalidate(rankingProvider(platform))),
+      error: (e, _) => ErrorView(error: e, onRetry: () => ref.invalidate(rankingProvider(platform))),
       loading: () => CustomScrollView(slivers: [
         SliverPadding(padding: EdgeInsets.fromLTRB(pad, 4, pad, bottom), sliver: const GameGridSliver(games: [], heroScope: 'rank', skeletons: 8)),
       ]),

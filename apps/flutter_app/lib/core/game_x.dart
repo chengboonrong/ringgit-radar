@@ -1,3 +1,4 @@
+import '../l10n/app_localizations.dart';
 import 'api/models.dart';
 import 'format.dart';
 
@@ -25,13 +26,13 @@ extension GameLabels on Game {
   }
 
   /// What stands where a price would be when there is none.
-  String noPriceLabel(DateTime now) {
+  String noPriceLabel(DateTime now, AppLocalizations l) {
     if (isUpcomingAt(now)) {
-      if (releaseDate != null) return releaseDateLabel(releaseDate!);
+      if (releaseDate != null) return releaseDateLabel(releaseDate!, l.localeName);
       if (releaseText.isNotEmpty) return releaseText;
-      return 'Coming soon';
+      return l.comingSoon;
     }
-    return 'Price unavailable';
+    return l.priceUnavailable;
   }
 
   String get kindLabel => switch (category) {

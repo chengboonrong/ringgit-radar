@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:ringgit_radar/app/theme.dart';
 import 'package:ringgit_radar/core/api/models.dart';
 import 'package:ringgit_radar/core/widgets/price_text.dart';
+import 'package:ringgit_radar/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +37,7 @@ Future<void> pumpCard(
   double width = 151,
 }) async {
   await t.pumpWidget(
-    MaterialApp(
+    MaterialApp(locale: const Locale('en'), localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, 
       theme: buildTheme(Brightness.light),
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(

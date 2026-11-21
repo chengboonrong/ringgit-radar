@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../app/theme.dart';
 import '../../core/api/models.dart';
 import '../../core/format.dart';
+import '../../l10n/l10n.dart';
 
 /// Step chart of the prices we have seen. It holds the last price up to [now].
 /// The axis labels come from integer sen, never from the plotted doubles.
@@ -35,7 +36,7 @@ class PriceHistoryChart extends StatelessWidget {
     final maxY = hi / 100.0;
     final maxX = spots.last.x <= 0 ? 1.0 : spots.last.x;
     final summary =
-        'Price history from ${longDateMyt(first)}: ${history.map((h) => plainMoney(h.priceMinor)).join(', then ')}.';
+        'Price history from ${longDateMyt(first, context.l10n.localeName)}: ${history.map((h) => plainMoney(h.priceMinor)).join(', then ')}.';
 
     TextStyle label() =>
         TextStyle(fontFamily: fontFamily, fontSize: 11, color: tk.hint);
@@ -100,7 +101,7 @@ class PriceHistoryChart extends StatelessWidget {
                             meta,
                             distanceFromEdge: 0,
                           ),
-                          child: Text(shortDateMyt(at), style: label()),
+                          child: Text(shortDateMyt(at, context.l10n.localeName), style: label()),
                         );
                       },
                     ),

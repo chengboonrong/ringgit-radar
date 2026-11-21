@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
 import '../api/models.dart';
+import '../../l10n/l10n.dart';
 import '../format.dart';
 
 /// The one place a price is drawn. A small top-aligned "RM", a gap, tabular digits with two
@@ -214,7 +215,7 @@ class SaleChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(2),
       ),
       child: Text(
-        percentOffLabel(percent),
+        context.l10n.percentOff(percent),
         style: TextStyle(
           fontSize: size,
           fontWeight: FontWeight.w700,

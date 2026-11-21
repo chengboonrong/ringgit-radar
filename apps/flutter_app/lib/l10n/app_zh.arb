@@ -1,5 +1,15 @@
 {
   "@@locale": "zh",
   "languageHeading": "Language",
-  "appLanguageSystem": "System"
+  "appLanguageSystem": "System",
+  "couldNotLoad": "{what, select, list{Couldn't load the list.} highlights{Couldn't load Highlights.} ranking{Couldn't load the ranking.} genres{Couldn't load genres.} status{Couldn't load data status.} game{Couldn't load this game.} other{Couldn't load this.}}",
+  "serverAnswered": "The server answered {status}.",
+  "serverUnreachable": "The Ringgit Radar server can't be reached.",
+  "unexpectedAnswer": "The answer was not in the expected shape.",
+  "somethingWentWrong": "Something went wrong.",
+  "saleEnds": "Sale ends {dateTime}",
+  "percentOff": "{percent}% OFF",
+  "itemsCount": "{count, plural, other{Items: {count}}}",
+  "comingSoon": "Coming soon",
+  "priceUnavailable": "Price unavailable"
 }

@@ -13,6 +13,7 @@ import '../storage/prefs.dart';
 import 'art_image.dart';
 import 'price_text.dart';
 import 'ring.dart';
+import '../../l10n/l10n.dart';
 
 enum GameCardStyle {
   list(bandHeight: 18, bodyHeight: 72, titleSize: 13, digitSize: 17),
@@ -98,8 +99,8 @@ class GameCard extends ConsumerWidget {
       if (game.isSwitch2) 'Switch 2',
       if (game.kindLabel.isNotEmpty) game.kindLabel,
       if (showRank && game.rank != null) 'Rank ${game.rank}',
-      if (price != null) PriceText.describe(price) else game.noPriceLabel(now),
-      if (price?.onSale == true && price?.discountEnd != null) 'Ends ${shortDateMyt(price!.discountEnd!)}',
+      if (price != null) PriceText.describe(price) else game.noPriceLabel(now, context.l10n),
+      if (price?.onSale == true && price?.discountEnd != null) 'Ends ${shortDateMyt(price!.discountEnd!, context.l10n.localeName)}',
     ].join(', ');
 
     final scale = cardTextScale(context);
@@ -190,11 +191,11 @@ class GameCard extends ConsumerWidget {
                                     ? PriceText(
                                         price: price,
                                         digitSize: style.digitSize,
-                                        note: price.onSale && price.discountEnd != null ? 'Ends ${shortDateMyt(price.discountEnd!)}' : null,
+                                        note: price.onSale && price.discountEnd != null ? 'Ends ${shortDateMyt(price.discountEnd!, context.l10n.localeName)}' : null,
                                       )
                                     : FittedBox(
                                         fit: BoxFit.scaleDown,
-                                        child: Text(game.noPriceLabel(now), style: TextStyle(fontSize: style.titleSize, fontWeight: FontWeight.w500, color: tk.hint)),
+                                        child: Text(game.noPriceLabel(now, context.l10n), style: TextStyle(fontSize: style.titleSize, fontWeight: FontWeight.w500, color: tk.hint)),
                                       ),
                               ),
                             ],

@@ -111,6 +111,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'System'**
   String get appLanguageSystem;
+
+  /// First sentence of an error message in the middle of a page, saying which request failed. Followed by a second sentence saying why. Room for a full sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'{what, select, list{Couldn\'t load the list.} highlights{Couldn\'t load Highlights.} ranking{Couldn\'t load the ranking.} genres{Couldn\'t load genres.} status{Couldn\'t load data status.} game{Couldn\'t load this game.} other{Couldn\'t load this.}}'**
+  String couldNotLoad(String what);
+
+  /// Second sentence of an error message: the server replied with an HTTP error code (the number, e.g. 503). Room for a full sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'The server answered {status}.'**
+  String serverAnswered(int status);
+
+  /// Second sentence of an error message: no connection to the app's server. 'Ringgit Radar' is the app's name, never translated. Room for a full sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'The Ringgit Radar server can\'t be reached.'**
+  String get serverUnreachable;
+
+  /// Second sentence of an error message: the server answered with data the app could not read. Room for a full sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'The answer was not in the expected shape.'**
+  String get unexpectedAnswer;
+
+  /// Error message for a failure that is not a server request. Room for a full sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong.'**
+  String get somethingWentWrong;
+
+  /// Line on a game page under the price: when the sale ends. dateTime is a date and time in Malaysia time, e.g. '16 Dec 2026, 11:59 pm'. About 35 characters plus the date.
+  ///
+  /// In en, this message translates to:
+  /// **'Sale ends {dateTime}'**
+  String saleEnds(String dateTime);
+
+  /// Red sale chip next to a price, e.g. '10% OFF'. Very tight: about 8 characters. Capitals in English as on the eShop.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% OFF'**
+  String percentOff(int percent);
+
+  /// Small count above a list of games, e.g. 'Items: 7,827'. About 15 characters.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{Items: {count}}}'**
+  String itemsCount(int count);
+
+  /// Stands where a price would be, for a game not out yet with no release date. About 14 characters, right-aligned on a card.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get comingSoon;
+
+  /// Stands where a price would be when the store gives none for a released game. About 18 characters, right-aligned on a card.
+  ///
+  /// In en, this message translates to:
+  /// **'Price unavailable'**
+  String get priceUnavailable;
 }
 
 class _AppLocalizationsDelegate
