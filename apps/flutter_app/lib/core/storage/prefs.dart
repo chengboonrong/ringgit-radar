@@ -52,3 +52,21 @@ class ShowAllNotifier extends Notifier<bool> {
 }
 
 final showAllProvider = NotifierProvider<ShowAllNotifier, bool>(ShowAllNotifier.new);
+
+const localeKey = 'locale';
+
+/// The chosen app language, or null for System (stored as 'system').
+class LocaleNotifier extends Notifier<Locale?> {
+  @override
+  Locale? build() {
+    final code = ref.read(sharedPreferencesProvider).getString(localeKey);
+    return const ['en', 'zh', 'ms'].contains(code) ? Locale(code!) : null;
+  }
+
+  Future<void> set(Locale? locale) {
+    state = locale;
+    return ref.read(sharedPreferencesProvider).setString(localeKey, locale?.languageCode ?? 'system');
+  }
+}
+
+final localeProvider = NotifierProvider<LocaleNotifier, Locale?>(LocaleNotifier.new);

@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "languageHeading": "Language",
+  "@languageHeading": {"description": "Settings section heading above the language chips, about 20 characters"},
+  "appLanguageSystem": "System",
+  "@appLanguageSystem": {"description": "Language chip in Settings: follow the device language, about 10 characters"}
+}
