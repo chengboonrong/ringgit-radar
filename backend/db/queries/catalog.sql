@@ -124,5 +124,5 @@ ORDER BY count(*) DESC, g.name;
 -- name: StatusPrices :one
 SELECT
   (SELECT max(finished_at) FROM collection_runs WHERE status = 'succeeded')::timestamptz AS last_run_at,
-  (SELECT count(*) FROM products p WHERE NOT EXISTS (SELECT 1 FROM removed_products r WHERE r.nsuid = p.nsuid))::bigint AS product_count,
+  (SELECT count(*) FROM catalog)::bigint AS product_count,
   (SELECT min(observed_at) FROM price_history)::timestamptz AS history_since;
