@@ -466,8 +466,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get privacyNotNintendoTitle => '不是任天堂';
 
   @override
-  String get privacyNotNintendoBody =>
-      'Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。价格收集自马来西亚 Nintendo eShop，并与其历史价格一同显示；要购买游戏，请使用你的 Switch。';
+  String privacyNotNintendoBody(String email) {
+    return 'Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。价格收集自马来西亚 Nintendo eShop，并与其历史价格一同显示；要购买游戏，请使用你的 Switch。如需删除或更正内容，请发送电邮至 $email。发往该地址的电邮由 Cloudflare 转发到我们的 Google 邮箱。';
+  }
 
   @override
   String get privacyEnglishPrevails => '本页为英文版的翻译；如两者有出入，以英文版为准。';
@@ -586,4 +587,39 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get descriptionSource => '来自发行商的商店介绍';
+
+  @override
+  String get dataFromTitle => '来源';
+
+  @override
+  String get dataFromBody =>
+      '每天从马来西亚 Nintendo eShop 收集一次。我们自己的价格历史从 2026年11月1日开始。';
+
+  @override
+  String get dataKeptTitle => '我们保存的内容';
+
+  @override
+  String get dataKeptBody =>
+      '每款游戏在 eShop 上公布的商品资料（名称、发行商、发售日期、游戏类型、简介和图片地址），以及我们记录到的每一个价格和优惠。本应用只显示每段简介的开头部分。';
+
+  @override
+  String get dataNotKeptTitle => '我们不保存的内容';
+
+  @override
+  String get dataNotKeptBody =>
+      '图片副本：图片直接从任天堂的图片服务器加载。我们不出售任何东西，也没有购买按钮；游戏请在 Switch 上购买。';
+
+  @override
+  String get dataRightsTitle => '权利人';
+
+  @override
+  String dataRightsBody(String email) {
+    return '如果你拥有此处显示的内容，并希望将其删除或更正，请发送电邮至 $email，我们会将其从 Ringgit Radar 中删除。';
+  }
+
+  @override
+  String get dataSourceCodeTitle => '源代码';
+
+  @override
+  String get dataSourceCodeBody => '本应用及其服务器均为开源：';
 }

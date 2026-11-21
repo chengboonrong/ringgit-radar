@@ -476,8 +476,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyNotNintendoTitle => 'Not Nintendo';
 
   @override
-  String get privacyNotNintendoBody =>
-      'Ringgit Radar is an independent, unofficial app. Not affiliated with or endorsed by Nintendo. Prices are collected from the Malaysian Nintendo eShop and shown with their history; to buy a game, use your Switch.';
+  String privacyNotNintendoBody(String email) {
+    return 'Ringgit Radar is an independent, unofficial app. Not affiliated with or endorsed by Nintendo. Prices are collected from the Malaysian Nintendo eShop and shown with their history; to buy a game, use your Switch. To ask for content to be removed or corrected, email $email. Emails to that address are forwarded by Cloudflare to our Google mail inbox.';
+  }
 
   @override
   String get privacyEnglishPrevails => '';
@@ -599,4 +600,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get descriptionSource => 'From the publisher\'s store listing';
+
+  @override
+  String get dataFromTitle => 'Where from';
+
+  @override
+  String get dataFromBody =>
+      'Collected from the Malaysian Nintendo eShop once a day. Our own price history starts on 1 November 2026.';
+
+  @override
+  String get dataKeptTitle => 'What we keep';
+
+  @override
+  String get dataKeptBody =>
+      'Each game\'s catalogue entry as the eShop publishes it (title, publisher, release date, genres, description and picture addresses), and every price and sale we record. The app shows only the first part of each description.';
+
+  @override
+  String get dataNotKeptTitle => 'What we don\'t keep';
+
+  @override
+  String get dataNotKeptBody =>
+      'Copies of pictures: they load from Nintendo\'s image server. We sell nothing and there is no Buy button; games are bought on the Switch.';
+
+  @override
+  String get dataRightsTitle => 'Rights holders';
+
+  @override
+  String dataRightsBody(String email) {
+    return 'If you own content shown here and want it removed or corrected, email $email and we will remove it from Ringgit Radar.';
+  }
+
+  @override
+  String get dataSourceCodeTitle => 'Source code';
+
+  @override
+  String get dataSourceCodeBody => 'The app and its server are open source:';
 }

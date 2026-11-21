@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// Literals that are not UI text: names that are never translated, format patterns, and code-only strings.
 const allowed = {
   'Ringgit Radar', 'Switch 2', 'Switch', 'RM', 'MPlusRounded1c', 'RinggitZh', 'API_BASE', //
-  'd MMM', 'd MMM y', 'h:mm a', 'HH:mm', 'override in main',
+  'd MMM', 'd MMM y', 'h:mm a', 'HH:mm', 'override in main', 'ringgitradar@snitco.com', // the contact address is never translated
 };
 
 /// Every string literal in [src] with its line, interpolations removed (they are code, not text).

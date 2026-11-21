@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../app/theme.dart';
 import '../../core/widgets/page_bits.dart';
 import '../lists/game_grid.dart';
+import 'data_sources_page.dart';
 import '../../l10n/l10n.dart';
 
 /// What the app and its server do with your data. Every line here is something the code does; if the
@@ -18,7 +19,7 @@ class PrivacyPage extends StatelessWidget {
         (l.privacyLogsTitle, l.privacyLogsBody),
         (l.privacyPicturesTitle, l.privacyPicturesBody),
         (l.privacyOthersTitle, l.privacyOthersBody),
-        (l.privacyNotNintendoTitle, l.privacyNotNintendoBody),
+        (l.privacyNotNintendoTitle, l.privacyNotNintendoBody(contactEmail)),
       ];
 
   @override

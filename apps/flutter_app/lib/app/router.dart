@@ -10,6 +10,7 @@ import '../features/ranking/ranking_page.dart';
 import '../features/sale/sale_page.dart';
 import '../features/search/search_page.dart';
 import '../features/settings/about_page.dart';
+import '../features/settings/data_sources_page.dart';
 import '../features/settings/privacy_page.dart';
 import '../features/wishlist/wishlist_page.dart';
 import 'shell.dart';
@@ -30,6 +31,7 @@ GoRouter buildRouter() => GoRouter(
             GoRoute(path: '/wish-list', pageBuilder: (c, s) => _instant(s, const WishlistPage())),
             GoRoute(path: '/about', pageBuilder: (c, s) => _instant(s, const AboutPage())),
             GoRoute(path: '/privacy', pageBuilder: (c, s) => _instant(s, const PrivacyPage())),
+            GoRoute(path: '/data-sources', pageBuilder: (c, s) => _instant(s, const DataSourcesPage())),
           ],
         ),
         GoRoute(

@@ -39,7 +39,10 @@ class AboutPage extends ConsumerWidget {
               const SizedBox(height: 8),
               Text(l.aboutRecord, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: tk.hint)),
               const SizedBox(height: 16),
-              Align(alignment: Alignment.centerLeft, child: OutlineChip(label: l.privacy, onTap: () => context.go('/privacy'))),
+              Wrap(spacing: 8, runSpacing: 8, children: [
+                OutlineChip(label: l.privacy, onTap: () => context.go('/privacy')),
+                OutlineChip(label: l.dataSourcesTitle, onTap: () => context.go('/data-sources')),
+              ]),
               SectionHeading(l.dataHeading),
               status.when(
                 loading: () => const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [SkeletonLine(width: 240), SizedBox(height: 12), SkeletonLine(width: 180)]),

@@ -627,9 +627,15 @@
   "@privacyNotNintendoTitle": {
     "description": "Privacy page heading."
   },
-  "privacyNotNintendoBody": "Ringgit Radar is an independent, unofficial app. Not affiliated with or endorsed by Nintendo. Prices are collected from the Malaysian Nintendo eShop and shown with their history; to buy a game, use your Switch.",
+  "privacyNotNintendoBody": "Ringgit Radar is an independent, unofficial app. Not affiliated with or endorsed by Nintendo. Prices are collected from the Malaysian Nintendo eShop and shown with their history; to buy a game, use your Switch. To ask for content to be removed or corrected, email {email}. Emails to that address are forwarded by Cloudflare to our Google mail inbox.",
   "@privacyNotNintendoBody": {
-    "description": "Privacy page paragraph. Must say clearly that the app is not Nintendo's."
+    "description": "Privacy page paragraph. Must say clearly that the app is not Nintendo's. Ends with the removal contact and one true sentence on how its mail is forwarded (Cloudflare to a Google inbox); keep both names.",
+    "placeholders": {
+      "email": {
+        "type": "String",
+        "example": "ringgitradar@snitco.com"
+      }
+    }
   },
   "privacyEnglishPrevails": "",
   "@privacyEnglishPrevails": {
@@ -786,5 +792,51 @@
   "descriptionSource": "From the publisher's store listing",
   "@descriptionSource": {
     "description": "Small grey line under the game page's Description heading: the text below is the publisher's, quoted from the eShop listing. About 40 characters."
+  },
+  "dataFromTitle": "Where from",
+  "@dataFromTitle": {
+    "description": "Heading on the data-sources page. About 20 characters."
+  },
+  "dataFromBody": "Collected from the Malaysian Nintendo eShop once a day. Our own price history starts on 1 November 2026.",
+  "@dataFromBody": {
+    "description": "Data-sources page paragraph: where the data comes from and when our history starts. Keep the date."
+  },
+  "dataKeptTitle": "What we keep",
+  "@dataKeptTitle": {
+    "description": "Heading on the data-sources page. About 20 characters."
+  },
+  "dataKeptBody": "Each game's catalogue entry as the eShop publishes it (title, publisher, release date, genres, description and picture addresses), and every price and sale we record. The app shows only the first part of each description.",
+  "@dataKeptBody": {
+    "description": "Data-sources page paragraph. Must stay true: the full catalogue entry, description included, is stored; only its first part is shown."
+  },
+  "dataNotKeptTitle": "What we don't keep",
+  "@dataNotKeptTitle": {
+    "description": "Heading on the data-sources page. About 22 characters."
+  },
+  "dataNotKeptBody": "Copies of pictures: they load from Nintendo's image server. We sell nothing and there is no Buy button; games are bought on the Switch.",
+  "@dataNotKeptBody": {
+    "description": "Data-sources page paragraph."
+  },
+  "dataRightsTitle": "Rights holders",
+  "@dataRightsTitle": {
+    "description": "Heading on the data-sources page, for owners of the games, text or pictures shown. About 20 characters."
+  },
+  "dataRightsBody": "If you own content shown here and want it removed or corrected, email {email} and we will remove it from Ringgit Radar.",
+  "@dataRightsBody": {
+    "description": "Data-sources page paragraph for rights holders. Must not promise a time (no 'within N days').",
+    "placeholders": {
+      "email": {
+        "type": "String",
+        "example": "ringgitradar@snitco.com"
+      }
+    }
+  },
+  "dataSourceCodeTitle": "Source code",
+  "@dataSourceCodeTitle": {
+    "description": "Heading on the data-sources page. About 20 characters."
+  },
+  "dataSourceCodeBody": "The app and its server are open source:",
+  "@dataSourceCodeBody": {
+    "description": "Data-sources page line; the GitHub address follows on its own line."
   }
 }

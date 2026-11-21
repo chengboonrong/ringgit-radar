@@ -124,7 +124,7 @@
   "privacyOthersTitle": "还有谁会看到你的访问",
   "privacyOthersBody": "网站及其服务器运行在 Vercel 上。Vercel 按其自己的政策保存请求日志，其中可能包括你请求的页面、时间、你的网络地址和浏览器类型。价格数据存放在 Supabase；那里只有游戏价格，没有任何访客信息，而且只接收我们服务器的请求。除了那些图片，网页版的所有内容（包括字体）都从我们自己的地址载入，Android 应用也只与我们的服务器通信。",
   "privacyNotNintendoTitle": "不是任天堂",
-  "privacyNotNintendoBody": "Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。价格收集自马来西亚 Nintendo eShop，并与其历史价格一同显示；要购买游戏，请使用你的 Switch。",
+  "privacyNotNintendoBody": "Ringgit Radar 是一款独立的非官方应用，与任天堂无关，也未获其认可。价格收集自马来西亚 Nintendo eShop，并与其历史价格一同显示；要购买游戏，请使用你的 Switch。如需删除或更正内容，请发送电邮至 {email}。发往该地址的电邮由 Cloudflare 转发到我们的 Google 邮箱。",
   "privacyEnglishPrevails": "本页为英文版的翻译；如两者有出入，以英文版为准。",
   "backToAbout": "返回关于",
   "onSaleChip": "特价",
@@ -163,5 +163,15 @@
   "dataSourcesTitle": "我们的数据从哪里来",
   "unofficialLabel": "非官方",
   "wordmarkSemantics": "Ringgit Radar，非官方",
-  "descriptionSource": "来自发行商的商店介绍"
+  "descriptionSource": "来自发行商的商店介绍",
+  "dataFromTitle": "来源",
+  "dataFromBody": "每天从马来西亚 Nintendo eShop 收集一次。我们自己的价格历史从 2026年11月1日开始。",
+  "dataKeptTitle": "我们保存的内容",
+  "dataKeptBody": "每款游戏在 eShop 上公布的商品资料（名称、发行商、发售日期、游戏类型、简介和图片地址），以及我们记录到的每一个价格和优惠。本应用只显示每段简介的开头部分。",
+  "dataNotKeptTitle": "我们不保存的内容",
+  "dataNotKeptBody": "图片副本：图片直接从任天堂的图片服务器加载。我们不出售任何东西，也没有购买按钮；游戏请在 Switch 上购买。",
+  "dataRightsTitle": "权利人",
+  "dataRightsBody": "如果你拥有此处显示的内容，并希望将其删除或更正，请发送电邮至 {email}，我们会将其从 Ringgit Radar 中删除。",
+  "dataSourceCodeTitle": "源代码",
+  "dataSourceCodeBody": "本应用及其服务器均为开源："
 }
