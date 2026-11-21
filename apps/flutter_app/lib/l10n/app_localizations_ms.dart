@@ -581,4 +581,17 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get genreVideo => 'Video';
+
+  @override
+  String get noticeTitle => 'Aplikasi bebas';
+
+  @override
+  String get noticeBody =>
+      'Ringgit Radar ialah aplikasi bebas yang tidak rasmi. Ia tiada hubungan dengan Nintendo dan tidak diiktiraf oleh Nintendo. Ia menyimpan rekodnya sendiri tentang harga eShop Malaysia; untuk membeli permainan, gunakan Switch anda.';
+
+  @override
+  String get noticeOk => 'OK';
+
+  @override
+  String get dataSourcesTitle => 'Dari mana data kami datang';
 }

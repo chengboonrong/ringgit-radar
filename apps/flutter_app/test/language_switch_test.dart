@@ -34,7 +34,7 @@ Future<(SharedPreferences, ProviderContainer)> _pumpApp(WidgetTester t, ApiClien
   t.view.physicalSize = const Size(390, 1600);
   t.view.devicePixelRatio = 1;
   addTearDown(t.view.reset);
-  SharedPreferences.setMockInitialValues({localeKey: code});
+  SharedPreferences.setMockInitialValues({localeKey: code, noticeSeenKey: true});
   final prefs = await SharedPreferences.getInstance();
   await t.pumpWidget(ProviderScope(
     retry: (_, _) => null, // show a failure at once rather than after Riverpod's retries
@@ -67,7 +67,7 @@ void main() {
     t.view.physicalSize = const Size(390, 1600);
     t.view.devicePixelRatio = 1;
     addTearDown(t.view.reset);
-    SharedPreferences.setMockInitialValues({localeKey: 'en'});
+    SharedPreferences.setMockInitialValues({localeKey: 'en', noticeSeenKey: true});
     final prefs = await SharedPreferences.getInstance();
     await t.pumpWidget(ProviderScope(
       overrides: [sharedPreferencesProvider.overrideWithValue(prefs), apiClientProvider.overrideWithValue(_StatusApi())],

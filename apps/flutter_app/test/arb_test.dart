@@ -78,8 +78,8 @@ Set<String> shape(String msg) {
 /// and a few Malay words are the English word.
 const sameAsEnglish = {
   'zh': {'languageEnglish', 'languageChinese', 'languageMalay'},
-  // Malay writes platform, genre, data, RPG, platformer and video with the English word
-  'ms': {'languageEnglish', 'languageChinese', 'languageMalay', 'platform', 'genre', 'dataHeading', 'genreRpg', 'genrePlatformer', 'genreVideo'},
+  // Malay writes platform, genre, data, RPG, platformer and video with the English word, and OK as OK
+  'ms': {'languageEnglish', 'languageChinese', 'languageMalay', 'platform', 'genre', 'dataHeading', 'genreRpg', 'genrePlatformer', 'genreVideo', 'noticeOk'},
 };
 
 /// Words the honesty rules forbid: nothing is called popular, best-selling or trending, and nothing

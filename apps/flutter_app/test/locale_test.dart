@@ -40,7 +40,7 @@ void main() {
   });
 
   test('the language choice is stored and read back, System as null', () async {
-    SharedPreferences.setMockInitialValues({});
+    SharedPreferences.setMockInitialValues({noticeSeenKey: true});
     final c = container(await SharedPreferences.getInstance());
     addTearDown(c.dispose);
     expect(c.read(localeProvider), isNull);
@@ -53,7 +53,7 @@ void main() {
   });
 
   testWidgets('the app shows the stored language', (t) async {
-    SharedPreferences.setMockInitialValues({localeKey: 'ms'});
+    SharedPreferences.setMockInitialValues({localeKey: 'ms', noticeSeenKey: true});
     final prefs = await SharedPreferences.getInstance();
     await t.pumpWidget(ProviderScope(
       overrides: [sharedPreferencesProvider.overrideWithValue(prefs), apiClientProvider.overrideWithValue(_SilentApi())],

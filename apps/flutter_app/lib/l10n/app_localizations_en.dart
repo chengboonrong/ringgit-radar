@@ -577,4 +577,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get genreVideo => 'Video';
+
+  @override
+  String get noticeTitle => 'An independent app';
+
+  @override
+  String get noticeBody =>
+      'Ringgit Radar is independent and unofficial. It is not affiliated with or endorsed by Nintendo. It keeps its own record of Malaysian eShop prices; to buy a game, use your Switch.';
+
+  @override
+  String get noticeOk => 'OK';
+
+  @override
+  String get dataSourcesTitle => 'Where our data comes from';
 }

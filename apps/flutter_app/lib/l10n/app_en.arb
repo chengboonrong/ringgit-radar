@@ -758,5 +758,21 @@
   "genreVideo": "Video",
   "@genreVideo": {
     "description": "Genre name as the eShop groups games (API value 'Video'). Shown on Search tiles, filters and the game page. About 18 characters."
+  },
+  "noticeTitle": "An independent app",
+  "@noticeTitle": {
+    "description": "Title of the one-time notice shown on first launch. About 24 characters."
+  },
+  "noticeBody": "Ringgit Radar is independent and unofficial. It is not affiliated with or endorsed by Nintendo. It keeps its own record of Malaysian eShop prices; to buy a game, use your Switch.",
+  "@noticeBody": {
+    "description": "Body of the one-time first-launch notice. Must never suggest the app is official or approved by Nintendo. Up to about 200 characters."
+  },
+  "noticeOk": "OK",
+  "@noticeOk": {
+    "description": "The button that closes the first-launch notice. About 8 characters."
+  },
+  "dataSourcesTitle": "Where our data comes from",
+  "@dataSourcesTitle": {
+    "description": "Title of the page on where the data comes from; also its link in the first-launch notice and its chip on About. About 28 characters."
   }
 }
