@@ -782,5 +782,9 @@
   "wordmarkSemantics": "Ringgit Radar, unofficial",
   "@wordmarkSemantics": {
     "description": "What screen readers say for the wordmark and its Unofficial chip. Keep the name Ringgit Radar as it is."
+  },
+  "descriptionSource": "From the publisher's store listing",
+  "@descriptionSource": {
+    "description": "Small grey line under the game page's Description heading: the text below is the publisher's, quoted from the eShop listing. About 40 characters."
   }
 }

@@ -578,6 +578,8 @@ class _Description extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
+        const SizedBox(height: 2),
+        Text(context.l10n.descriptionSource, style: TextStyle(fontSize: 13, color: tk.hint, height: 1.4)),
         const SizedBox(height: 8),
         if (tagline.isNotEmpty) ...[
           Text(

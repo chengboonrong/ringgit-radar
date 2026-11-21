@@ -34,6 +34,10 @@ void main() {
       )..layout();
       expect(label.size.width, lessThanOrEqualTo(english.width + 1), reason: 'wider than "Add to Wish List"');
       expect(find.textContaining('PEGI'), findsNothing); // age ratings are no longer shown
+      // the description is marked as the publisher's text, at a readable size
+      final source = find.text(l.descriptionSource, skipOffstage: false);
+      expect(source, findsOneWidget);
+      expect(t.renderObject<RenderParagraph>(source).text.style!.fontSize, greaterThanOrEqualTo(12));
     },
     'Filter sheet': (t, l) async {
       await go(t, '/sale');

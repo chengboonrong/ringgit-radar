@@ -1077,6 +1077,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ringgit Radar, unofficial'**
   String get wordmarkSemantics;
+
+  /// Small grey line under the game page's Description heading: the text below is the publisher's, quoted from the eShop listing. About 40 characters.
+  ///
+  /// In en, this message translates to:
+  /// **'From the publisher\'s store listing'**
+  String get descriptionSource;
 }
 
 class _AppLocalizationsDelegate
