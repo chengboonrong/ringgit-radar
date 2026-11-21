@@ -8,13 +8,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'app/router.dart';
 import 'app/theme.dart';
 import 'core/storage/prefs.dart';
+import 'l10n/html_lang.dart';
+import 'l10n/l10n.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   // pushed pages such as a game page show in the address bar, so the browser's back button works
   GoRouter.optionURLReflectsImperativeAPIs = true;
-  await initializeDateFormatting('en');
+  await initializeDateFormatting();
   final prefs = await SharedPreferences.getInstance();
   runApp(ProviderScope(overrides: [sharedPreferencesProvider.overrideWithValue(prefs)], child: const RinggitRadarApp()));
 }
@@ -44,7 +46,14 @@ class _RinggitRadarAppState extends ConsumerState<RinggitRadarApp> {
       themeMode: ref.watch(themeModeProvider),
       theme: buildTheme(Brightness.light),
       darkTheme: buildTheme(Brightness.dark),
-      builder: (context, child) => MediaQuery.withClampedTextScaling(minScaleFactor: 0.9, maxScaleFactor: 1.3, child: child!),
+      locale: ref.watch(localeProvider),
+      supportedLocales: appLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localeListResolutionCallback: (device, _) => resolveAppLocale(device),
+      builder: (context, child) {
+        setHtmlLang(Localizations.localeOf(context).languageCode);
+        return MediaQuery.withClampedTextScaling(minScaleFactor: 0.9, maxScaleFactor: 1.3, child: child!);
+      },
     );
   }
 }
