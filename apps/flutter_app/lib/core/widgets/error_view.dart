@@ -2,13 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../app/theme.dart';
+import '../../l10n/l10n.dart';
+import '../api/api_client.dart';
 import 'ring.dart';
+
+/// An error in the reader's language: what failed, then why.
+String errorText(AppLocalizations l, Object error) {
+  if (error is! ApiException) return l.somethingWentWrong;
+  final why = switch (error.failure) {
+    ApiFailure.status => l.serverAnswered(error.status ?? 0),
+    ApiFailure.unreachable => l.serverUnreachable,
+    ApiFailure.badShape => l.unexpectedAnswer,
+  };
+  return '${l.couldNotLoad(error.what.name)} $why';
+}
 
 /// Says what failed and offers Retry.
 class ErrorView extends StatelessWidget {
-  const ErrorView({super.key, required this.message, required this.onRetry});
+  const ErrorView({super.key, required this.error, required this.onRetry});
 
-  final String message;
+  final Object error;
   final VoidCallback onRetry;
 
   @override
@@ -22,7 +35,7 @@ class ErrorView extends StatelessWidget {
           children: [
             Icon(PhosphorIconsRegular.wifiSlash, size: 36, color: tk.hint),
             const SizedBox(height: 12),
-            Text(message, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
+            Text(errorText(context.l10n, error), textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
             const SizedBox(height: 16),
             RedButton(label: 'Retry', onTap: onRetry),
           ],

@@ -3,6 +3,7 @@ import 'package:ringgit_radar/core/api/models.dart';
 import 'package:ringgit_radar/core/storage/prefs.dart';
 import 'package:ringgit_radar/core/widgets/art_image.dart';
 import 'package:ringgit_radar/core/widgets/game_card.dart';
+import 'package:ringgit_radar/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -32,7 +33,7 @@ Future<void> pump(WidgetTester t, List<Game> games, {double textScale = 1, doubl
   final prefs = await SharedPreferences.getInstance();
   await t.pumpWidget(ProviderScope(
     overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
-    child: MaterialApp(
+    child: MaterialApp(locale: const Locale('en'), localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, 
       theme: buildTheme(Brightness.light),
       builder: (context, child) => MediaQuery(data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(textScale)), child: child!),
       home: Scaffold(

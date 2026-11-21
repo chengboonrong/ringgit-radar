@@ -17,6 +17,7 @@ import '../../core/widgets/price_text.dart';
 import '../../core/widgets/ring.dart';
 import '../../core/widgets/skeleton.dart';
 import 'price_history_chart.dart';
+import '../../l10n/l10n.dart';
 
 const _wideBreakpoint = 1200.0;
 
@@ -44,7 +45,7 @@ class GamePage extends ConsumerWidget {
       body = (
         left: detail.hasError
             ? ErrorView(
-                message: detail.error.toString(),
+                error: detail.error!,
                 onRetry: () => ref.invalidate(gameDetailProvider(nsuid)),
               )
             : const _PageSkeleton(),
@@ -55,7 +56,7 @@ class GamePage extends ConsumerWidget {
         left: _Facts(
           game: game,
           detail: d,
-          loadError: detail.hasError ? detail.error.toString() : null,
+          loadError: detail.hasError ? detail.error : null,
           heroTag: heroTag,
           nsuid: nsuid,
         ),
@@ -169,7 +170,7 @@ class _Facts extends ConsumerWidget {
 
   final Game game;
   final GameDetail? detail;
-  final String? loadError;
+  final Object? loadError;
   final String heroTag;
   final String nsuid;
 
@@ -186,7 +187,7 @@ class _Facts extends ConsumerWidget {
       if (price?.onSale == true && price?.discountEnd != null)
         _Fact(
           icon: PhosphorIconsRegular.tag,
-          text: saleEndsMyt(price!.discountEnd!),
+          text: context.l10n.saleEnds(longDateTimeMyt(price!.discountEnd!, context.l10n.localeName)),
           strong: true,
         ),
       _HistorySection(
@@ -477,7 +478,7 @@ class _HistorySection extends StatelessWidget {
   });
 
   final GameDetail? detail;
-  final String? error;
+  final Object? error;
   final VoidCallback onRetry;
   final DateTime now;
 
@@ -490,7 +491,7 @@ class _HistorySection extends StatelessWidget {
       content = error != null
           ? Row(
               children: [
-                Expanded(child: Text(error!)),
+                Expanded(child: Text(errorText(context.l10n, error!))),
                 const SizedBox(width: 12),
                 RedButton(label: 'Retry', onTap: onRetry, minWidth: 80),
               ],
@@ -511,7 +512,7 @@ class _HistorySection extends StatelessWidget {
     } else if (d.history.length < 2 && d.firstObservedAt != null) {
       // one observation so far: the whole story is one line, with no lowest price and no chart
       content = Text(
-        "Tracking began ${longDateMyt(d.firstObservedAt!)}. We've only seen this price so far.",
+        "Tracking began ${longDateMyt(d.firstObservedAt!, context.l10n.localeName)}. We've only seen this price so far.",
         style: TextStyle(fontSize: 15, color: tk.hint, height: 1.4),
       );
     } else {
@@ -521,7 +522,7 @@ class _HistorySection extends StatelessWidget {
         children: [
           if (lowest != null)
             Text(
-              "Lowest we've seen: ${plainMoney(lowest.priceMinor)} since ${longDateMyt(lowest.since)}",
+              "Lowest we've seen: ${plainMoney(lowest.priceMinor)} since ${longDateMyt(lowest.since, context.l10n.localeName)}",
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -531,7 +532,7 @@ class _HistorySection extends StatelessWidget {
           if (d.firstObservedAt != null) ...[
             const SizedBox(height: 4),
             Text(
-              'Tracking began ${longDateMyt(d.firstObservedAt!)}',
+              'Tracking began ${longDateMyt(d.firstObservedAt!, context.l10n.localeName)}',
               style: TextStyle(fontSize: 14, color: tk.hint, height: 1.4),
             ),
           ],
@@ -625,7 +626,7 @@ class _Dlc extends StatelessWidget {
           RingTarget(
             radius: 8,
             label:
-                '${a.title}, ${a.price == null ? a.noPriceLabel(now) : PriceText.describe(a.price!)}',
+                '${a.title}, ${a.price == null ? a.noPriceLabel(now, context.l10n) : PriceText.describe(a.price!)}',
             onTap: () async {
               final container = ProviderScope.containerOf(context);
               await context.push<void>(
@@ -664,7 +665,7 @@ class _Dlc extends StatelessWidget {
                       PriceText(price: a.price!, digitSize: 15)
                     else
                       Text(
-                        a.noPriceLabel(now),
+                        a.noPriceLabel(now, context.l10n),
                         style: TextStyle(color: tk.hint, fontSize: 13),
                       ),
                   ],
@@ -698,7 +699,7 @@ class _Details extends StatelessWidget {
         },
       ),
       if (game.releaseDate != null)
-        ('Release date', releaseDateLabel(game.releaseDate!))
+        ('Release date', releaseDateLabel(game.releaseDate!, context.l10n.localeName))
       else if (game.releaseText.isNotEmpty)
         ('Release date', game.releaseText),
       if (detail.genres.isNotEmpty) ('Genre', detail.genres.join(', ')),
@@ -800,7 +801,7 @@ class _PricePanel extends ConsumerWidget {
     final priceWidget = price != null
         ? PriceText(price: price, digitSize: wide ? 44 : 22)
         : Text(
-            game.noPriceLabel(now),
+            game.noPriceLabel(now, context.l10n),
             style: TextStyle(
               fontSize: wide ? 22 : 16,
               fontWeight: FontWeight.w700,

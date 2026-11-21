@@ -11,12 +11,13 @@ class GameListState {
   final int total;
   final int pages;
   final bool loading;
-  final String? error;
+  /// The caught failure, kept as a value so its text follows the language.
+  final Object? error;
 
   bool get hasMore => pages == 0 || items.length < total;
   bool get initialLoad => pages == 0 && error == null;
 
-  GameListState copyWith({List<Game>? items, int? total, int? pages, bool? loading, String? error, bool clearError = false}) =>
+  GameListState copyWith({List<Game>? items, int? total, int? pages, bool? loading, Object? error, bool clearError = false}) =>
       GameListState(
         items: items ?? this.items,
         total: total ?? this.total,
@@ -56,7 +57,7 @@ class GameListController extends Notifier<GameListState> {
       if (!ref.mounted) return;
       state = state.copyWith(items: [...state.items, ...page.items], total: page.total, pages: state.pages + 1, loading: false);
     } on ApiException catch (e) {
-      if (ref.mounted) state = state.copyWith(loading: false, error: e.message);
+      if (ref.mounted) state = state.copyWith(loading: false, error: e);
     } finally {
       _busy = false;
     }

@@ -10,6 +10,7 @@ import '../../core/widgets/error_view.dart';
 import '../../core/widgets/page_bits.dart';
 import '../../core/widgets/skeleton.dart';
 import '../lists/game_grid.dart';
+import '../../l10n/l10n.dart';
 
 class AboutPage extends ConsumerWidget {
   const AboutPage({super.key});
@@ -40,12 +41,12 @@ class AboutPage extends ConsumerWidget {
               const SectionHeading('Data'),
               status.when(
                 loading: () => const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [SkeletonLine(width: 240), SizedBox(height: 12), SkeletonLine(width: 180)]),
-                error: (e, _) => SizedBox(height: 180, child: ErrorView(message: e.toString(), onRetry: () => ref.invalidate(statusProvider))),
+                error: (e, _) => SizedBox(height: 180, child: ErrorView(error: e, onRetry: () => ref.invalidate(statusProvider))),
                 data: (s) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _Fact('Prices last checked', s.lastRunAt == null ? 'Not yet' : '${longDateTimeMyt(s.lastRunAt!)} (Malaysia time)'),
-                    _Fact('Tracking began', s.historySince == null ? 'Not yet' : longDateMyt(s.historySince!)),
+                    _Fact('Prices last checked', s.lastRunAt == null ? 'Not yet' : '${longDateTimeMyt(s.lastRunAt!, context.l10n.localeName)} (Malaysia time)'),
+                    _Fact('Tracking began', s.historySince == null ? 'Not yet' : longDateMyt(s.historySince!, context.l10n.localeName)),
                     _Fact('Products tracked', '${s.productCount}'),
                   ],
                 ),

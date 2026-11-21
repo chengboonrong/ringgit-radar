@@ -152,7 +152,7 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
               SkeletonLine(width: 160), SizedBox(height: 28), SkeletonLine(width: 120), SizedBox(height: 28), SkeletonLine(width: 190),
             ]),
           ),
-          error: (e, _) => SizedBox(height: 240, child: ErrorView(message: e.toString(), onRetry: () => ref.invalidate(genresProvider))),
+          error: (e, _) => SizedBox(height: 240, child: ErrorView(error: e, onRetry: () => ref.invalidate(genresProvider))),
         );
       case 'age':
         return Column(children: [

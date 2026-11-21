@@ -4,13 +4,13 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../app/theme.dart';
 import '../../core/api/models.dart';
-import '../../core/format.dart';
 import '../../core/widgets/error_view.dart';
 import '../../core/widgets/ring.dart';
 import 'filter_sheet.dart';
 import 'game_grid.dart';
 import 'list_controller.dart';
 import 'list_spec.dart';
+import '../../l10n/l10n.dart';
 
 /// A list page body: hint, a sticky "Items: N / Filter / sort" row, the grid, infinite scroll.
 /// [query] is owned by the page so the filter sheet and sort menu can change it.
@@ -99,7 +99,7 @@ class _GameListViewState extends ConsumerState<GameListView> {
           ),
         ),
         if (state.error != null && state.items.isEmpty)
-          SliverFillRemaining(hasScrollBody: false, child: ErrorView(message: state.error!, onRetry: () => ref.read(gameListProvider(widget.query).notifier).loadMore()))
+          SliverFillRemaining(hasScrollBody: false, child: ErrorView(error: state.error!, onRetry: () => ref.read(gameListProvider(widget.query).notifier).loadMore()))
         else if (!state.loading && state.items.isEmpty)
           SliverFillRemaining(hasScrollBody: false, child: Center(child: Padding(padding: const EdgeInsets.all(32), child: Text(widget.emptyText, textAlign: TextAlign.center))))
         else
@@ -157,7 +157,7 @@ class _ItemsRow extends StatelessWidget {
         Expanded(
           child: total == null
               ? Align(alignment: Alignment.centerLeft, child: Container(width: 88, height: 14, decoration: BoxDecoration(color: tk.skeleton, borderRadius: BorderRadius.circular(7))))
-              : Text(itemsLabel(total!), style: const TextStyle(fontSize: 14)),
+              : Text(context.l10n.itemsCount(total!), style: const TextStyle(fontSize: 14)),
         ),
         RingTarget(
           radius: 8,

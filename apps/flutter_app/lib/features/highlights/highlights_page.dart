@@ -22,7 +22,7 @@ class HighlightsPage extends ConsumerWidget {
     final bottom = width < 840 ? 120.0 : 32.0;
 
     return data.when(
-      error: (e, _) => ErrorView(message: e.toString(), onRetry: () => ref.invalidate(highlightsProvider)),
+      error: (e, _) => ErrorView(error: e, onRetry: () => ref.invalidate(highlightsProvider)),
       loading: () => _scroll(
         pad,
         bottom,

@@ -1,10 +1,11 @@
 import 'package:ringgit_radar/app/theme.dart';
 import 'package:ringgit_radar/core/api/models.dart';
 import 'package:ringgit_radar/core/widgets/price_text.dart';
+import 'package:ringgit_radar/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Widget host(Widget child) => MaterialApp(theme: buildTheme(Brightness.light), home: Scaffold(body: Center(child: child)));
+Widget host(Widget child) => MaterialApp(locale: const Locale('en'), localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, theme: buildTheme(Brightness.light), home: Scaffold(body: Center(child: child)));
 
 Price regular(int minor) => Price(currency: 'MYR', regularMinor: minor, currentMinor: minor, onSale: false);
 
@@ -54,7 +55,7 @@ void main() {
   });
 
   testWidgets('on a dark card the sale price uses the pinker red', (t) async {
-    await t.pumpWidget(MaterialApp(theme: buildTheme(Brightness.dark), home: Scaffold(body: Center(child: PriceText(price: sale(7200, 6480, 10))))));
+    await t.pumpWidget(MaterialApp(locale: const Locale('en'), localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, theme: buildTheme(Brightness.dark), home: Scaffold(body: Center(child: PriceText(price: sale(7200, 6480, 10))))));
     expect(t.widget<Text>(find.text('64.80')).style!.color, saleRedOnDark);
   });
 

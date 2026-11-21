@@ -3,6 +3,8 @@ import 'package:ringgit_radar/core/format.dart';
 import 'package:ringgit_radar/core/game_x.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter/widgets.dart';
+import 'package:ringgit_radar/l10n/app_localizations.dart';
 
 Game game({String? releaseDate, String releaseText = '', String status = 'onsale'}) => Game(
       nsuid: '1',
@@ -16,7 +18,8 @@ Game game({String? releaseDate, String releaseText = '', String status = 'onsale
     );
 
 void main() {
-  setUpAll(() => initializeDateFormatting('en'));
+  setUpAll(() => initializeDateFormatting());
+  final en = lookupAppLocalizations(const Locale('en'));
 
   group('money', () {
     test('splits integer sen into grouped whole and two-digit fraction', () {
@@ -36,23 +39,47 @@ void main() {
 
   group('percent', () {
     test('shows the whole percent with OFF', () {
-      expect(percentOffLabel(10), '10% OFF');
-      expect(percentOffLabel(92), '92% OFF');
+      expect(en.percentOff(10), '10% OFF');
+      expect(en.percentOff(92), '92% OFF');
+    });
+  });
+
+  group('per language', () {
+    test('a sale ending 23:59 on 31 Dec in Malaysia reads the same moment in every language', () {
+      final end = DateTime.utc(2026, 12, 31, 15, 59); // 23:59 on 31 Dec in Malaysia
+      expect(shortDateMyt(end, 'en'), '31 Dec');
+      expect(shortDateMyt(end, 'zh'), '12月31日');
+      expect(shortDateMyt(end, 'ms'), '31 Dis');
+      expect(longDateTimeMyt(end, 'en'), '31 Dec 2026, 11:59 pm');
+      expect(longDateTimeMyt(end, 'zh'), '2026年12月31日 23:59');
+      expect(longDateTimeMyt(end, 'ms'), '31 Dis 2026, 23:59');
+      expect(longDateMyt(end, 'zh'), '2026年12月31日');
+      expect(longDateMyt(end, 'ms'), '31 Dis 2026');
+      expect(dateTimeMyt(end, 'zh'), '12月31日 23:59');
+    });
+
+    test('release dates and counts', () {
+      expect(releaseDateLabel('2027-03-08', 'zh'), '2027年3月8日');
+      expect(releaseDateLabel('2027-03-08', 'ms'), '8 Mac 2027');
+      expect(releaseDateLabel('soon', 'zh'), 'soon');
+      expect(groupedCount(7827, 'ms'), '7,827');
+      expect(groupedCount(7827, 'en'), '7,827');
+      expect(en.itemsCount(7827), 'Items: 7,827');
     });
   });
 
   group('Malaysia time', () {
     test('a sale that ends 15 Nov 23:59:59 in Kuala Lumpur reads 15 Nov 11:59 pm', () {
       final end = DateTime.parse('2026-11-15T15:59:59Z');
-      expect(shortDateMyt(end), '15 Nov');
-      expect(dateTimeMyt(end), '15 Nov 11:59 pm');
-      expect(saleEndsMyt(end), 'Sale ends 15 Nov 2026, 11:59 pm');
+      expect(shortDateMyt(end, 'en'), '15 Nov');
+      expect(dateTimeMyt(end, 'en'), '15 Nov 11:59 pm');
+      expect(en.saleEnds(longDateTimeMyt(end, 'en')), 'Sale ends 15 Nov 2026, 11:59 pm');
     });
 
     test('a sale that starts at 16:00Z reads as the next day, midnight', () {
       final start = DateTime.parse('2026-10-25T16:00:00Z');
-      expect(dateTimeMyt(start), '26 Oct 12:00 am');
-      expect(longDateMyt(start), '26 Oct 2026');
+      expect(dateTimeMyt(start, 'en'), '26 Oct 12:00 am');
+      expect(longDateMyt(start, 'en'), '26 Oct 2026');
     });
 
     test('conversion does not depend on the device zone', () {
@@ -60,12 +87,12 @@ void main() {
       final a = DateTime.parse('2026-12-16T15:59:59Z');
       final b = DateTime.parse('2026-12-16T10:59:59-05:00');
       expect(a.isAtSameMomentAs(b), isTrue);
-      expect(saleEndsMyt(a), saleEndsMyt(b));
-      expect(saleEndsMyt(a), 'Sale ends 16 Dec 2026, 11:59 pm');
+      expect(longDateTimeMyt(a, 'en'), longDateTimeMyt(b, 'en'));
+      expect(en.saleEnds(longDateTimeMyt(a, 'en')), 'Sale ends 16 Dec 2026, 11:59 pm');
     });
 
     test('release dates have no zone and are not shifted', () {
-      expect(releaseDateLabel('2027-03-08'), '8 Mar 2027');
+      expect(releaseDateLabel('2027-03-08', 'en'), '8 Mar 2027');
     });
 
     test('today is the Malaysian calendar day', () {
@@ -87,10 +114,10 @@ void main() {
     });
 
     test('a title with no price shows its date, the source text, or Coming soon', () {
-      expect(game(releaseDate: '2027-03-08', status: 'unreleased').noPriceLabel(now), '8 Mar 2027');
-      expect(game(releaseText: '2027', status: 'unreleased').noPriceLabel(now), '2027');
-      expect(game(status: 'unreleased').noPriceLabel(now), 'Coming soon');
-      expect(game(releaseDate: '2026-01-01').noPriceLabel(now), 'Price unavailable');
+      expect(game(releaseDate: '2027-03-08', status: 'unreleased').noPriceLabel(now, en), '8 Mar 2027');
+      expect(game(releaseText: '2027', status: 'unreleased').noPriceLabel(now, en), '2027');
+      expect(game(status: 'unreleased').noPriceLabel(now, en), 'Coming soon');
+      expect(game(releaseDate: '2026-01-01').noPriceLabel(now, en), 'Price unavailable');
     });
   });
 }
