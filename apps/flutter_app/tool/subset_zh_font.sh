@@ -1,7 +1,7 @@
 #!/bin/sh
 # Rebuilds assets/fonts/RinggitZh-*.ttf from the full Resource Han Rounded CN files in $1 (OFL,
 # github.com/CyanoHao/Resource-Han-Rounded, release v0.990, RHR-CN-0.990.7z). The subset holds exactly the
-# non-ASCII characters in lib/l10n/app_zh.arb, so rerun this after every change to that file;
+# non-ASCII characters in lib/l10n/app_zh.arb plus 年月日, which intl's Chinese date patterns add (lib/core/format.dart), so rerun this after every change to that file;
 # test/zh_font_test.dart fails when a character is missing. It holds no Latin or digits on purpose: those
 # fall through to M PLUS Rounded 1c, so prices and game titles look the same in every language.
 set -eu
@@ -12,7 +12,7 @@ chars="$(mktemp)"
 python3 -c '
 import json, sys
 d = json.load(open(sys.argv[1], encoding="utf-8"))
-print("".join(sorted({c for k, v in d.items() if not k.startswith("@") for c in v if ord(c) > 0x7E})))
+print("".join(sorted({c for k, v in d.items() if not k.startswith("@") for c in v if ord(c) > 0x7E} | set("年月日"))))
 ' "$root/lib/l10n/app_zh.arb" > "$chars"
 for w in Regular Medium Bold; do
   pyftsubset "$src/ResourceHanRoundedCN-$w.ttf" \

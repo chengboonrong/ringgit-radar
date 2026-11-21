@@ -128,6 +128,16 @@ Columns: key, what the agent read back, the problem, and the fix (the new text, 
 | retryLoadingMore | Try loading again / Try loading more | Lagi means both. | No change: both readings are true for this button. |
 | genreFirstPersonShooter | Shootout FPS | Part Malay, part acronym; "first-person" comes only from FPS. | No change: FPS is the name Malaysian players use, and the label must fit one line on the Search tile. |
 
+### Round 6 (after the screenshot check and the translation review): 3 keys, 3 listed
+
+The screenshots showed the Malay wish-list button drawn smaller than English: the bar scales a label that is wider than its room, and "Tambah ke Senarai Hajat" is 23 characters against about 16. fit_test now checks that every language's label is no wider than the English one. A consulting agent proposed short labels; it warned against "Hajat" on its own, which also calls up "buang hajat". The translation review found Malay rendering "System" two ways.
+
+| Key | Back-translation | Problem | Fix |
+|---|---|---|---|
+| addToWishList | + Wish List | No verb; the + says "add". | No change: the glossary term kept whole, and the heart button sits on the game page. |
+| onWishList | Saved / Stored / Kept | Doesn't name the list. | No change: it sits next to the filled heart, the app's only "save" is the wish list, and the full term would not fit. |
+| themeSystem | Follow system | Was "Sistem" while the Language chip says "Ikut sistem". | Ikut sistem, so both chips match (zh already uses 跟随系统 for both). |
+
 ## Result
 
-Chinese settled after round 4 and Malay after round 5. The last rounds read back the English meaning. Their remaining notes are style preferences that swapped from round to round, and the tables above give a ruling for each.
+Chinese settled after round 4 and Malay after round 6. The last rounds read back the English meaning. Their remaining notes are style preferences that swapped from round to round, and the tables above give a ruling for each.

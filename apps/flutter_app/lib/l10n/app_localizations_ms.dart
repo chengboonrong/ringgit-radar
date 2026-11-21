@@ -223,10 +223,10 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get onWishList => 'Dalam Senarai Hajat';
+  String get onWishList => 'Disimpan';
 
   @override
-  String get addToWishList => 'Tambah ke Senarai Hajat';
+  String get addToWishList => '+ Senarai Hajat';
 
   @override
   String get buyOnSwitch => 'Beli di Nintendo eShop pada Switch anda.';
@@ -432,7 +432,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get appearanceHeading => 'Penampilan';
 
   @override
-  String get themeSystem => 'Sistem';
+  String get themeSystem => 'Ikut sistem';
 
   @override
   String get themeLight => 'Cerah';

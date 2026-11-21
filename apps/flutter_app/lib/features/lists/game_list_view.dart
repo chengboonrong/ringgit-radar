@@ -136,7 +136,9 @@ class _StickyRow extends SliverPersistentHeaderDelegate {
   @override
   double get maxExtent => height;
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) => child;
+  // fills the whole extent, so the pinned header paints as tall as the room it takes
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) =>
+      SizedBox.expand(child: Align(alignment: Alignment.topCenter, child: child));
   @override
   bool shouldRebuild(_StickyRow old) => true;
 }
