@@ -1,0 +1,40 @@
+{{define "main"}}
+<h1>{{.T "headline"}}</h1>
+<p class="lead">{{.T "promise"}}</p>
+<div class="cta" id="cta">
+<a class="btn primary" id="open" href="/app/">{{.T "open"}}</a>
+<div class="alt" id="android"><a class="btn secondary" href="{{.Lang.Prefix}}/android/">{{.T "android"}}</a><p class="note">{{.T "androidNote"}}</p></div>
+<details class="alt" id="iphone" hidden>
+<summary class="btn secondary">{{.T "iphone"}}</summary>
+<ol><li>{{.T "iphoneStep1"}}</li><li>{{.T "iphoneStep2"}}</li><li>{{.T "iphoneStep3"}}</li></ol>
+<p class="note">{{.T "iphoneNote"}}</p>
+</details>
+</div>
+<p class="unofficial">{{.T "unofficial"}}</p>
+<p class="facts">{{.T "facts"}}</p>
+<section>
+<h2>{{.T "getTitle"}}</h2>
+<ul class="get">
+<li><h3>{{.T "get1Title"}}</h3><p>{{.T "get1"}}</p></li>
+<li><h3>{{.T "get2Title"}}</h3><p>{{.T "get2"}}</p></li>
+<li><h3>{{.T "get3Title"}}</h3><p>{{.T "get3"}}</p></li>
+</ul>
+</section>
+<section>
+<h2>{{.T "runsTitle"}}</h2>
+<ul>
+<li>{{.T "runsWeb"}}</li>
+<li>{{.T "runsAndroid"}}</li>
+<li>{{.T "runsIphone"}}</li>
+</ul>
+<p style="margin:12px 0 0">{{.T "runsStores"}}</p>
+</section>
+<section>
+<h2>{{.T "faqTitle"}}</h2>
+<div class="qa"><h3>{{.T "faqOfficialQ"}}</h3><p>{{.T "faqOfficialA"}}</p></div>
+<div class="qa"><h3>{{.T "faqBuyQ"}}</h3><p>{{.T "faqBuyA"}}</p></div>
+<div class="qa"><h3>{{.T "faqFreeQ"}}</h3><p>{{.T "faqFreeA"}}</p></div>
+<div class="qa"><h3>{{.T "faqAccountQ"}}</h3><p>{{.T "faqAccountA"}}</p></div>
+<div class="qa"><h3>{{.T "faqRemoveQ"}}</h3><p>{{.T "faqRemoveA"}}</p></div>
+</section>
+{{end}}
