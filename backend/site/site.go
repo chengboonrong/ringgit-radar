@@ -26,6 +26,8 @@ type Lang struct{ Code, HTMLLang, Prefix string }
 
 var Langs = []Lang{{"en", "en", ""}, {"zh", "zh-Hans", "/zh"}, {"ms", "ms", "/ms"}}
 
+var ogLocales = map[string]string{"en": "en_MY", "zh": "zh_CN", "ms": "ms_MY"}
+
 var switchLabels = map[string]string{"en": "EN", "zh": "中文", "ms": "BM"}
 
 // Options says where to write and what to write it with.
@@ -42,8 +44,8 @@ var kinds = []struct{ name, dir, title, description string }{
 }
 
 type switchLink struct {
-	Label, Href, Code, HTMLLang string
-	Current                     bool
+	Label, Href, Abs, Code, HTMLLang string
+	Current                          bool
 }
 
 type page struct {
@@ -52,9 +54,16 @@ type page struct {
 	Title       string
 	Description string
 	Switch      []switchLink
+	Canonical   string
+	XDefault    string
+	OGLocale    string
+	OGImage     string
 	text        map[string]string
 	args        map[string]template.HTML
 }
+
+// Raw is a page text as plain text, for attributes.
+func (p page) Raw(key string) string { return p.text[key] }
 
 // T is a page text with its placeholders filled in.
 func (p page) T(key string) template.HTML {
@@ -86,6 +95,7 @@ func Build(o Options) error {
 	if err := copyFile(o.APKPath, filepath.Join(o.Out, "ringgit-radar.apk")); err != nil {
 		return err
 	}
+	var sitemap []string
 	for _, k := range kinds {
 		tmpl, err := template.ParseFS(files, "templates/base.html.tmpl", "templates/"+k.name+".html.tmpl")
 		if err != nil {
@@ -96,9 +106,11 @@ func Build(o Options) error {
 			if err != nil {
 				return fmt.Errorf("text for %s: %w", l.Code, err)
 			}
-			p := page{Lang: l, Path: l.Prefix + k.dir, text: text}
+			p := page{Lang: l, Path: l.Prefix + k.dir, text: text, Canonical: Origin + l.Prefix + k.dir, XDefault: Origin + k.dir,
+				OGLocale: ogLocales[l.Code], OGImage: Origin + "/site/og-" + l.Code + ".png"}
+			sitemap = append(sitemap, p.Canonical)
 			for _, s := range Langs {
-				p.Switch = append(p.Switch, switchLink{switchLabels[s.Code], s.Prefix + k.dir, s.Code, s.HTMLLang, s == l})
+				p.Switch = append(p.Switch, switchLink{switchLabels[s.Code], s.Prefix + k.dir, Origin + s.Prefix + k.dir, s.Code, s.HTMLLang, s == l})
 			}
 			p.args = map[string]template.HTML{
 				"count":    template.HTML(`<span data-count>` + formatCount(o.Status.ProductCount) + `</span>`),
@@ -118,6 +130,18 @@ func Build(o Options) error {
 				return err
 			}
 		}
+	}
+	var sm strings.Builder
+	sm.WriteString(`<?xml version="1.0" encoding="UTF-8"?>` + "\n" + `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">` + "\n")
+	for _, u := range sitemap {
+		sm.WriteString("  <url><loc>" + u + "</loc></url>\n")
+	}
+	sm.WriteString("</urlset>\n")
+	if err := write(filepath.Join(o.Out, "sitemap.xml"), []byte(sm.String())); err != nil {
+		return err
+	}
+	if err := write(filepath.Join(o.Out, "robots.txt"), []byte("User-agent: *\nAllow: /\n\nSitemap: "+Origin+"/sitemap.xml\n")); err != nil {
+		return err
 	}
 	return fs.WalkDir(files, "static", func(name string, d fs.DirEntry, err error) error {
 		if err != nil || d.IsDir() {
