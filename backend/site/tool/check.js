@@ -90,12 +90,14 @@ function assert(ok, msg) {
     await c.close();
   });
 
-  for (const [name, opts, init] of [
+  // Safari's engine too, since iPhones and iPads run nothing else
+  const webkit = await require(process.env.PLAYWRIGHT || 'playwright').webkit.launch();
+  for (const [name, opts, init, b] of [
     ['iphone', { userAgent: UA.iphone, isMobile: true, hasTouch: true }, null],
     ['ipad', { userAgent: UA.ipad, hasTouch: true }, () => Object.defineProperty(Navigator.prototype, 'maxTouchPoints', { get: () => 5 })],
-  ]) {
+  ].flatMap(([n, o, i]) => [[n, o, i, browser], [n + ' (webkit)', o, i, webkit]])) {
     await check(name, async () => {
-      const c = await ctx(opts);
+      const c = await b.newContext({ viewport: { width: 390, height: 844 }, ...opts });
       if (init) await c.addInitScript(init);
       const page = await c.newPage();
       await page.goto(base + '/zh/');
@@ -263,6 +265,7 @@ function assert(ok, msg) {
   });
 
   await browser.close();
+  await webkit.close();
   console.log(failed ? `${failed} failed` : 'all passed');
   process.exit(failed ? 1 : 0);
 })();

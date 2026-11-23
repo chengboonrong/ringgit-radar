@@ -318,3 +318,12 @@ func TestBuildRetiringWorker(t *testing.T) {
 		t.Error("the app build was touched")
 	}
 }
+
+func TestRawMissingKeyFails(t *testing.T) {
+	defer func() {
+		if recover() == nil {
+			t.Error("Raw returned quietly for a key no text has; an alt or aria-label would ship empty")
+		}
+	}()
+	page{Lang: Langs[0], text: map[string]string{}}.Raw("noSuchKey")
+}
