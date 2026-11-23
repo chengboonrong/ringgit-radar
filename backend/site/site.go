@@ -63,15 +63,18 @@ type page struct {
 }
 
 // Raw is a page text as plain text, for attributes.
-func (p page) Raw(key string) string { return p.text[key] }
+func (p page) Raw(key string) string { return p.get(key) }
 
 // T is a page text with its placeholders filled in.
-func (p page) T(key string) template.HTML {
+func (p page) T(key string) template.HTML { return render(p.get(key), p.args) }
+
+// get fails the build (the template turns the panic into an error) rather than ship an empty text.
+func (p page) get(key string) string {
 	s, ok := p.text[key]
 	if !ok {
 		panic("site: no text " + key + " in " + p.Lang.Code)
 	}
-	return render(s, p.args)
+	return s
 }
 
 func a(href string, label template.HTML) template.HTML {
