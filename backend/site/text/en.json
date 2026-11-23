@@ -42,5 +42,17 @@
   "footerGitHub": "Source code on GitHub (MIT)",
   "footerPrivacy": "Privacy",
   "footerData": "Where our data comes from",
-  "langLabel": "Language"
+  "langLabel": "Language",
+  "androidTitle": "Ringgit Radar for Android",
+  "androidMetaDescription": "Download Ringgit Radar for Android: Malaysian eShop prices in ringgit. Unofficial, not affiliated with Nintendo.",
+  "androidLead": "Malaysian eShop prices in ringgit, with price history and sale end dates.",
+  "androidDownload": "Download the app",
+  "androidFileNote": "APK file, {size} MB. This app is not on Google Play.",
+  "installTitle": "How to install",
+  "install1": "Download the file, then open it from your notifications or Downloads.",
+  "install2": "If Android blocks it, allow installs from your browser when asked.",
+  "install3": "Tap Install, then Open.",
+  "androidWeb": "On iPhone or a computer, use the {web}. It has everything the app has. Read our {privacy}.",
+  "webLink": "web app",
+  "privacyLink": "privacy page"
 }
