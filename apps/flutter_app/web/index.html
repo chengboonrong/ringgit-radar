@@ -32,6 +32,30 @@
 
   <title>Ringgit Radar</title>
   <link rel="manifest" href="manifest.json">
+  <script>
+    // Saved data handed over from the old address (backend/site/root/carry.html), merged once before the app
+    // reads storage: the Wish Lists are combined, other settings are only filled in where none is set here.
+    // Only accepted when the old address sent the visitor, so a link made elsewhere can't write into storage.
+    (function () {
+      var m = location.hash.match(/^#carry=(.*)$/);
+      if (!m) return;
+      history.replaceState(null, '', location.pathname + location.search);
+      if (document.referrer.indexOf('https://ringgit-radar-mu.vercel.app/') !== 0) return;
+      try {
+        var d = JSON.parse(decodeURIComponent(m[1]));
+        for (var k in d) {
+          if (k.indexOf('flutter.') !== 0 || typeof d[k] !== 'string') continue;
+          if (k === 'flutter.wishlist') {
+            var mine = JSON.parse(localStorage.getItem(k) || '[]');
+            JSON.parse(d[k]).forEach(function (id) { if (mine.indexOf(id) < 0) mine.push(id); });
+            localStorage.setItem(k, JSON.stringify(mine));
+          } else if (localStorage.getItem(k) === null) {
+            localStorage.setItem(k, d[k]);
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>

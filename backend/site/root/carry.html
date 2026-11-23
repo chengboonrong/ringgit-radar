@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>Ringgit Radar</title>
+<script>
+// The old address forwards every app link here (?p=<old path>). Browser storage belongs to one address, so this
+// hands the web app's saved data (Wish List and settings: the flutter.* keys) to the new address in the URL
+// fragment, which never reaches a server. The app's index.html merges it in once.
+(function () {
+  var q = new URLSearchParams(location.search);
+  var p = (q.get('p') || '/').replace(/^\/app(\/|$)/, '/');
+  q.delete('p');
+  var to = 'https://ringgitradar.snitco.com/app' + p + (q.toString() ? '?' + q : ''), d = {}, n = 0;
+  try {
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (k.indexOf('flutter.') === 0) { d[k] = localStorage.getItem(k); n++; }
+    }
+  } catch (e) {}
+  location.replace(n ? to + '#carry=' + encodeURIComponent(JSON.stringify(d)) : to);
+})();
+</script>
+<noscript><meta http-equiv="refresh" content="0;url=https://ringgitradar.snitco.com/app/"></noscript>
+</head>
+<body><p><a href="https://ringgitradar.snitco.com/app/">Ringgit Radar</a></p></body>
+</html>

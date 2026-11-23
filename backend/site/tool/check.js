@@ -220,6 +220,37 @@ function assert(ok, msg) {
     assert(bad.length === 0, bad.join('; '));
   });
 
+  await check('carry', async () => {
+    // web app data lives per address: the old address hands it over (carry.html) and the app's index.html merges it
+    const OLD = 'https://ringgit-radar-mu.vercel.app', NEW = 'https://ringgitradar.snitco.com';
+    const c = await ctx();
+    // both addresses are served from base, documents only, so this runs before a deploy and Flutter never starts
+    for (const host of [OLD, NEW]) await c.route(host + '/**', async (r) => {
+      if (r.request().resourceType() !== 'document') return r.abort();
+      const path = r.request().url().slice(host.length).split('#')[0];
+      if (path === '/seed') return r.fulfill({ contentType: 'text/html', body: '<p>seed</p>' });
+      return r.fulfill({ response: await c.request.get(base + path) });
+    });
+    const page = await c.newPage();
+    const store = (o) => page.evaluate((o) => { for (const [k, v] of Object.entries(o)) localStorage.setItem(k, v); }, o);
+    const read = () => page.evaluate(() => Object.fromEntries(Object.entries(localStorage)));
+    await page.goto(OLD + '/seed');
+    await store({ 'flutter.wishlist': '["70010000109166","1"]', 'flutter.locale': '"zh"', 'flutter.notice_seen': 'true', other: 'x' });
+    await page.goto(NEW + '/seed');
+    await store({ 'flutter.wishlist': '["2","1"]', 'flutter.locale': '"en"' });
+    await page.goto(OLD + '/carry.html?p=/games/70010000109166&ref=x');
+    await page.waitForURL(NEW + '/app/games/70010000109166?ref=x', { timeout: 5000 });
+    let s = await read();
+    assert(s['flutter.wishlist'] === '["2","1","70010000109166"]', 'wishlist ' + s['flutter.wishlist']);
+    assert(s['flutter.locale'] === '"en"' && s['flutter.notice_seen'] === 'true' && !('other' in s), JSON.stringify(s));
+    // a link made anywhere else can't write into someone's storage
+    await page.goto(NEW + '/app/#carry=' + encodeURIComponent(JSON.stringify({ 'flutter.wishlist': '["666"]' })));
+    s = await read();
+    assert(s['flutter.wishlist'] === '["2","1","70010000109166"]', 'a foreign link wrote ' + s['flutter.wishlist']);
+    assert(!page.url().includes('#'), 'fragment left in ' + page.url());
+    await c.close();
+  });
+
   await check('slashes', async () => {
     const c = await ctx();
     const bad = [];
