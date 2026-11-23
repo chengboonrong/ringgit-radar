@@ -15,7 +15,7 @@ import (
 	"strings"
 )
 
-//go:embed templates text static
+//go:embed templates text static root
 var files embed.FS
 
 // Origin is the address the pages are published at.
@@ -143,7 +143,14 @@ func Build(o Options) error {
 	if err := write(filepath.Join(o.Out, "robots.txt"), []byte("User-agent: *\nAllow: /\n\nSitemap: "+Origin+"/sitemap.xml\n")); err != nil {
 		return err
 	}
-	return fs.WalkDir(files, "static", func(name string, d fs.DirEntry, err error) error {
+	if err := copyEmbedded("static", filepath.Join(o.Out, "site")); err != nil {
+		return err
+	}
+	return copyEmbedded("root", o.Out) // files that must sit at the site root, such as the retiring service worker
+}
+
+func copyEmbedded(dir, out string) error {
+	return fs.WalkDir(files, dir, func(name string, d fs.DirEntry, err error) error {
 		if err != nil || d.IsDir() {
 			return err
 		}
@@ -151,7 +158,7 @@ func Build(o Options) error {
 		if err != nil {
 			return err
 		}
-		return write(filepath.Join(o.Out, "site", filepath.FromSlash(strings.TrimPrefix(name, "static/"))), b)
+		return write(filepath.Join(out, filepath.FromSlash(strings.TrimPrefix(name, dir+"/"))), b)
 	})
 }
 
