@@ -6,6 +6,20 @@
 <title>{{.Title}}</title>
 <meta name="description" content="{{.Description}}">
 <meta name="theme-color" content="#C8102E">
+<link rel="canonical" href="{{.Canonical}}">
+{{range .Switch}}<link rel="alternate" hreflang="{{.HTMLLang}}" href="{{.Abs}}">
+{{end}}<link rel="alternate" hreflang="x-default" href="{{.XDefault}}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ringgit Radar">
+<meta property="og:title" content="{{.Title}}">
+<meta property="og:description" content="{{.Description}}">
+<meta property="og:url" content="{{.Canonical}}">
+<meta property="og:locale" content="{{.OGLocale}}">
+<meta property="og:image" content="{{.OGImage}}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ringgit Radar · {{.Raw "ogTagline"}}">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/site/favicon.png">
 <link rel="apple-touch-icon" href="/site/icon-192.png">
 <link rel="preload" href="/site/fonts/MPLUSRounded1c-Regular.woff2" as="font" type="font/woff2" crossorigin>
@@ -62,7 +76,7 @@ footer li a { display: inline-block; min-height: 44px; padding: 10px 0; }
 <body data-lang="{{.Lang.Code}}">
 <header class="top">
 <a class="brand" href="{{.Lang.Prefix}}/"><img src="/site/icon-192.png" alt="" width="36" height="36">Ringgit Radar</a>
-<nav class="sw" aria-label="{{.T "langLabel"}}">{{range $i, $s := .Switch}}{{if $i}} · {{end}}<a href="{{$s.Href}}" hreflang="{{$s.HTMLLang}}" lang="{{$s.HTMLLang}}" data-lang="{{$s.Code}}"{{if $s.Current}} aria-current="page"{{end}}>{{$s.Label}}</a>{{end}}</nav>
+<nav class="sw" aria-label="{{.Raw "langLabel"}}">{{range $i, $s := .Switch}}{{if $i}} · {{end}}<a href="{{$s.Href}}" hreflang="{{$s.HTMLLang}}" lang="{{$s.HTMLLang}}" data-lang="{{$s.Code}}"{{if $s.Current}} aria-current="page"{{end}}>{{$s.Label}}</a>{{end}}</nav>
 </header>
 <main>
 {{template "main" .}}
