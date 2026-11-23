@@ -5,6 +5,8 @@
   "outputDirectory": "public",
   "functions": { "api/index.go": { "maxDuration": 30 } },
   "redirects": [
+    { "source": "/android.html", "has": [{ "type": "host", "value": "ringgit-radar-mu.vercel.app" }], "destination": "https://ringgitradar.snitco.com/android/", "permanent": true },
+    { "source": "/:path((?!v1/|healthz$|ringgit-radar\\.apk$|flutter_service_worker\\.js$|api/).*)", "has": [{ "type": "host", "value": "ringgit-radar-mu.vercel.app" }], "destination": "https://ringgitradar.snitco.com/app/:path", "permanent": true },
     { "source": "/:p(zh|ms|app|android|zh/android|ms/android)", "destination": "/:p/", "permanent": true }
   ],
   "rewrites": [

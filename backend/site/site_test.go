@@ -302,3 +302,19 @@ func TestZhFontCoversText(t *testing.T) {
 		}
 	}
 }
+
+func TestBuildRetiringWorker(t *testing.T) {
+	o := built(t)
+	w := read(t, filepath.Join(o.Out, "flutter_service_worker.js"))
+	for _, want := range []string{"registration.unregister()", "caches.delete", "skipWaiting"} {
+		if !strings.Contains(w, want) {
+			t.Errorf("retiring worker lacks %s", want)
+		}
+	}
+	if strings.Contains(w, "addEventListener('fetch'") {
+		t.Error("retiring worker must not answer requests")
+	}
+	if got := read(t, filepath.Join(o.Out, "app", "index.html")); !strings.Contains(got, `<base href="/app/">`) {
+		t.Error("the app build was touched")
+	}
+}
