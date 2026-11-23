@@ -6,6 +6,8 @@ CREATE TABLE removed_products (
     removed_at timestamptz NOT NULL DEFAULT now(),
     note       text NOT NULL DEFAULT ''
 );
+-- Closed to Supabase's Data API like every other table (README); the API connects as the owner, so it still reads it.
+ALTER TABLE removed_products ENABLE ROW LEVEL SECURITY;
 
 -- The catalog view again, without the titledb age ratings (no longer shown) and without removed products.
 DROP VIEW catalog;

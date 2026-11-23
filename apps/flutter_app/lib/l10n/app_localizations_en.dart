@@ -494,6 +494,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'None of the games on your Wish List are on sale right now.';
 
   @override
+  String get wishAllGone =>
+      'The games on your Wish List are no longer shown in Ringgit Radar.';
+
+  @override
   String get wishEmptyTitle =>
       'You can add software you\'re interested in to your Wish List!';
 

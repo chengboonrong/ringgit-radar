@@ -498,6 +498,10 @@ class AppLocalizationsMs extends AppLocalizations {
       'Tiada permainan dalam Senarai Hajat anda yang dalam promosi sekarang.';
 
   @override
+  String get wishAllGone =>
+      'Permainan dalam Senarai Hajat anda tidak lagi dipaparkan dalam Ringgit Radar.';
+
+  @override
   String get wishEmptyTitle =>
       'Anda boleh menambah perisian yang anda minati ke Senarai Hajat anda!';
 

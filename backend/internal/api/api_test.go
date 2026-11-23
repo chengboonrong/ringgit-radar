@@ -742,19 +742,23 @@ func TestRemovedProductHiddenEverywhere(t *testing.T) {
 		e.add(s)
 	}
 	e.add(game{nsuid: "2", title: "Game 2 DLC", publisher: "A", sctg: "aoc", regular: 500})
-	if _, err := e.pool.Exec(context.Background(), `INSERT INTO removed_products (nsuid, note) VALUES ('1','test'),('2','test')`); err != nil {
+	// "4" (to be removed) and "5" (kept) are coming soon.
+	for _, id := range []string{"4", "5"} {
+		e.add(game{nsuid: id, title: "Soon " + id, publisher: "C" + id, ssitu: "unreleased", raw: map[string]any{"dsdate": "2099-03-08 00:00:00", "sdate": "2099.3.8"}})
+	}
+	if _, err := e.pool.Exec(context.Background(), `INSERT INTO removed_products (nsuid, note) VALUES ('1','test'),('2','test'),('4','test')`); err != nil {
 		t.Fatal(err)
 	}
 	hidden := func(where string, ids []string) {
 		t.Helper()
 		for _, id := range ids {
-			if id == "1" || id == "2" {
+			if id == "1" || id == "2" || id == "4" {
 				t.Errorf("%s still shows removed product %s: %v", where, id, ids)
 			}
 		}
 	}
 	for _, path := range []string{"/v1/games", "/v1/games?sale=true", "/v1/games?q=game", "/v1/games?ids=1,2,3",
-		"/v1/games?type=addon", "/v1/games?release=recent", "/v1/games?genre=Action", "/v1/games?age=12"} {
+		"/v1/games?type=addon", "/v1/games?release=recent", "/v1/games?release=upcoming", "/v1/games?genre=Action", "/v1/games?age=12"} {
 		var l listResp
 		if code := e.get(path, &l); code != http.StatusOK { // ?age= from old links is ignored, not a 400
 			t.Fatalf("%s = %d", path, code)
@@ -762,6 +766,9 @@ func TestRemovedProductHiddenEverywhere(t *testing.T) {
 		hidden(path, l.ids())
 		if path == "/v1/games" && !has(l.ids(), "3") {
 			t.Fatalf("the kept game is missing, so the test proves nothing: %v", l.ids())
+		}
+		if path == "/v1/games?release=upcoming" && !has(l.ids(), "5") {
+			t.Fatalf("coming soon lacks the kept game, so it proves nothing: %v", l.ids())
 		}
 	}
 	var rails map[string]json.RawMessage
@@ -784,6 +791,9 @@ func TestRemovedProductHiddenEverywhere(t *testing.T) {
 	}
 	var rank listResp
 	e.get("/v1/ranking", &rank)
+	if !has(rank.ids(), "3") {
+		t.Errorf("ranking lacks the kept game, so it proves nothing: %v", rank.ids())
+	}
 	hidden("ranking", rank.ids())
 	var genres struct {
 		Items []struct {
@@ -792,17 +802,21 @@ func TestRemovedProductHiddenEverywhere(t *testing.T) {
 		} `json:"items"`
 	}
 	e.get("/v1/genres", &genres)
+	action := -1
 	for _, g := range genres.Items {
-		if g.Name == "Action" && g.Count != 1 {
-			t.Errorf("Action counts %d games, want 1", g.Count)
+		if g.Name == "Action" {
+			action = g.Count
 		}
+	}
+	if action != 1 {
+		t.Errorf("Action counts %d games, want 1 (-1: genre missing)", action)
 	}
 	var st struct {
 		ProductCount int `json:"product_count"`
 	}
 	e.get("/v1/status/prices", &st)
-	if st.ProductCount != 1 {
-		t.Errorf("product_count = %d, want 1", st.ProductCount)
+	if st.ProductCount != 2 { // "3" and "5"
+		t.Errorf("product_count = %d, want 2", st.ProductCount)
 	}
 	if code := e.get("/v1/games/1", nil); code != http.StatusNotFound {
 		t.Errorf("removed game page = %d, want 404", code)
@@ -836,5 +850,18 @@ func TestEndpointsWorkBeforeMigration0004(t *testing.T) {
 		if rec.Code != want {
 			t.Errorf("%s on the 0003 schema = %d, want %d: %s", path, rec.Code, want, rec.Body.String())
 		}
+	}
+}
+
+// Supabase serves every public table through its Data API unless row level security is on; the README
+// turned it on by hand for the launch tables, so a table added later has to do it in its migration.
+func TestRemovedProductsHasRowLevelSecurity(t *testing.T) {
+	pool := testdb.Pool(t)
+	var on bool
+	if err := pool.QueryRow(context.Background(), `SELECT relrowsecurity FROM pg_class WHERE oid = 'removed_products'::regclass`).Scan(&on); err != nil {
+		t.Fatal(err)
+	}
+	if !on {
+		t.Error("removed_products has row level security off")
 	}
 }

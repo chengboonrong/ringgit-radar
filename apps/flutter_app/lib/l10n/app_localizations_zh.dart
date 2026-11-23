@@ -483,6 +483,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noneOnSale => '你的愿望单里目前没有特价游戏。';
 
   @override
+  String get wishAllGone => '你愿望单上的游戏已不再在 Ringgit Radar 中显示。';
+
+  @override
   String get wishEmptyTitle => '你可以把感兴趣的软件加入愿望单！';
 
   @override

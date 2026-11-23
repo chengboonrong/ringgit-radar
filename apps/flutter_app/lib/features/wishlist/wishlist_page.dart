@@ -58,7 +58,8 @@ class _WishlistPageState extends ConsumerState<WishlistPage> {
             if (shown.isEmpty) {
               return SliverFillRemaining(
                 hasScrollBody: false,
-                child: Center(child: Padding(padding: const EdgeInsets.all(32), child: Text(context.l10n.noneOnSale, textAlign: TextAlign.center))),
+                // nothing came back at all: every game on the list has been removed from the catalogue
+                child: Center(child: Padding(padding: const EdgeInsets.all(32), child: Text(all.isEmpty ? context.l10n.wishAllGone : context.l10n.noneOnSale, textAlign: TextAlign.center))),
               );
             }
             return SliverPadding(

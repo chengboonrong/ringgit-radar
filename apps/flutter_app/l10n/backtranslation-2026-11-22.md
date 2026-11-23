@@ -45,3 +45,12 @@ Columns: key, what the agent read back, the problem, and the fix (the new text, 
 | privacyNotNintendoBody | …to our Google mailbox. | "peti masuk Gmail" would be more natural. | Stands: names the provider as the English does, without a product name. |
 | dataFromTitle | Origin of data | Terse. | Stands: a heading, read with its paragraph. |
 | dataRightsTitle | Rights holders | Rights to what? | Stands: the paragraph under it says. |
+
+## Follow-up, 2026-11-23: `wishAllGone`
+
+One key, shown on the Wish List page when none of its games are listed any more. Same method: a fresh reader per language, without the English.
+
+| Language | Back-translation | Problem | Fix |
+|---|---|---|---|
+| Chinese | Games on your wish list are no longer shown in Ringgit Radar. | "不再显示" could be read as the games being taken off the wish list. | Stands: the English says the same, and it is true; the saved games stay on the list, the app just cannot show them. |
+| Malay | Games in your Wish List are no longer displayed in Ringgit Radar. | Same reading as Chinese; the repeated "dalam" is slightly clumsy. | Stands, as in Chinese. |

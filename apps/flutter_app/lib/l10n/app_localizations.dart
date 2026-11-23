@@ -874,6 +874,12 @@ abstract class AppLocalizations {
   /// **'None of the games on your Wish List are on sale right now.'**
   String get noneOnSale;
 
+  /// Wish List page when none of its games are listed any more (each was removed at a rights holder's request).
+  ///
+  /// In en, this message translates to:
+  /// **'The games on your Wish List are no longer shown in Ringgit Radar.'**
+  String get wishAllGone;
+
   /// Big line on an empty Wish List.
   ///
   /// In en, this message translates to:
