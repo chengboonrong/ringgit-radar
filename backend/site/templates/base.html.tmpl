@@ -9,9 +9,12 @@
 <link rel="icon" type="image/png" href="/site/favicon.png">
 <link rel="apple-touch-icon" href="/site/icon-192.png">
 <link rel="preload" href="/site/fonts/MPLUSRounded1c-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<style>
+{{if eq .Lang.Code "zh"}}<link rel="preload" href="/site/fonts/RinggitZh-Regular.woff2" as="font" type="font/woff2" crossorigin>
+{{end}}<style>
 @font-face { font-family: "M PLUS Rounded 1c"; font-weight: 400; font-display: swap; src: url(/site/fonts/MPLUSRounded1c-Regular.woff2) format("woff2"); unicode-range: U+0020-007E, U+00A0-00FF, U+2010-2027; }
 @font-face { font-family: "M PLUS Rounded 1c"; font-weight: 700; font-display: swap; src: url(/site/fonts/MPLUSRounded1c-Bold.woff2) format("woff2"); unicode-range: U+0020-007E, U+00A0-00FF, U+2010-2027; }
+@font-face { font-family: RinggitZh; font-weight: 400; font-display: swap; src: url(/site/fonts/RinggitZh-Regular.woff2) format("woff2"); unicode-range: U+2E80-9FFF, U+FF00-FFEF, U+3000-303F; }
+@font-face { font-family: RinggitZh; font-weight: 700; font-display: swap; src: url(/site/fonts/RinggitZh-Bold.woff2) format("woff2"); unicode-range: U+2E80-9FFF, U+FF00-FFEF, U+3000-303F; }
 :root { color-scheme: light dark; --red: #C8102E; --bg: #EAEAEA; --card: #F8F8F8; --text: #1A1A1A; --muted: #5C5C5C; --line: #D2D2D2; }
 @media (prefers-color-scheme: dark) { :root { --bg: #1B1B1D; --card: #2A2A2D; --text: #F2F2F2; --muted: #B4B4B8; --line: #3C3C40; } }
 * { box-sizing: border-box; }
@@ -22,6 +25,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid #5A6BFF; outline-off
 .top { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; max-width: 640px; margin: 0 auto; padding: 12px 16px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; font-weight: 700; font-size: 18px; text-decoration: none; }
 .brand img { border-radius: 8px; }
+html[lang=zh-Hans] body { font-family: "M PLUS Rounded 1c", RinggitZh, system-ui, sans-serif; }
 .sw { font-family: system-ui, sans-serif; font-size: 15px; color: var(--muted); }
 .sw a { display: inline-block; min-width: 44px; min-height: 44px; padding: 10px 6px; text-align: center; }
 .sw a[aria-current] { color: var(--text); font-weight: 700; text-decoration: none; }
