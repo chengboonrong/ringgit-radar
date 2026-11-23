@@ -4,10 +4,13 @@
   "regions": ["sin1"],
   "outputDirectory": "public",
   "functions": { "api/index.go": { "maxDuration": 30 } },
+  "redirects": [
+    { "source": "/:p(zh|ms|app|android|zh/android|ms/android)", "destination": "/:p/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/v1/:path*", "destination": "/api/index?p=/v1/:path*" },
     { "source": "/healthz", "destination": "/api/index?p=/healthz" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/app/:path*", "destination": "/app/index.html" }
   ],
   "headers": [
     {
