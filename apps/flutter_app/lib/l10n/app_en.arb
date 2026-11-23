@@ -653,6 +653,10 @@
   "@noneOnSale": {
     "description": "Wish List filtered to on-sale with nothing on sale."
   },
+  "wishAllGone": "The games on your Wish List are no longer shown in Ringgit Radar.",
+  "@wishAllGone": {
+    "description": "Wish List page when none of its games are listed any more (each was removed at a rights holder's request)."
+  },
   "wishEmptyTitle": "You can add software you're interested in to your Wish List!",
   "@wishEmptyTitle": {
     "description": "Big line on an empty Wish List."
