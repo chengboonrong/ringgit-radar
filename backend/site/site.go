@@ -24,8 +24,7 @@ const Origin = "https://ringgitradar.snitco.com"
 // Lang is one language of the site. Prefix is "" for English, which lives at the root.
 type Lang struct{ Code, HTMLLang, Prefix string }
 
-// ponytail: Chinese and Malay join in the next step, once their text files exist.
-var Langs = []Lang{{"en", "en", ""}}
+var Langs = []Lang{{"en", "en", ""}, {"zh", "zh-Hans", "/zh"}, {"ms", "ms", "/ms"}}
 
 var switchLabels = map[string]string{"en": "EN", "zh": "中文", "ms": "BM"}
 

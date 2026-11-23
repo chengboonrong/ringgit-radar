@@ -261,3 +261,44 @@ func TestBuildAndroid(t *testing.T) {
 		}
 	}
 }
+
+func TestBuildAllLanguages(t *testing.T) {
+	o := built(t)
+	for _, l := range []struct{ code, html, prefix string }{{"zh", "zh-Hans", "/zh"}, {"ms", "ms", "/ms"}} {
+		tx, err := loadText(l.code)
+		if err != nil {
+			t.Fatal(err)
+		}
+		page := read(t, filepath.Join(o.Out, l.code, "index.html"))
+		for _, want := range []string{`<html lang="` + l.html + `">`, string(render(tx["headline"], nil)), `href="` + l.prefix + `/android/"`, `href="/app/"`} {
+			if !strings.Contains(page, want) {
+				t.Errorf("%s landing page lacks %q", l.code, want)
+			}
+		}
+	}
+	for _, l := range Langs {
+		for dir, kind := range map[string]string{"/": "landing", "/android/": "android"} {
+			page := read(t, filepath.Join(o.Out, filepath.FromSlash(l.Prefix+dir), "index.html"))
+			for _, m := range Langs {
+				if !strings.Contains(page, `href="`+m.Prefix+dir+`" hreflang="`+m.HTMLLang+`"`) {
+					t.Errorf("%s %s page has no switch link to %s%s", l.Code, kind, m.Prefix, dir)
+				}
+			}
+		}
+	}
+}
+
+func TestZhFontCoversText(t *testing.T) {
+	zh := chars(t, "zh_chars.txt")
+	tx, err := loadText("zh")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for k, v := range tx {
+		for _, r := range v {
+			if r > 0x7E && !zh[r] {
+				t.Errorf("zh.%s: %q is not in the Chinese font subset", k, r)
+			}
+		}
+	}
+}
