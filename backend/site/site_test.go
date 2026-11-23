@@ -239,3 +239,25 @@ func TestFontsCoverText(t *testing.T) {
 		}
 	}
 }
+
+func TestBuildAndroid(t *testing.T) {
+	o := built(t)
+	en, _ := loadText("en")
+	page := read(t, filepath.Join(o.Out, "android", "index.html"))
+	for _, want := range []string{
+		`<html lang="en">`, `href="/ringgit-radar.apk" download`, "APK file, 3 MB",
+		`href="/app/"`, `href="/app/privacy"`, en["unofficial"],
+	} {
+		if !strings.Contains(page, want) {
+			t.Errorf("android page lacks %q", want)
+		}
+	}
+	if strings.Contains(page, `href="/privacy"`) {
+		t.Error("android page links the old /privacy")
+	}
+	for _, l := range Langs {
+		if !strings.Contains(page, `href="`+l.Prefix+`/android/"`) {
+			t.Errorf("android page has no switch link to %s/android/", l.Prefix)
+		}
+	}
+}

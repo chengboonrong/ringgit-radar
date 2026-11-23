@@ -39,6 +39,7 @@ type Options struct {
 // kinds are the two page kinds, and where each lives under a language's prefix.
 var kinds = []struct{ name, dir, title, description string }{
 	{"landing", "/", "metaTitle", "metaDescription"},
+	{"android", "/android/", "androidTitle", "androidMetaDescription"},
 }
 
 type switchLink struct {
@@ -106,6 +107,8 @@ func Build(o Options) error {
 				"size":     template.HTML(fmt.Sprint(apkMB(st.Size()))),
 				"email":    a("mailto:ringgitradar@snitco.com", "ringgitradar@snitco.com"),
 				"dataPage": a("/app/data-sources", render(text["dataPageLink"], nil)),
+				"web":      a("/app/", render(text["webLink"], nil)),
+				"privacy":  a("/app/privacy", render(text["privacyLink"], nil)),
 			}
 			p.Title, p.Description = text[k.title], text[k.description]
 			var buf bytes.Buffer
