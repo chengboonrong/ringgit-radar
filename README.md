@@ -2,7 +2,7 @@
 
 Unofficial price tracker for Malaysian Nintendo eShop prices, in MYR. A Go collector records prices into local Postgres, a read API serves them, and a Flutter app (web, Android, iOS) shows them. Not affiliated with or endorsed by Nintendo.
 
-**Try it:** [ringgit-radar-mu.vercel.app](https://ringgit-radar-mu.vercel.app) · Android: [download the APK](https://ringgit-radar-mu.vercel.app/android.html)
+**Try it:** [ringgitradar.snitco.com](https://ringgitradar.snitco.com) · Android: [download the APK](https://ringgitradar.snitco.com/android/)
 
 <p align="center">
   <img src="docs/screenshots/preview.gif" width="260" alt="Phone walkthrough: Highlights, Sale, Ranking, then a game page with its price history chart">
