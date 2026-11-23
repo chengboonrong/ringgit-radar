@@ -18,9 +18,9 @@ For the App Store and Google Play listings. Ringgit Radar shows Nintendo's catal
 
 ## URLs and contact
 
-- Support URL: the landing page once it is live (`ringgitradar.snitco.com`); until then the GitHub repository.
-- Marketing URL: the landing page.
-- Privacy URL: the app's `/privacy` page on the live site.
+- Support URL: `https://ringgitradar.snitco.com/`
+- Marketing URL: `https://ringgitradar.snitco.com/`
+- Privacy URL: `https://ringgitradar.snitco.com/app/privacy`
 - Contact email: `ringgitradar@snitco.com` (never a personal address).
 
 ## If App Review asks for authorisation (guideline 5.2.2)
